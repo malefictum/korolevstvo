@@ -1,0 +1,21 @@
+{
+  "id": "/korolevstvo/",
+  "name": "Королевство (Порубежье)",
+  "short_name": "Королевство",
+  "description": "Средневековая пошаговая стратегия: ведите воевод, растите поселения, торгуйте и воюйте за Порубежье. Кампания, обучение, игра с ботами и по сети.",
+  "lang": "ru",
+  "dir": "ltr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["fullscreen", "standalone"],
+  "orientation": "any",
+  "background_color": "#1b120b",
+  "theme_color": "#1b120b",
+  "categories": ["games", "entertainment"],
+  "icons": [
+    {"src": "img/appicons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "img/appicons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "img/appicons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}
