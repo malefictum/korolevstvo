@@ -5681,8 +5681,8 @@ body.tut-on #gAdv { display: none !important; }   /* в обучении гов�
     eng: { catapult: { hit: 4, dmg: 1, dice: 2 }, trebuchet: { hit: 3, dmg: 2, dice: 2 }, cannon: { hit: 3, dmg: 2, dice: 3 }, ram: { hit: 3, dmg: 2, dice: 0 } },
     engHit: 4, engAp: 2, engRange: 5, segHp: [0, 2, 3, 4, 5, 6],
     climb: [0, 1, 2, 3, 3, 4], cover: [0, 1, 1, 2, 2, 2], wallMor: 1 };   // по уровню стены: штраф лезущим на стену, прибавка к спасброску за стеной; дух за целой стеной +1
-  const GORD = { wait: 'Стоять', hold: 'Оборона', shoot: 'Стрельба', shootback: 'Стрельба с отходом', bombard: 'Обстрел стены', march: 'Марш', flankL: 'На левый фланг', flankR: 'На правый фланг', melee: 'Сеча', back: 'Отход', flee: 'Побег' };
-  const GPRI = { flee: 0, back: 0, hold: 1, wait: 1, shoot: 2, shootback: 2, bombard: 2, march: 3, flankL: 3, flankR: 3, melee: 4 };
+  const GORD = { chop: 'Рубить стену', wait: 'Стоять', hold: 'Оборона', shoot: 'Стрельба', shootback: 'Стрельба с отходом', bombard: 'Обстрел стены', march: 'Марш', flankL: 'На левый фланг', flankR: 'На правый фланг', melee: 'Сеча', back: 'Отход', flee: 'Побег' };
+  const GPRI = { chop: 2, flee: 0, back: 0, hold: 1, wait: 1, shoot: 2, shootback: 2, bombard: 2, march: 3, flankL: 3, flankR: 3, melee: 4 };
   const GMOVE = { flankL: 1, flankR: 1, back: 1, flee: 1, shootback: 1 };   // по ним враг перебрасывает промахи
   const gclamp = (v, a, b) => v < a ? a : v > b ? b : v;
   function gr(G) { G.rs = (G.rs + 0x6D2B79F5) >>> 0; let t = G.rs; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }
@@ -5822,6 +5822,7 @@ body.tut-on #gAdv { display: none !important; }   /* в обучении гов�
       if (o === 'shoot' && (eng || !(q.ranged || (q.engine && q.engine !== 'ram')))) bad = true;
       if (o === 'shootback' && (eng || !q.ranged)) bad = true;
       if (o === 'bombard' && !q.engine) bad = true;
+      if (o === 'chop' && !gCanChop(G, q)) bad = true;
       if (o === 'melee' && (q.engine || !gAdj(G, q, false).length)) bad = true;
       if (q.engine && q.engine !== 'ram' && (o === 'march' || o === 'flankL' || o === 'flankR')) bad = true;
       if (bad) { E.burn.push(q.id); q.cur = { o: 'wait', burnt: o }; } }
@@ -5840,7 +5841,8 @@ body.tut-on #gAdv { display: none !important; }   /* в обучении гов�
     for (const q of G.sq) { if (!q.cur || q.st !== 'ok') continue;
       if ((q.cur.o === 'shoot' || q.cur.o === 'shootback') && !q.engine) { const sb = q.cur.o === 'shootback'; let t = q.cur.t && G.sq.find(z => z.id === q.cur.t); if (!t || !gCanShoot(G, q, t)) t = gBestShot(G, q); if (!t) { if (!sb) E.burn.push(q.id); continue; }
         gRoll(G, q, t, false, gShotMod(G, q, t) + (sb ? 1 : 0), E.shot, [gLineThroughOwn(G, q, t) ? 'own' : null, G.terr === 'forest' ? 'forest' : null, gCover(G, q, t) ? 'merlon' : null, sb ? 'onmove' : null].filter(Boolean)); }   // с отходом — на 1 хуже
-      else if (q.engine && (q.cur.o === 'shoot' || q.cur.o === 'bombard')) gEngine(G, q, E); }
+      else if (q.engine && (q.cur.o === 'shoot' || q.cur.o === 'bombard')) gEngine(G, q, E);
+      else if (q.cur.o === 'chop') gChop(G, q, E); }
     gApply(G);
     // 3б) стрелки с отходом: после залпа — шаг назад (раньше марша — уходят от погони)
     for (const q of G.sq) { if (!gOk(q) || !q.cur || q.cur.o !== 'shootback') continue; const from = [q.c, q.r], c = q.c - gDir(q.side);
@@ -5919,6 +5921,15 @@ body.tut-on #gAdv { display: none !important; }   /* в обучении гов�
     G.step++;
     if (!G.draft) { E.snap = G.sq.map(q => [q.id, q.c, q.r, q.sol.length, q.st === 'ok' ? 0 : q.st === 'flee' ? 1 : q.st === 'gone' ? 2 : 3]); if (G.wall) E.wall = G.wall.seg.slice(); G.log.push(E); }
     return E;
+  }
+  // РУБИТЬ СТЕНУ (24.10, Ник: «деревянную стену не взять, а таранов нет»): пешие вплотную рубят и жгут частокол и деревянное прясло.
+  // Кубик на бойца: 6 — минус очко прочности (топор — 5+). Каменную стену — только машины, ворота — только таран.
+  function gCanChop(G, q) { return !!(G.wall && G.wall.lv <= 2 && q.side === 'a' && !q.engine && !q.mounted && q.c === 2 && q.r !== GRID.gate && gWallUp(G, q.r)); }
+  function gChop(G, q, E) {
+    const row = q.r, R = { id: q.id, row, d: [], th: 6, dmg: 0, chop: 1 };
+    for (const x of q.sol) { const th = (x.w === 'axe' ? 5 : 6) + (x.starve ? 1 : 0), d = gd6(G); R.d.push(d); if (d >= Math.min(6, th)) R.dmg++; }
+    const before = G.wall.seg[row]; G.wall.seg[row] = Math.max(0, before - R.dmg); R.dmg = before - G.wall.seg[row]; G.wall.dealt += R.dmg; if (before > 0 && G.wall.seg[row] <= 0) R.breach = 1;
+    E.eng.push(R);
   }
   // осадная машина: «обстрел стены» по пряслу или «стрельба» по отряду
   function gEngine(G, q, E) {
@@ -6053,6 +6064,10 @@ body.tut-on #gAdv { display: none !important; }   /* в обучении гов�
       if (q.mounted && !breach.length) return { o: 'hold' };
       if (q.c >= 3) { const t = tgtList.sort((a, b) => gDist(a, q) - gDist(b, q))[0]; return gStepTo(G, q, t); }
       if (breach.length) { const br = breach.sort((a, b) => Math.abs(a - q.r) - Math.abs(b - q.r))[0]; if (br !== q.r && (q.mounted || Math.abs(br - q.r) <= 1)) return gFlankTo(q, br); }
+      if (!breach.length && G.wall.lv <= 2 && !q.mounted) {   // дерево — рубить самим
+        if (gCanChop(G, q)) return { o: 'chop' };
+        if (q.r === GRID.gate) { const r2 = [1, 3].find(r => gFree(G, q.c, r)); if (r2 != null) return gFlankTo(q, r2); }
+        if (gFree(G, q.c + 1, q.r)) return { o: 'march' }; return gSideStep(G, q); }
       if (!breach.length) return q.c >= 1 ? { o: 'hold' } : (gFree(G, q.c + 1, q.r) ? { o: 'march' } : { o: 'hold' });   // стена цела — ждать пролома
       if (q.c === 2) return { o: 'hold' };
       return gFree(G, q.c + 1, q.r) ? { o: 'march' } : gSideStep(G, q);
@@ -20730,10 +20745,11 @@ var GridScene = (function () {
     melee: ['Сеча', 'Ударить соседний отряд — и по прямой, и наискось. Урон наносится обоим разом. Связанный сечей отряд не может уйти маршем.'],
     back: ['Отход', 'Назад на клетку (конница и лучники — на 2). Соседи-враги бьют вслед, перебрасывая промахи.'],
     flee: ['Побег', 'Бежать: на 2 клетки назад (конница — на 3), за край поля — прочь из боя. Соседи бьют вслед.'],
+    chop: ['Рубить стену', 'Пешие вплотную у частокола или деревянного прясла рубят и жгут его: кубик на бойца, 6 — минус очко прочности (топор — 5+). Каменную стену — только машины, ворота — только таран.'],
     bombard: ['Обстрел стены', 'Машины крошат прясло стены (нажмите кусок стены). Ворота пробивает только таран — вплотную. Прясло рухнуло — пролом: туда можно идти, укрытия там нет.']
   };
   // знаки приказов (24×24): из этих же путей рисует и холст
-  var GLY = { shootback: 'M3 18L14 7M10 6h5v5M21 14h-6M18 11l-3 3 3 3', march: 'M3 12h14M12 6l6 6-6 6', back: 'M21 12H7M12 6l-6 6 6 6', flee: 'M21 12H6M10 7l-5 5 5 5M16 7l-5 5 5 5', up: 'M12 21V6M6 11l6-6 6 6', down: 'M12 3v15M6 13l6 6 6-6',
+  var GLY = { chop: 'M4 20L14 10M12 4l6 6-3 3-6-6zM15 14l5 5', shootback: 'M3 18L14 7M10 6h5v5M21 14h-6M18 11l-3 3 3 3', march: 'M3 12h14M12 6l6 6-6 6', back: 'M21 12H7M12 6l-6 6 6 6', flee: 'M21 12H6M10 7l-5 5 5 5M16 7l-5 5 5 5', up: 'M12 21V6M6 11l6-6 6 6', down: 'M12 3v15M6 13l6 6 6-6',
     melee: 'M4 4l16 16M20 4L4 20M3 8V3h5M21 8V3h-5', shoot: 'M5 19L18 6M13 5h6v6M5 6c7 0 13 6 13 13', hold: 'M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z', wait: 'M7 12h10', bombard: 'M12 15m-5 0a5 5 0 1 0 10 0a5 5 0 1 0-10 0M5 5l3 3M12 3v4M19 5l-3 3' };
   var WHY = { own: 'через своих −1', fresh: 'сшибка: переброс промахов', onmove: 'на отходе −1', merlon: 'за зубцами −1', forest: 'лес −1', wall: 'лезут на стену', oil: 'кипяток −1', ford: 'брод −1', charge: 'натиск +1', flank: 'во фланг (цель уже в сече) +1', rear: 'в тыл +1, без ответа', hunger: 'голод −1', pike: 'копья против коней 3+' };
   function glyKey(o, side) { if (o === 'flankL') return side === 'a' ? 'up' : 'down'; if (o === 'flankR') return side === 'a' ? 'down' : 'up'; return o; }
@@ -20966,9 +20982,9 @@ var GridScene = (function () {
           shots.push({ t0: now(), dur: T(520), n: Math.min(7, Math.ceil(R.d.length / 2)), x0: cx(a.c), y0: cy(a.r) - ch * 0.25, x1: cx(t.c), y1: cy(t.r) - ch * 0.1, arc: R.eng ? ch * 0.8 : ch * 0.45, seed: i * 31, stone: !!R.eng });
           setTimeout(function () { hurt(R); pop(cx(t.c), top + t.r * ch + ch * 0.05, diceHtml(R), T(2000)); }, T(520)); }, T(i * 160)); });
         E.eng.forEach(function (R, i) { setTimeout(function () { var a = S.disp[R.id]; if (!a) return; var wx = mx + 3 * cw, wy = cy(R.row);
-          shots.push({ t0: now(), dur: T(650), n: Math.max(1, R.d.length), x0: cx(a.c), y0: cy(a.r) - ch * 0.3, x1: wx, y1: wy, arc: R.id.indexOf('ram') >= 0 ? 0 : ch * 1.1, seed: 77 + i, stone: true });
+          if (R.chop) { S.atk = S.atk || {}; S.atk[R.id] = now() + T(700); } else shots.push({ t0: now(), dur: T(650), n: Math.max(1, R.d.length), x0: cx(a.c), y0: cy(a.r) - ch * 0.3, x1: wx, y1: wy, arc: R.id.indexOf('ram') >= 0 ? 0 : ch * 1.1, seed: 77 + i, stone: true });
           setTimeout(function () { if (S.wall) S.wall[R.row] = Math.max(0, S.wall[R.row] - R.dmg); S.flash = (S.flash || []).concat([{ x: wx, y: wy, t0: now(), dur: T(500) }]);
-            pop(wx, top + R.row * ch, '<div class="gs-dr">' + R.d.map(function (d) { return '<i class="' + (d >= R.th ? 'h' : '') + '">' + d + '</i>'; }).join('') + '<em>' + R.th + '+</em></div><div class="gs-k">' + (R.breach ? 'ПРОЛОМ!' : R.dmg ? 'прясло −' + R.dmg : 'камни мимо') + '</div>', T(1900), R.breach ? 'big' : ''); }, T(650)); }, T((E.shot.length + i) * 160)); });
+            pop(wx, top + R.row * ch, '<div class="gs-dr">' + R.d.map(function (d) { return '<i class="' + (d >= R.th ? 'h' : '') + '">' + d + '</i>'; }).join('') + '<em>' + R.th + '+</em></div><div class="gs-k">' + (R.breach ? 'ПРОЛОМ!' : R.dmg ? 'прясло −' + R.dmg : R.chop ? 'стена держит' : 'камни мимо') + '</div>', T(1900), R.breach ? 'big' : ''); }, T(650)); }, T((E.shot.length + i) * 160)); });
         wait(900 + (E.shot.length + E.eng.length) * 160 + 900, nx); });
       seq.push(function (nx) { var R = E.shot.filter(function (r) { return !r.eng; })[0]; if (!S.L || !R) return nx(); S.L.gate('shot', '<div class="gs-lroll">' + diceHtml(R) + '</div>', nx); });
       seq.push(function (nx) { var R = E.eng[0]; if (!S.L || !R) return nx(); S.L.gate('eng', '<div class="gs-lroll"><div class="gs-dr">' + R.d.map(function (d) { return '<i class="' + (d >= R.th ? 'h' : '') + '">' + d + '</i>'; }).join('') + '<em>' + R.th + '+</em></div><div class="gs-k">' + (R.breach ? 'пролом!' : R.dmg ? 'прясло −' + R.dmg : 'мимо') + '</div></div>', nx); });
@@ -21035,11 +21051,11 @@ var GridScene = (function () {
     } },
     siege: { steps: [
       { t: 'Стена', x: 'У стен поле то же, но посредине — <b>стена из пяти прясел</b>, в среднем — ворота. Точки у прясла — его прочность. Защитники стоят на стене и за ней.', btn: 1, glow: '.gs-cv' },
-      { t: 'Как брать стену', x: 'Пока прясло цело, <b>ни пешим, ни коннице не достать</b> тех, кто на стене, — а их стрелки бьют вниз безнаказанно, даже под самую стену. Стену берут <b>машинами</b>: пролом — и туда идёт войско. Лучники за стеной укрыты, но стрелять по ним можно.', btn: 1 },
-      { t: 'Машины', x: 'Катапульта, требушет и пушка — свои отряды: «<b>Обстрел стены</b>» крошит прясло (нажми кусок стены), «<b>Стрельба</b>» — камнями по войскам за стеной, навесом: стена от них не укрывает. <b>Ворота пробивает только таран</b> — ему надо подъехать вплотную. Нет машин — стену не взять: держи войско подальше от стрелков.', btn: 1, glow: '[data-grp="eng"]' },
+      { t: 'Как брать стену', x: 'Пока прясло цело, <b>ни пешим, ни коннице не достать</b> тех, кто на стене, — а их стрелки бьют вниз безнаказанно, даже под самую стену. Стену берут <b>машинами</b>, а <b>частокол и деревянную</b> пешие могут и сами — приказ «<b>Рубить стену</b>» вплотную у прясла. Пролом — и туда идёт войско. Лучники за стеной укрыты, но стрелять по ним можно.', btn: 1 },
+      { t: 'Машины', x: 'Катапульта, требушет и пушка — свои отряды: «<b>Обстрел стены</b>» крошит прясло (нажми кусок стены), «<b>Стрельба</b>» — камнями по войскам за стеной, навесом: стена от них не укрывает. <b>Ворота пробивает только таран</b> — ему надо подъехать вплотную. Нет машин — каменную стену не взять, а деревянную руби сам.', btn: 1, glow: '[data-grp="eng"]' },
       { t: 'В бой', x: 'Расставь войско и жми «<b>К приказам</b>», затем «<b>В бой</b>». Машины — по пряслу, стрелки — по стене, пехота ждёт пролома вне досягаемости луков.', wait: 'go', glow: '[data-act="go"]' }
     ], gates: {
-      eng: { t: 'Удар по стене', x: 'Каждая машина бросает кубик; попала — прясло теряет прочность. Прочность кончилась — <b>пролом</b>: там стены больше нет, туда может идти и пехота, и конница, а защитникам в проломе не укрыться.' },
+      eng: { t: 'Удар по стене', x: 'Машины и рубщики бросают кубики (рубят — на 6, топоры на 5+); попали — прясло теряет прочность. Прочность кончилась — <b>пролом</b>: там стены больше нет, туда может идти и пехота, и конница, а защитникам в проломе не укрыться.' },
       wallmel: { t: 'В пролом', x: 'В проломе стены больше нет: бьются как в поле, укрытия нет ни у кого. Соседние целые прясла по-прежнему держат — через них не достать.' },
       mor: { t: 'Дух', x: 'Отряд, что за шаг потерял <b>половину</b>, бросает кубик духа: нужно <b>4+</b>. За целой стеной защитникам +1. Побежала половина войска — бой окончен.' }
     } }
@@ -21080,7 +21096,7 @@ var GridScene = (function () {
     if (q.engine === 'ram') return ['wait', 'march', 'flankL', 'flankR', 'bombard', 'back'];
     if (q.engine) return wall ? ['wait', 'bombard', 'shoot'] : ['wait', 'shoot'];
     if (q.ranged) return ['shoot', 'shootback', 'hold', 'march', 'flankL', 'flankR', 'melee', 'back', 'flee', 'wait'];
-    return ['march', 'melee', 'hold', 'flankL', 'flankR', 'back', 'flee', 'wait'];
+    return ['march', 'melee', 'hold', 'flankL', 'flankR', 'back', 'flee', 'wait'].concat(wall && wall.lv <= 2 && !q.mounted ? ['chop'] : []);
   }
   function occ(view, disp, c, r, skip) { for (var i = 0; i < view.sq.length; i++) { var q = view.sq[i], d = disp[q.id]; if (q.id !== skip && d && d.st < 2 && d.c === c && d.r === r) return q; } return null; }
   // тень пути: где будет отряд после каждого из трёх приказов (без учёта чужих ходов)
@@ -21378,8 +21394,8 @@ var App = (function () {
     A.match.enter();
   }
   function resumeLocal(save) {
-    A.mode = 'local'; A.over = null; A.sel = null; A.tutorial = false; A.statDone = false;
-    var s = Core.deserialize(save.game);
+    A.mode = 'local'; A.over = null; A.sel = null; A.tutorial = false; A.tutResume = save.coach || null; A.statDone = false;
+    var s = Core.deserialize(save.game); if (save.coach) s.tutorial = true;
     if (save.meta) s.players.forEach(function (p, i) { var m = save.meta[i] || {}; p.name = m.name || ''; p.face = m.face != null ? m.face : -1; });
     var hs = humans(s); A.me = hs.length ? (hs.find(function (p) { return p.index === s.activeSeat; }) || hs[0]).index : 0;
     attachMatch(s, {});
@@ -21475,9 +21491,13 @@ var App = (function () {
 
   // сохранение одиночной партии
   // две ячейки: обычная партия (krlv-solo) и глава кампании (krlv-camp-save) — друг друга не затирают; учебный поход не пишется
-  var SOLO_K = 'krlv-solo', CAMP_K = 'krlv-camp-save';
+  var SOLO_K = 'krlv-solo', CAMP_K = 'krlv-camp-save', TUT_K = 'krlv-tut-save';
   function autosave() {
-    if (A.mode !== 'local' || !A.s || A.over || A.s.tutorial) return;
+    if (A.mode !== 'local' || !A.s || A.over) return;
+    if (A.s.tutorial) {   // учебный поход — своя ячейка вместе с шагом наставника (24.10, Ник: «пропала кнопка продолжить, если закрыл случайно»)
+      if (!window.Coach || !Coach.C || !Coach.C.on) return;
+      try { localStorage.setItem(TUT_K, JSON.stringify({ ts: Date.now(), game: Core.serialize(A.s), meta: A.s.players.map(function (p) { return { name: p.name, face: p.face }; }), coach: Coach.snapshot() })); } catch (e) { }
+      return; }
     var camp = A.s.camp, rec = { ts: Date.now(), game: Core.serialize(A.s), meta: A.s.players.map(function (p) { return { name: p.name, face: p.face }; }) };
     if (camp) { var ch = window.Campaign && Campaign.BY[camp.id], st = null; try { st = Campaign.status(A.s); } catch (e) { } rec.camp = { id: camp.id, title: ch ? ch.title : camp.id, year: st && st.year || null }; }
     try { localStorage.setItem(camp ? CAMP_K : SOLO_K, JSON.stringify(rec)); } catch (e) { }
@@ -21486,6 +21506,8 @@ var App = (function () {
   function readSave(k) { try { var d = JSON.parse(localStorage.getItem(k) || 'null'); return d && d.game ? d : null; } catch (e) { return null; } }
   function savedSolo() { var d = readSave(SOLO_K); return d && !(d.game.camp) ? d : null; }   // старая глава в общей ячейке — не «партия»
   function savedCamp() { var d = readSave(CAMP_K); if (d) return d; d = readSave(SOLO_K); return d && d.game.camp ? d : null; }   // глава из прежних сборок лежала в общей ячейке
+  function savedTut() { var d = readSave(TUT_K); return d && d.coach ? d : null; }
+  function dropTut() { try { localStorage.removeItem(TUT_K); } catch (e) { } }
   function dropSolo() { try { localStorage.removeItem(SOLO_K); } catch (e) { } }
   function dropCamp() { try { localStorage.removeItem(CAMP_K); var d = readSave(SOLO_K); if (d && d.game.camp) localStorage.removeItem(SOLO_K); } catch (e) { } }
 
@@ -21503,7 +21525,7 @@ var App = (function () {
   return {
     A: A, startLocal: startLocal, resumeLocal: resumeLocal, startHost: startHost, resumeHost: resumeHost, guestSync: guestSync,
     send: send, select: select, selectSettlement: selectSettlement, selectHex: selectHex, nextPrince: nextPrince, myPrinces: myPrinces,
-    myTurn: myTurn, viewSeat: viewSeat, autosave: autosave, savedSolo: savedSolo, dropSolo: dropSolo, savedCamp: savedCamp, dropCamp: dropCamp, stop: stop, revealHotseat: revealHotseat, seatName: seatName,
+    myTurn: myTurn, viewSeat: viewSeat, autosave: autosave, savedSolo: savedSolo, dropSolo: dropSolo, savedCamp: savedCamp, dropCamp: dropCamp, savedTut: savedTut, dropTut: dropTut, stop: stop, revealHotseat: revealHotseat, seatName: seatName,
     onRender: function (f) { onRender = f; }, onEvent: function (f) { onEvent = f; },
     state: function () { return A.s; },
   };
@@ -22634,6 +22656,13 @@ var Table = (function () {
         : [['Атаковать', function () { App.send({ a: 'attack', pr: pr.id, to: k }, toastRes('Бой')); }, true]];
     modal('Бой', body, [['Отмена', null]].concat(btns));
   }
+  // незаконченный бой после загрузки — снова на доску
+  function resumeFight() {
+    var s = A.s, f = s && s.fight; if (!f || f.owner !== A.me || !f.G || !window.GridScene || document.querySelector('.gs-ov')) return;
+    var pr = Core.getPrince(s, f.pid), foe = f.fid != null ? Core.getPrince(s, f.fid) : null, v = f.vctx && Core.settlementAt(s, f.vctx.targetKey);
+    var dName = foe ? foe.name : v ? (v.name || 'поселение') : '', dFac = foe ? foe.faction : v && v.owner != null && s.players[v.owner] ? s.players[v.owner].faction : 'slate';
+    GridScene.run(Core.fightView(s), function (arg, cb) { App.send({ a: 'fight', arg: arg }, cb); }, { aName: pr ? pr.name : '', dName: dName, aFac: pr ? pr.faction : 'azure', dFac: dFac, season: s.season, lesson: true, tutorial: !!s.tutorial }, function () { render(); perkToasts(); });
+  }
   // бой на клетках: расстановка → стеки по три приказа → исход (24.10)
   function gridGo(pr, k) {
     var foe = Core.princeAt(A.s, k), v = Core.settlementAt && Core.settlementAt(A.s, k);
@@ -22816,7 +22845,7 @@ var Table = (function () {
     try { BattleScene.play(battle, [{ t: battle.atk.name + ' против ' + battle.def.name, cls: 'bhead', d: 600 }], function () { render(); if (window.Coach) Coach.hint('battle'); }); } catch (e) { }
   }
 
-  return { chatIn: chatIn, lobbyChat: lobbyChat, hallChanged: hallChanged, settings: settingsDialog, hotkeys: hotkeys, build: build, show: show, hide: hide, render: render, toast: toast, modal: modal, centerOnKey: centerOnKey, fitAll: fitAll, T: T, battle: Battle, fieldPlan: fieldPlan };
+  return { resumeFight: resumeFight, chatIn: chatIn, lobbyChat: lobbyChat, hallChanged: hallChanged, settings: settingsDialog, hotkeys: hotkeys, build: build, show: show, hide: hide, render: render, toast: toast, modal: modal, centerOnKey: centerOnKey, fitAll: fitAll, T: T, battle: Battle, fieldPlan: fieldPlan };
 })();
 </script>
 <script>/* src/ui2/codex.js */
@@ -23020,7 +23049,7 @@ var Codex = (function () {
         '<p><b>Кубики.</b> Каждый боец — кубик. Попадание: меч, топор, копьё — 4+ (копьё по коннице — 3+); булава, цеп, кулак, луки, арбалет — 5+; стрелки, связанные сечей, рубятся плохо — 6+. Каждое попадание — спасбросок по броне: без брони 6, щит 5+, кольчуга 4+, латы 3+, щит с кольчугой 3+, латы со щитом 2+. Топор не замечает щита, булава и арбалет портят спасбросок на 1. <b>Сшибка:</b> первый удар нападающего (марш упёрся во врага или «Сеча» по ещё не сцепленному отряду) перебрасывает промахи; дальше, когда уже сцепились, бой идёт без перебросов, пока кто-то не отойдёт. Конница с разбега бьёт ещё и на 1 метче — это натиск; копья в обороне гасят натиск в лоб и бьют первыми. <b>Фланг и тыл:</b> отряд, уже связанный сечей с вашим отрядом, второй ваш отряд бьёт во фланг — +1 к попаданию. Отряд смотрит на врага; удар из-за спины — тыл: +1, без ответного удара и −1 к духу цели. Конница, влетевшая во фланг, складывает натиск и фланг.</p>' +
         '<p><b>Дух.</b> Отряд, что за шаг потерял половину, бросает кубик: нужно 4+ (знамя князя рядом +1, сосед бежит −1). Не выдержал — бежит. Побежала половина войска — оно сломлено, победитель гонит бегущих, конница — особенно. Не решилось за четыре стека — побеждает тот, у кого меньше потерь (поровну — оборона).</p>' +
         '<p><b>Знамя князя</b> стоит при отряде. Отряд бежит или пал — князь ранен. Погибает князь, только если разбито всё войско.</p>' +
-        '<p><b>Штурм.</b> У стен поселения стена идёт посреди доски: пять прясел, в среднем — ворота. Пока прясло цело, <b>ни пешим, ни коннице не достать</b> тех, кто на стене, а лучники со стены бьют вниз безнаказанно, даже под самую стену. Тех, кто за стеной, стрелы снаружи не видят — туда бьют лишь машины навесом. Стрелять по стоящим на стене можно, но за зубцами попасть на 1 труднее, а спасбросок у них лучше. Катапульта, требушет и пушка — отдельные отряды: «Обстрел стены» крошит прясло (выберите кусок стены), «Стрельба» — камнями по войскам за стеной. <b>Ворота пробивает только таран</b> — вплотную, вдвое сильнее. Рухнуло прясло или ворота — пролом: туда можно идти, там бьются как в поле. Урон стене остаётся у поселения. Без машин стену не взять — советник в таком случае уводит войско.</p>' +
+        '<p><b>Штурм.</b> У стен поселения стена идёт посреди доски: пять прясел, в среднем — ворота. Пока прясло цело, <b>ни пешим, ни коннице не достать</b> тех, кто на стене, а лучники со стены бьют вниз безнаказанно, даже под самую стену. Тех, кто за стеной, стрелы снаружи не видят — туда бьют лишь машины навесом. Стрелять по стоящим на стене можно, но за зубцами попасть на 1 труднее, а спасбросок у них лучше. Катапульта, требушет и пушка — отдельные отряды: «Обстрел стены» крошит прясло (выберите кусок стены), «Стрельба» — камнями по войскам за стеной. <b>Ворота пробивает только таран</b> — вплотную, вдвое сильнее. <b>Частокол и деревянную стену</b> пешие могут рубить и жечь сами: приказ «Рубить стену» вплотную у прясла, кубик на бойца, 6 — минус очко прочности (топор — 5+), а стрелки со стены бьют по рубщикам. Рухнуло прясло или ворота — пролом: туда можно идти, там бьются как в поле. Урон стене остаётся у поселения. Каменную стену без машин не взять — советник в таком случае уводит войско.</p>' +
         '<p><b>Местность.</b> Лес — натиска нет, стрелы на 1 хуже. Болото — все на клетку медленнее, натиска нет. Холмы — нападающий идёт медленнее, стрелки обороны бьют на клетку дальше. Брод и река — нападающему в сече на 1 хуже.</p>';
       return '<p><b>В поле дружины бьются строй против строя.</b> Войско делится на отряды по оружию: мечники, копейщики, лучники, конные — в каждом не больше восьми. Поле делится на линии: их столько, сколько пеших и конных отрядов у меньшей стороны, но не больше четырёх. В каждой линии у каждой стороны ровно один отряд в строю — строи всегда стоят друг против друга и не проходят друг сквозь друга.</p>' +
         '<p><b>Кто против кого — решает нападающий.</b> Оборона встаёт первой, её строй виден; что стоит за её строем — нет. Нажмите свой отряд, потом место в строю: подсказка между строями покажет, как сложится пара один на один (перевес, сильнее, на равных, слабее, тяжело). Лишние отряды встают за строй: стрелки — во вторую линию, прочие — в запас.</p>' +
@@ -23146,7 +23175,7 @@ var Coach = (function () {
     { ch: 3, t: 'Навыки воеводы', x: 'Пока ты ковал, воевода учился. Навыки растут <b>сами</b> от повторяемых дел: кто много куёт — станет <b>Кузнецом</b> (второе изделие даром), кто зимует в поле — <b>Зимним воеводой</b>, кто сидит в городе в мор — <b>Лекарем</b>. Значки старших навыков — под именем воеводы, все навыки и сколько осталось до следующего уровня — во вкладке «<b>Отряд</b>». Погибнет воевода — навыки уйдут с ним, береги опытных.', glow: '.pk-row, [data-ptab="army"]',
       enter: function () { if (!(Core.RULES && Core.RULES.perks && Core.deed)) return; var sel = App.A.sel && Core.getPrince(S(), App.A.sel), p = sel && sel.owner === me() ? sel : mine().sort(function (a, b) { return ((b.deeds || {}).craft || 0) - ((a.deeds || {}).craft || 0); })[0]; if (!p) return; var n = (p.deeds || {}).craft || 0; if (n < 5) Core.deed(S(), p, 'craft', 5 - n); App.select && App.select(p.id); },
       btn: 'Дальше' },
-    { ch: 3, t: 'Штурм Заречья', x: '<b>Заречье</b> за частоколом миром не сдаётся. Веди дружину вплотную, поставь настрой <b>Ярость</b> и выбери «<b>Штурм отрядами</b>» — я покажу, как берут стену (или «Штурм: авторасчёт»). Сломленный гарнизон — «<b>Подчинить</b>» в «Свободно».', tile: function () { return byName('Заречье').key; }, glow: '.c-deed[data-dialog="attack"], .c-deed[data-cmd*="subjugate"], [data-ptab="free"]',
+    { ch: 3, t: 'Штурм Заречья', x: '<b>Заречье</b> за частоколом миром не сдаётся. Веди дружину вплотную, поставь настрой <b>Ярость</b> и выбери «<b>Штурм отрядами</b>» — я покажу, как берут стену: тарана нет, так что частокол руби сам (или «Штурм: авторасчёт»). Сломленный гарнизон — «<b>Подчинить</b>» в «Свободно».', tile: function () { return byName('Заречье').key; }, glow: '.c-deed[data-dialog="attack"], .c-deed[data-cmd*="subjugate"], [data-ptab="free"]',
       done: function () { return ownedBy('Заречье'); } },
     { ch: 3, t: 'Подкуп Каменца', x: 'Каменная крепость <b>Каменец</b> штурмом не взять без машин. Но старейшин можно <b>подкупить</b> златом — деяние рядом с городом. Цена растёт с гарнизоном и стенами.', tile: function () { return byName('Каменец').key; }, glow: '.c-deed[data-cmd*="bribe"]',
       enter: function () { var p = S().players[me()], v = byName('Каменец'); p.score = Math.max(p.score || 0, (Core.bribeCost ? Core.bribeCost(S(), v) : 80) + 30); }, done: function () { return ownedBy('Каменец'); } },
@@ -23206,7 +23235,17 @@ var Coach = (function () {
     card(PRO, function () { if (window.Table) Table.render(); draw(); });
     if (C.timer) clearInterval(C.timer); C.timer = setInterval(function () { if (!C.on) { clearInterval(C.timer); C.timer = null; return; } try { check(); } catch (e) { } }, 600);   // окна и вкладки открываются без перерисовки стола — проверяем и так
   }
-  function finish() { var done = C.on && C.step >= STEPS.length - 1; var s = S(); if (done) setTimeout(function () { card(EPI, function () { }); }, 50); if (s) { s.botQuiet = false; s.noPirates = false; s.tutorial = false; } stop(); }
+  // сохранение обучения: шаг наставника и сценарные метки (без таймера)
+  function snapshot() { var o = {}; for (var k in C) if (k !== 'timer' && k !== 'on') o[k] = C[k]; return JSON.parse(JSON.stringify(o)); }
+  function resume(o) {
+    var s = S(); if (!s || !o) return;
+    for (var k in o) C[k] = o[k]; C.on = true; s.tutorial = true; s.botQuiet = true; s.noPirates = true;
+    document.body.classList.add('tut-on');
+    var st = STEPS[C.step]; if (st) { st._k = null; var kk = st.tile && st.tile(); st._k = kk; if (kk && window.Table && Table.centerOnKey) Table.centerOnKey(kk); }
+    if (window.Table) Table.render(); draw();
+    if (C.timer) clearInterval(C.timer); C.timer = setInterval(function () { if (!C.on) { clearInterval(C.timer); C.timer = null; return; } try { check(); } catch (e) { } }, 600);
+  }
+  function finish() { if (window.App && App.dropTut) App.dropTut(); var done = C.on && C.step >= STEPS.length - 1; var s = S(); if (done) setTimeout(function () { card(EPI, function () { }); }, 50); if (s) { s.botQuiet = false; s.noPirates = false; s.tutorial = false; } stop(); }
   function stop() { C.on = false; document.body.classList.remove('tut-on'); var el = document.getElementById('coach'); if (el) el.remove(); clearGlow(); clearMark(); }
   function next() {
     C.step++;
@@ -23284,7 +23323,7 @@ var Coach = (function () {
     if (myV().some(function (v) { return !v.capital && (v.loyalty | 0) <= 8; })) return hint('revolt');
     if (prs.some(function (p) { return s.settlements.some(function (v) { return v.owner === null && Core.distance(Core.parse(p.at), [v.c, v.r]) <= 2; }); })) return hint('claim');
   }
-  return { start: start, stop: stop, finish: finish, next: next, check: check, hint: hint, C: C, STEPS: STEPS };
+  return { start: start, resume: resume, snapshot: snapshot, stop: stop, finish: finish, next: next, check: check, hint: hint, C: C, STEPS: STEPS };
 })();
 </script>
 <script>/* src/ui2/camp_art.js */
@@ -23654,7 +23693,7 @@ var Shell = (function () {
   function build() {
     if ($('menuRoot')) return;
     var r = document.createElement('div'); r.id = 'menuRoot';
-    r.innerHTML = '<div class="m-wrap"><div class="m-logo" id="mLogo"></div><div class="m-cols"><div class="m-col" id="mCol"></div><div class="h-col k-parch k-frame k-iron-corners" id="hCol"></div></div><div class="m-foot">Королевство · Порубежье · сборка 24.10 20:45</div></div>';
+    r.innerHTML = '<div class="m-wrap"><div class="m-logo" id="mLogo"></div><div class="m-cols"><div class="m-col" id="mCol"></div><div class="h-col k-parch k-frame k-iron-corners" id="hCol"></div></div><div class="m-foot">Королевство · Порубежье · сборка 24.10 21:19</div></div>';
     document.body.appendChild(r);
     $('mLogo').innerHTML = '<div class="k-logo">КОРОЛЕВСТВО</div><div class="k-logo-sub">Порубежье</div>';
     hallStart();
@@ -23673,6 +23712,7 @@ var Shell = (function () {
     var solo = App.savedSolo(), back = Net.savedBack(), host = Net.savedHost();
     var h = '';
     if (solo) h += btn('continue', 'Продолжить партию', 'seal', 'год ' + (solo.game.round || 1), true);
+    var tut = App.savedTut && App.savedTut(); if (tut) h += btn('continue-tut', 'Продолжить обучение', 'seal', 'Первый поход · шаг ' + ((tut.coach.step || 0) + 1), !solo);
     if (back) h += btn('back', 'Вернуться за стол ' + back.code, 'key', 'место ' + (back.seat + 1));
     if (host && (!back || back.code !== host.code)) h += btn('rehost', 'Поднять свой стол ' + host.code, 'key', 'из сохранения');
     // главное — картины: начать игру, кампания, первый поход; прочее — мелкими кнопками
@@ -23688,6 +23728,7 @@ var Shell = (function () {
   function btn(id, title, ic, sub, main) { return '<button class="k-btn' + (main ? ' k-main' : '') + '" data-go="' + id + '">' + IC(ic, 28) + esc(title) + (sub ? '<span class="k-sub">' + esc(sub) + '</span>' : '') + '</button>'; }
   function go(id) {
     if (id === 'continue') { var s = App.savedSolo(); if (s) { leaveMenu(); App.resumeLocal(s); } return; }
+    if (id === 'continue-tut') { var ts = App.savedTut(); if (ts) { leaveMenu(); App.resumeLocal(ts); } return; }
     if (id === 'start') return startPanel();
     if (id === 'tutorial') return startTutorial();
     if (id === 'campaign') return campaignPanel();
@@ -23799,7 +23840,7 @@ var Shell = (function () {
   function startTutorial() {
     var facs = shuffle(FAC);
     var cfg = { width: 22, height: 14, fogEnabled: false, seed: (window.Core && Core.TUTORIAL_SEED) || 'pervyi-pohod-2', seats: [{ kind: 'human', faction: facs[0], name: myName() }, { kind: 'bot', faction: facs[1], level: 'dumb', doctrine: 'turtle' }], tutorial: true };
-    leaveMenu(); App.startLocal(cfg);
+    if (App.dropTut) App.dropTut(); leaveMenu(); App.startLocal(cfg);
     if (window.Tutorial) Tutorial.start();
   }
 
@@ -24109,7 +24150,7 @@ var Shell = (function () {
   App.onRender(function () { Table.render(); });
   App.onEvent(function (e) {
     var A = App.A;
-    if (e.t === 'start') { if (window.Coach) Coach.stop(); Table.show(); if (App.A.tutorial && window.Coach) setTimeout(Coach.start, 300); return; }
+    if (e.t === 'start') { if (window.Coach) Coach.stop(); Table.show(); setTimeout(function () { try { Table.resumeFight(); } catch (x) { console.error(x); } }, 600); if (App.A.tutorial && window.Coach) setTimeout(Coach.start, 300); else if (App.A.tutResume && window.Coach && Coach.resume) { var tr = App.A.tutResume; App.A.tutResume = null; setTimeout(function () { Coach.resume(tr); }, 300); } return; }
     if (e.t === 'pass') {
       var p = A.s.players[e.seat]; Table.hide();
       cover('<h2>Ход: ' + esc(App.seatName(e.seat)) + '</h2><p class="c-hint" style="color:var(--k-ink-2)">Передайте устройство. Остальные — не подглядывайте.</p><button class="k-btn k-main" data-ok>Я готов</button>',
