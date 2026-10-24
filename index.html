@@ -985,6 +985,67 @@ body.tut-on #gAdv { display: none !important; }   /* в обучении гов�
 .fs-speed button { border: 0; padding: 4px 9px; min-height: 30px; background: rgba(38, 26, 14, .82); color: var(--k-light-2); font: 700 13px var(--k-head); cursor: pointer; }
 .fs-speed button.on { background: var(--k-brass); color: #2a1a08; }
 
+/* ================= БОЙ НА КЛЕТКАХ (24.10, gs-*) ================= */
+.gs-steps { display: flex; gap: 3px; height: 12px; padding: 2px 6px; margin: 0 0 8px; border-radius: 3px; background: var(--k-parch-bg); background-size: 512px, cover; box-shadow: inset 0 0 0 1px rgba(60,40,15,.5); }
+.gs-steps i { flex: 1; border-radius: 2px; background: rgba(90,60,25,.18); }
+.gs-steps i.e { margin-right: 6px; }
+.gs-steps i.on { background: linear-gradient(180deg, #8e2418, #b63a2c); }
+.gs-stage { padding: 4px; }
+.gs-wrap { position: relative; margin: 0 auto; }
+.gs-cv { display: block; cursor: pointer; touch-action: manipulation; }
+.gs-fx { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.gs-speed { position: static; width: max-content; margin: 4px 0 0 auto; }
+@media (max-width: 560px) { .gs-go { width: 100%; } .gs-go .k-main { flex: 1 1 100%; } .gs-grp .k-btn { min-height: 32px; padding: 3px 8px; font-size: 13px; } }
+.gs-pop { position: absolute; transform: translate(-50%, -100%); padding: 4px 7px 5px; border-radius: 6px; background: rgba(250, 240, 214, .96); color: #2a1a08; box-shadow: 0 2px 8px rgba(0,0,0,.45), inset 0 0 0 1px rgba(110,80,40,.6);
+  font: 600 12px/1.2 var(--k-head); text-align: center; white-space: nowrap; animation: gsIn .18s ease-out; transition: opacity .25s, transform .25s; max-width: 92%; }
+.gs-pop.out { opacity: 0; transform: translate(-50%, -130%); }
+.gs-pop.big { font-size: 15px; background: #7e1f14; color: #fbe6d2; box-shadow: 0 2px 10px rgba(0,0,0,.5), inset 0 0 0 1px #d9b44a; }
+.gs-pop.burn { background: rgba(60,45,30,.85); color: #f0e2c0; font-size: 11px; }
+.gs-pop.part { background: rgba(255,226,200,.96); }
+.gs-pop small { display: block; font-size: 10.5px; opacity: .8; white-space: normal; }
+@keyframes gsIn { from { opacity: 0; transform: translate(-50%, -80%); } }
+.gs-dr { display: flex; flex-wrap: wrap; justify-content: center; gap: 2px; max-width: 220px; margin: 1px auto; }
+.gs-dr i { display: inline-block; width: 15px; height: 15px; border-radius: 3px; font: 700 10.5px/15px Georgia, serif; font-style: normal; background: #e8dcc0; color: #7a6a52; box-shadow: inset 0 0 0 1px rgba(90,60,25,.4); }
+.gs-dr i.h { background: #fff; color: #8e2418; box-shadow: inset 0 0 0 1.5px #8e2418; }
+.gs-dr.s i.ok { background: #dbe8cc; color: #2f5a1e; box-shadow: inset 0 0 0 1.5px #4f7d33; }
+.gs-dr.s i.x { background: #f1d0c8; color: #8e2418; }
+.gs-dr em { font-style: normal; font-size: 10px; color: #6a5638; align-self: center; margin-left: 3px; }
+.gs-dr b { font-size: 10px; align-self: center; }
+.gs-k { font-size: 14px; font-weight: 700; color: #8e2418; }
+.gs-mor { font-size: 14px; display: flex; align-items: center; gap: 4px; justify-content: center; }
+.gs-mor i { display: inline-block; width: 20px; height: 20px; border-radius: 4px; font: 700 13px/20px Georgia; font-style: normal; background: #fff; color: #2a1a08; box-shadow: inset 0 0 0 1.5px #2a1a08; }
+.gs-mor i.x { color: #8e2418; box-shadow: inset 0 0 0 1.5px #8e2418; }
+.gs-pop.big .gs-mor i { background: #fbe6d2; }
+.gs-gly { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; flex: 0 0 auto; }
+.gs-top { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 6px; }
+.gs-grp { display: flex; flex-wrap: wrap; gap: 6px; flex: 1 1 auto; }
+.gs-go { display: flex; flex-wrap: wrap; gap: 8px; margin-left: auto; }
+.gs-go .k-btn { min-height: 38px; font-size: 15px; }
+.gs-grp .k-btn { min-height: 34px; padding: 4px 10px; font-size: 14px; }
+.gs-grp .k-btn.on { box-shadow: inset 0 0 0 2px var(--k-brass-2); background: #fff6dc; }
+.gs-selq { margin: 4px 0 8px; font-size: 14.5px; color: var(--k-ink-2); display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; }
+.gs-selq b { font-family: var(--k-head); color: var(--k-ink); font-size: 16px; }
+.gs-selq .k-btn { min-height: 32px; padding: 3px 10px; font-size: 13.5px; }
+.gs-slots { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin-bottom: 8px; }
+.gs-slot { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 4px; min-height: 64px; border-radius: 8px; border: 1px solid #8a6d3b; background: rgba(255, 250, 235, .55); color: var(--k-ink); cursor: pointer; font-family: var(--k-head); }
+.gs-slot small { font-size: 11.5px; color: var(--k-ink-2); }
+.gs-slot span { font-size: 14px; line-height: 1.1; text-align: center; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+.gs-slot.on { background: #fff6dc; box-shadow: inset 0 0 0 2px #8e2418; }
+.gs-pal { display: flex; flex-wrap: wrap; gap: 6px; }
+.gs-ord { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 5px 11px 5px 8px; border-radius: 8px; border: 1px solid #8a6d3b; background: rgba(255, 250, 235, .7); color: var(--k-ink); cursor: pointer; font: 600 14.5px var(--k-head); }
+.gs-ord:hover { background: #fff3cf; }
+.gs-ord:focus-visible, .gs-slot:focus-visible { outline: 2px solid #8e2418; outline-offset: 2px; }
+.gs-hint { margin: 8px 0 2px; font-size: 13.5px; color: var(--k-ink-2); max-width: 75ch; }
+.gs-hint-t { color: #8e2418; font-weight: 600; }
+.gs-terr { margin-top: 6px; font-size: 13px; font-style: italic; color: var(--k-ink-2); }
+@media (max-width: 560px) {
+  .gs-ord { min-height: 38px; padding: 4px 8px; font-size: 13.5px; }
+  .gs-ord span { max-width: 9ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .gs-slot { min-height: 56px; } .gs-slot span { font-size: 12.5px; }
+  .gs-pop { font-size: 11px; } .gs-dr i { width: 13px; height: 13px; font-size: 9.5px; line-height: 13px; }
+}
+@media (prefers-reduced-motion: reduce) { .gs-pop { animation: none; transition: none; } }
+
 </style>
 </head>
 <body>
@@ -3907,7 +3968,7 @@ body.tut-on #gAdv { display: none !important; }   /* в обучении гов�
   //  rotate  — первый ход по кругу: каждый сезон начинает следующая держава
   //  expand  — расширение: ближние к столицам вольные поселения слабые, дальние — крепости; вольные растут медленнее; строем — ×1.5
   //  econ2   — экономика Ника (06.10.2026): камень отдельно, руда = железо; стены уровнями с прочностью; дома; новшества города; реликвии
-  const RULES = { war: true, leader: true, shrines: true, roles: true, seasons: true, short: true, rotate: true, expand: true, econ2: true, woes: true, tax: true, fame: true, bigmap: true, sea: true, perks: true, domination: false, warfame: true, cavalry: true, orders: true, terrain2: true, field: true, fieldThink: true };   // cavalry — конница; orders — приказ перед боем; terrain2 — местность в бою (16.10)   // warfame — вес войны (16.10, проверено ботами): ратная слава ×1,8, мирная — с убыванием по виду, взятый у державы город 2 года даёт полоброка, боты в поход раньше   // perks — навыки воевод от повторяемых деяний (08.10, Ник)   // domination — досрочная победа по 2/3 поселений; 07.10 Ник: выключена, игра идёт по славе   // bigmap — просторная карта с морями; sea — морская торговля, господство, пираты (07.10, Ник)   // fame — победа по славе, злато — только казна (06.10, Ник)   // tax — налоги в сезон и жалование войску, злато — живой ресурс (06.10, Ник)   // woes — напасти городов, чаще у лидера (06.10, Ник)
+  const RULES = { war: true, leader: true, shrines: true, roles: true, seasons: true, short: true, rotate: true, expand: true, econ2: true, woes: true, tax: true, fame: true, bigmap: true, sea: true, perks: true, domination: false, warfame: true, cavalry: true, orders: true, terrain2: true, field: true, fieldThink: true, grid: true };   // cavalry — конница; orders — приказ перед боем; terrain2 — местность в бою (16.10)   // warfame — вес войны (16.10, проверено ботами): ратная слава ×1,8, мирная — с убыванием по виду, взятый у державы город 2 года даёт полоброка, боты в поход раньше   // perks — навыки воевод от повторяемых деяний (08.10, Ник)   // domination — досрочная победа по 2/3 поселений; 07.10 Ник: выключена, игра идёт по славе   // bigmap — просторная карта с морями; sea — морская торговля, господство, пираты (07.10, Ник)   // fame — победа по славе, злато — только казна (06.10, Ник)   // tax — налоги в сезон и жалование войску, злато — живой ресурс (06.10, Ник)   // woes — напасти городов, чаще у лидера (06.10, Ник)
   const SETTLE_NAMES = ['Белогорье', 'Вышград', 'Дубрава', 'Заречье', 'Каменец', 'Липовец', 'Медвежий Лог', 'Ольховка', 'Перунов Дол', 'Ратное', 'Соколиное', 'Тихомирье', 'Ужгора', 'Хвойный Стан', 'Черноброд', 'Ясногорск', 'Гнездово', 'Кривичи', 'Стрибожье', 'Волчий Брод', 'Красный Яр', 'Медуница', 'Полесье', 'Сторожевое', 'Берестье', 'Горислав', 'Добрынь', 'Елецк', 'Жданов Бор', 'Звенигород', 'Изборск', 'Калинов Мост', 'Любеч', 'Мстиславль', 'Новоторжье', 'Овруч', 'Переяславец', 'Радогощ', 'Святогорье', 'Туров', 'Устюжье', 'Холмогоры', 'Чернигощ', 'Ярополч', 'Вербилово', 'Глухая Падь', 'Дымное', 'Журавлиха', 'Озёрск', 'Рыбная Слобода', 'Сосновый Мыс', 'Чаячья Губа', 'Причалье', 'Корабельня'];
   const SEA_NAMES = ['Варяжское море', 'Студёное море', 'Хвалынское море', 'Сурожское море', 'Белое озеро', 'Ладожское озеро', 'Чудское озеро', 'Ильмень-море', 'Нево-море', 'Онего-море'];
   const SEA_MIN = 12;   // водоём от 12 клеток — «море»: на нём торгуют, за него спорят, там водятся пираты
@@ -5565,11 +5626,12 @@ body.tut-on #gAdv { display: none !important; }   /* в обучении гов�
   }
   // что видит игрок о бое: отряды (род, сторона, начальный счёт), линии, кадры, журнал
   function fieldPack(F) { return { terr: F.terr, t: F.t, N: F.N, broken: F.broken, aGen: F.aGen, dGen: F.dGen, sq: F.sq.map(q => ({ id: q.id, side: q.side, kind: q.kind, w: q.w, mounted: q.mounted, ranged: q.ranged, n0: q.n0 })), frames: F.frames, log: F.log }; }
-  function fightView(s) { const f = s.fight; if (!f) return null; return Object.assign(fieldPack(f.F), { ph: f.ph, pid: f.pid, fid: f.fid, owner: f.owner, next: fieldPauseAt(f.F, f.ph + 1) }); }
+  function fightView(s) { const f = s.fight; if (!f) return null; if (f.G) return gridView(s); return Object.assign(fieldPack(f.F), { ph: f.ph, pid: f.pid, fid: f.fid, owner: f.owner, next: fieldPauseAt(f.F, f.ph + 1) }); }
   // приказы на паузе: ord — { id отряда: приказ | {o, row} }, 'auto' — доиграть за игрока советником
   function fightOrders(s, seat, ord) {
     const f = s.fight; if (!f) return { ok: false, error: 'боя нет' };
     if (f.owner !== seat) return { ok: false, error: 'это не ваш бой' };
+    if (f.G) return gridFightOrders(s, seat, ord);
     const pr = getPrince(s, f.pid), foe = getPrince(s, f.fid), F = f.F;
     const auto = ord === 'auto';
     while (!fieldDone(F) && f.ph < 2) {
@@ -5585,6 +5647,487 @@ body.tut-on #gAdv { display: none !important; }   /* в обучении гов�
     return princeAftermath(s, pr, foe, fieldOutcome(F, f.A0, f.D0, true), f.ctx);
   }
   function fieldAutoForm() { return 'line'; }
+  // ===================== БОЙ НА КЛЕТКАХ (24.10.2026, Ник: «боёвка настольная, на экране — лишь анимации механик») =====================
+  // Поле 5 рядов × 6 колонок. Нападающий стоит в колонках 0–1, оборона — в 4–5. При осаде стена идёт между колонками 2|3,
+  // оборона стоит на стене (колонка 3) и за ней (4–5); 5 прясел стены, в среднем ряду — ворота.
+  // Отряды — по оружию (и коню), до 8 бойцов; на сторону не больше 10 отрядов (людей больше — отряды крупнее, до 16).
+  // Каждому отряду — стек из 3 приказов, у обеих сторон втайне. Стек разыгрывается по шагам: сперва первые приказы всех
+  // отрядов, затем вторые, затем третьи. Внутри шага по старшинству: побег/отход → оборона → стрельба/обстрел → марш/фланги → сеча.
+  // Кубики: каждый боец — кубик попадания, каждое попадание — спасбросок по броне цели. Оборона перебрасывает проваленные
+  // спасброски; по идущему во фланг, отходящему и бегущему бьющий перебрасывает промахи.
+  // После шага — дух: кто потерял за шаг половину, бросает d6 (нужно 4+), провал — бежит. Бежит половина войска — оно сломлено,
+  // погоня. Не больше 4 стеков (12 шагов); не решилось — побеждает тот, у кого меньше потерь (поровну — оборона).
+  const GRID = { R: 5, C: 6, chunk: 8, chunkMax: 16, maxSq: 10, steps: 3, stacks: 4, gate: 2,
+    hit: { sword: 4, axe: 4, pike: 4, mace: 5, flail: 5, fist: 5, bow: 5, longbow: 5, crossbow: 5 }, ap: { mace: 1, crossbow: 1 },
+    range: { bow: 3, longbow: 4, crossbow: 3 }, rangedMelee: 5, morale: 4, breakAt: 0.5,
+    eng: { catapult: { hit: 4, dmg: 1, dice: 2 }, trebuchet: { hit: 3, dmg: 2, dice: 2 }, cannon: { hit: 3, dmg: 2, dice: 3 }, ram: { hit: 3, dmg: 2, dice: 0 } },
+    engHit: 4, engAp: 2, engRange: 5, segHp: [0, 2, 3, 4, 5, 6],
+    climb: [0, 1, 2, 3, 3, 4], cover: [0, 1, 1, 2, 2, 2], wallMor: 1 };   // по уровню стены: штраф лезущим на стену, прибавка к спасброску за стеной; дух за целой стеной +1
+  const GORD = { wait: 'Стоять', hold: 'Оборона', shoot: 'Стрельба', bombard: 'Обстрел стены', march: 'Марш', flankL: 'На левый фланг', flankR: 'На правый фланг', melee: 'Сеча', back: 'Отход', flee: 'Побег' };
+  const GPRI = { flee: 0, back: 0, hold: 1, wait: 1, shoot: 2, bombard: 2, march: 3, flankL: 3, flankR: 3, melee: 4 };
+  const GMOVE = { flankL: 1, flankR: 1, back: 1, flee: 1 };   // по ним враг перебрасывает промахи
+  const gclamp = (v, a, b) => v < a ? a : v > b ? b : v;
+  function gr(G) { G.rs = (G.rs + 0x6D2B79F5) >>> 0; let t = G.rs; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }
+  const gd6 = (G) => 1 + Math.floor(gr(G) * 6);
+  const gOn = (q) => q && (q.st === 'ok' || q.st === 'flee') && (q.sol.length > 0);
+  const gOk = (q) => q && q.st === 'ok' && q.sol.length > 0;
+  const gDist = (a, b) => Math.max(Math.abs(a.c - b.c), Math.abs(a.r - b.r));
+  const gFoe = (side) => side === 'a' ? 'd' : 'a';
+  const gDir = (side) => side === 'a' ? 1 : -1;
+  // ---------- отряды ----------
+  function gMkSq(id, side, part, engine) {
+    const cnt = {}; let main = null;
+    for (const x of part) { const k = x.w + (x.mounted ? '_h' : ''); cnt[k] = (cnt[k] || 0) + 1; if (!main || cnt[k] > cnt[main]) main = k; }
+    const half = (f) => part.filter(f).length * 2 > part.length;
+    return { id, side, kind: engine || main, w: engine ? 'eng' : main.replace('_h', ''), engine: engine || null,
+      mounted: !engine && half(x => x.mounted), ranged: !engine && half(x => x.ranged), heavy: !engine && half(x => x.body === 'plate' && !x.mounted),
+      sol: part, n0: part.length, c: 0, r: 0, st: 'ok', stack: [], kills: 0 };
+  }
+  function gSquads(sol, side, eng, minSq) {
+    const g = {}, order = [];
+    for (const x of sol) { const k = x.w + (x.mounted ? '_h' : ''); if (!g[k]) { g[k] = []; order.push(k); } g[k].push(x); }
+    const engKinds = eng ? ['ram', 'catapult', 'trebuchet', 'cannon'].filter(k => eng[k] > 0) : [];
+    const cap = Math.max(4, GRID.maxSq - engKinds.length);
+    let chunk = GRID.chunk, out = [];
+    const build = () => { out = []; for (const k of order) { const arr = g[k], n = Math.ceil(arr.length / chunk), per = Math.ceil(arr.length / n);
+      for (let i = 0; i < n; i++) { const part = arr.slice(i * per, (i + 1) * per); if (part.length) out.push(part); } } };
+    build(); while (out.length > cap && chunk < GRID.chunkMax) { chunk += 2; build(); }
+    while (out.length > cap) {   // родов всё ещё больше, чем места: сливаем самых малых той же породы (стрелки со стрелками)
+      out.sort((a, b) => a.length - b.length); const a = out[0];
+      let j = out.findIndex((b, i) => i > 0 && !!b[0].ranged === !!a[0].ranged); if (j < 0) j = 1;
+      const b = out[j]; out.splice(j, 1); out.shift(); out.push(b.concat(a)); }
+    while (minSq && out.length < minSq) { out.sort((a, b) => b.length - a.length); const a = out[0]; if (a.length < 4) break; out.shift(); const h = Math.ceil(a.length / 2); out.push(a.slice(0, h), a.slice(h)); }   // за стеной — встать на все прясла
+    const sq = out.map((part, i) => gMkSq(side + i, side, part));
+    for (const k of engKinds) sq.push(gMkSq(side + 'e' + k, side, Array.from({ length: eng[k] }, () => ({ w: 'eng', engine: k, atk: 0, def: 0, body: null, bodyDef: 0, shieldDef: 0 })), k));
+    return sq;
+  }
+  // ---------- поле, стена ----------
+  function gAt(G, c, r) { for (const q of G.sq) if (gOn(q) && q.c === c && q.r === r) return q; return null; }
+  function gWallUp(G, r) { return !!(G.wall && G.wall.seg[r] > 0); }
+  const gWX = (G) => G.wall ? 3 : 4;   // первая колонка обороны (стена — перед ней)
+  function gCross(G, c1, c2, r) { if (!G.wall) return false; const lo = Math.min(c1, c2), hi = Math.max(c1, c2); return lo === 2 && hi === 3 && gWallUp(G, r); }
+  function gCover(G, att, tgt) { return G.wall && tgt.side === 'd' && tgt.c >= 3 && att.c <= 2 && gWallUp(G, tgt.r) ? GRID.cover[G.wall.lv] || 1 : 0; }
+  function gAdj(G, q, okOnly) { return G.sq.filter(e => e.side !== q.side && (okOnly ? gOk(e) : gOn(e)) && gDist(e, q) === 1); }
+  function gEngaged(G, q) { return G.sq.some(e => e.side !== q.side && gOk(e) && !e.engine && gDist(e, q) === 1); }
+  function gZone(G, side) { return side === 'a' ? [1, 0] : G.wall ? [3, 4, 5] : [4, 5]; }
+  // ---------- кубики ----------
+  function gSaveT(y, w, cover, melee) {
+    if (y.w === 'eng') return melee ? 7 : 4;   // машина: в сече гибнет сразу, от стрел её прикрывают щиты-мантелеты
+    let t = 6; const sh = y.shieldDef > 0 && w !== 'axe';
+    if (y.body === 'plate') t = sh ? 2 : 3; else if (y.body === 'chainmail') t = sh ? 3 : 4; else if (sh) t = 5;
+    t += (GRID.ap[w] || 0) + (y.starve ? 1 : 0) - (cover || 0);
+    return gclamp(t, 2, 7);
+  }
+  function gHitT(G, q, x, t, melee, mod) {
+    const w = melee && x.ranged ? 'fist' : x.w;
+    let thr = melee && x.ranged ? GRID.rangedMelee : (GRID.hit[w] || 5);
+    if (melee && w === 'pike' && t.mounted) thr = 3;
+    thr += (mod || 0) + (x.starve ? 1 : 0) + (G.mod[q.side] || 0);
+    return { w, thr: gclamp(thr, 2, 8) };   // выше 6 — шестёрка и ещё бросок: 7 → 6 и 4+, 8 → 6 и 5+
+  }
+  // бросок отряда q по цели t. Попадания ложатся по бойцам цели с первого (самый защищённый стоит впереди); гибель — в t._dead
+  function gRoll(G, q, t, melee, mod, rec, why) {
+    const R = { id: q.id, t: t.id, m: melee ? 1 : 0, d: [], th: 0, s: [], sth: 0, k: 0, rr: 0 }; if (why && why.length) R.why = why;
+    const moving = !!(GMOVE[t.cur && t.cur.o] || t.st === 'flee'), cover = gCover(G, q, t);
+    const hits = [];
+    for (const x of q.sol) { if (x.w === 'eng') continue;
+      const h = gHitT(G, q, x, t, melee, mod), th = Math.min(6, h.thr), ok = (d) => d >= th && (h.thr <= 6 || gd6(G) >= h.thr - 3);
+      let d = gd6(G), hit = ok(d); if (!hit && moving) { d = gd6(G); hit = ok(d); R.rr = 1; }
+      R.d.push(hit ? d : d >= th ? -d : d); /* −6: шестёрка без второго броска */ R.th = R.th || th; if (hit) hits.push(h.w); }
+    for (const w of hits) { const y = t.sol[t._dead || 0]; if (!y) break;
+      const st = gSaveT(y, w, cover, melee); let s = gd6(G);
+      if (s < st && st <= 6 && t.cur && t.cur.o === 'hold' && t.st === 'ok') { s = gd6(G); R.rs = 1; }
+      else if (s === 1 && G.bless[t.side]) s = gd6(G);
+      R.s.push(s); R.sth = R.sth || st; if (s < st) { t._dead = (t._dead || 0) + 1; R.k++; } }
+    q.kills += R.k; if (rec) rec.push(R);
+    return R;
+  }
+  function gApply(G) { for (const q of G.sq) { if (q._dead) { q.sol.splice(0, q._dead); q.lost = (q.lost || 0) + q._dead; } q._dead = 0; } }
+  function gSortSol(q) { if (q.engine) return; q.sol.sort((a, b) => gSaveT(a, 'sword', false, true) - gSaveT(b, 'sword', false, true)); }
+  // ожидаемые убитые от q по t (для советника)
+  function gEK(G, q, t, melee, mod) {
+    if (!t.sol.length) return 0; let s = 0; const y = t.sol[0], cover = gCover(G, q, t);
+    for (const x of q.sol) { if (x.w === 'eng') continue; const h = gHitT(G, q, x, t, melee, mod);
+      s += (h.thr <= 6 ? (7 - h.thr) / 6 : (10 - h.thr) / 36) * (gSaveT(y, h.w, cover, melee) - 1) / 6; }
+    return Math.min(s, t.sol.length);
+  }
+  // ---------- стрельба ----------
+  function gRangeOf(G, q) { if (q.engine) return q.engine === 'ram' ? 0 : GRID.engRange; let r = GRID.range[q.w] || 0; if (G.terr === 'hills' && q.side === 'd') r++; return r; }
+  function gLineThroughOwn(G, q, t) {   // на линии выстрела стоит свой отряд — −1 к попаданию
+    const n = gDist(q, t); for (let i = 1; i < n; i++) { const c = Math.round(q.c + (t.c - q.c) * i / n), r = Math.round(q.r + (t.r - q.r) * i / n), z = gAt(G, c, r); if (z && z.side === q.side) return true; }
+    return false; }
+  function gCanShoot(G, q, t) { if (!gOn(t) || t.side === q.side) return false; const d = gDist(q, t); return d >= 2 && d <= gRangeOf(G, q); }
+  function gShotMod(G, q, t) { return (gLineThroughOwn(G, q, t) ? 1 : 0) + (G.terr === 'forest' ? 1 : 0); }
+  function gBestShot(G, q) {
+    let best = null, bv = -1;
+    for (const t of G.sq) { if (!gCanShoot(G, q, t)) continue; const v = gEK(G, q, t, false, gShotMod(G, q, t)) * (t.engine ? 1.5 : 1) * (t.st === 'flee' ? 0.6 : 1); if (v > bv) { bv = v; best = t; } }
+    return best;
+  }
+  // ---------- ход отрядов ----------
+  function gSpeed(G, q, o) {
+    if (q.engine) return q.engine === 'ram' ? 1 : 0;
+    if (o === 'flankL' || o === 'flankR' || o === 'back') return q.mounted ? 2 : 1;
+    if (o === 'flee') return q.mounted ? 3 : 2;
+    let v = q.mounted ? 3 : q.heavy ? 1 : 2;
+    if (G.terr === 'marsh') v--; if (G.terr === 'forest' && q.mounted) v--; if (G.terr === 'hills' && q.side === 'a') v--;
+    return Math.max(1, v);
+  }
+  function gFlankRow(q, o) { return q.r + (o === 'flankL' ? -1 : 1) * (q.side === 'a' ? 1 : -1); }
+  function gFree(G, c, r) { return c >= 0 && c < GRID.C && r >= 0 && r < GRID.R && !gAt(G, c, r); }
+  // ---------- приказы ----------
+  function gNorm(o) { if (!o) return { o: 'wait' }; if (typeof o === 'string') return GORD[o] ? { o } : { o: 'wait' }; return GORD[o.o] ? { o: o.o, t: o.t, row: o.row } : { o: 'wait' }; }
+  function gOrders(G, side, ord) {   // ord: { id: [приказ, приказ, приказ] }
+    for (const q of G.sq) { if (q.side !== side || !gOn(q)) continue;
+      const arr = ord && ord[q.id]; q.stack = [0, 1, 2].map(i => gNorm(arr && arr[i])); }
+  }
+  // ---------- шаг боя ----------
+  function gStep(G) {
+    const k = G.step % GRID.steps, E = { step: G.step, burn: [], mv: [], shot: [], eng: [], mel: [], mor: [], ev: [] };
+    for (const q of G.sq) { q._dead = 0; q.n1 = q.sol.length; q.clash = null; q.charge = false; q.moved = 0;
+      if (!gOn(q)) { q.cur = null; continue; }
+      q.cur = q.st === 'flee' ? { o: 'flee' } : gNorm(q.stack[k]); gSortSol(q); }
+    // приказ, который нельзя исполнить, сгорает: отряд стоит (без переброса обороны)
+    for (const q of G.sq) { if (!q.cur || q.st !== 'ok') continue; const o = q.cur.o, eng = gEngaged(G, q);
+      let bad = false;
+      if ((o === 'march' || o === 'flankL' || o === 'flankR') && eng) bad = true;
+      if (o === 'shoot' && (eng || !(q.ranged || (q.engine && q.engine !== 'ram')))) bad = true;
+      if (o === 'bombard' && !q.engine) bad = true;
+      if (o === 'melee' && (q.engine || !gAdj(G, q, false).length)) bad = true;
+      if (q.engine && q.engine !== 'ram' && (o === 'march' || o === 'flankL' || o === 'flankR')) bad = true;
+      if (bad) { E.burn.push(q.id); q.cur = { o: 'wait', burnt: o }; } }
+    // 1) побег и отход: соседи бьют вслед, перебрасывая промахи
+    const leavers = G.sq.filter(q => q.cur && (q.cur.o === 'flee' || q.cur.o === 'back'));
+    for (const q of leavers) for (const e of gAdj(G, q, true)) { if (e.engine || (e.cur && (e.cur.o === 'flee' || e.cur.o === 'back'))) continue; const up = e.side === 'a' && gCross(G, e.c, q.c, q.r); gRoll(G, e, q, true, up ? GRID.climb[G.wall.lv] || 1 : 0, E.mel, up ? ['wall'] : null); E.mel[E.mel.length - 1].part = 1; }
+    gApply(G);
+    for (const q of leavers) { if (!gOn(q)) continue; const d = -gDir(q.side), from = [q.c, q.r]; let v = gSpeed(G, q, q.cur.o), exit = false;
+      while (v-- > 0) { const c = q.c + d;
+        if (c < 0 || c >= GRID.C) { if (q.cur.o === 'flee') exit = true; break; }
+        if (gCross(G, q.c, c, q.r) || !gFree(G, c, q.r)) { const alt = [q.r - 1, q.r + 1].find(r => gFree(G, c, r) && !gCross(G, q.c, c, r)); if (alt == null) break; q.r = alt; }
+        q.c = c; q.moved++; }
+      if (exit) { q.st = 'gone'; q.out = 1; }
+      E.mv.push({ id: q.id, o: q.cur.o, f: from, to: [q.c, q.r], out: exit ? 1 : 0 }); }
+    // 2) оборона — флаг на шаг (q.cur.o === 'hold'); 3) стрельба и обстрел — разом
+    for (const q of G.sq) { if (!q.cur || q.st !== 'ok') continue;
+      if (q.cur.o === 'shoot' && !q.engine) { let t = q.cur.t && G.sq.find(z => z.id === q.cur.t); if (!t || !gCanShoot(G, q, t)) t = gBestShot(G, q); if (!t) { E.burn.push(q.id); continue; }
+        gRoll(G, q, t, false, gShotMod(G, q, t), E.shot, [gLineThroughOwn(G, q, t) ? 'own' : null, G.terr === 'forest' ? 'forest' : null].filter(Boolean)); }
+      else if (q.engine && (q.cur.o === 'shoot' || q.cur.o === 'bombard')) gEngine(G, q, E); }
+    gApply(G);
+    // 4) марш и фланги: по клетке за раз, все вместе
+    const movers = G.sq.filter(q => gOk(q) && q.cur && (q.cur.o === 'march' || q.cur.o === 'flankL' || q.cur.o === 'flankR'));
+    for (const q of movers) { q._mv = gSpeed(G, q, q.cur.o); q._from = [q.c, q.r]; if (q.cur.o !== 'march') q._mv = Math.min(q._mv, 2); }
+    for (let sub = 0; sub < 3; sub++) {
+      const want = [];
+      for (const q of movers) { if (!(q._mv > 0) || !gOk(q) || q.clash) continue;
+        let c = q.c, r = q.r; if (q.cur.o === 'march') c += gDir(q.side); else r = gFlankRow(q, q.cur.o);
+        if (c < 0 || c >= GRID.C || r < 0 || r >= GRID.R) { q._mv = 0; continue; }
+        const z = gAt(G, c, r);
+        if (z && z.side !== q.side && gOn(z)) {   // марш в занятую врагом клетку — встал рядом, сшибка
+          if (z.st === 'flee') { q._mv = 0; continue; }
+          if (q.cur.o === 'march') { q.clash = z.id; q.charge = q.mounted && q.moved > 0 && !NO_CHARGE[G.terr] && G.terr !== 'forest'; } q._mv = 0; continue; }
+        if (z) { q._mv = 0; continue; }
+        if (gCross(G, q.c, c, r)) { if (q.side === 'a' && !q.mounted && !q.engine && q.moved === 0) want.push({ q, c, r, lad: 1 }); else q._mv = 0; continue; }   // целое прясло: пешие лезут лестницами (весь ход)
+        want.push({ q, c, r }); }
+      if (!want.length) break;
+      // споры за клетку: враги — встают рядом, сшибка; свои — первый идёт, второй ждёт
+      const byCell = {}; for (const w of want) { const key = w.c + ',' + w.r; (byCell[key] = byCell[key] || []).push(w); }
+      for (const key in byCell) { const arr = byCell[key];
+        arr.sort((x, y) => (y.q.mounted - x.q.mounted) || (y.q._mv - x.q._mv) || (gr(G) - 0.5));
+        const win = arr[0]; win.q.c = win.c; win.q.r = win.r; win.q.moved++; win.q._mv--; if (win.lad) { win.q._mv = 0; win.q.ladder = 1; }
+        for (const l of arr.slice(1)) { if (l.q.side !== win.q.side && l.q.cur.o === 'march') { l.q.clash = win.q.id; if (win.q.cur.o === 'march' && !win.q.clash) { win.q.clash = l.q.id; win.q.charge = win.q.mounted && !NO_CHARGE[G.terr] && G.terr !== 'forest'; } l.q.charge = l.q.mounted && l.q.moved > 0 && !NO_CHARGE[G.terr] && G.terr !== 'forest'; } l.q._mv = 0; } }
+    }
+    for (const q of movers) if (q.moved || q.clash) E.mv.push({ id: q.id, o: q.cur.o, f: q._from, to: [q.c, q.r], clash: q.clash || undefined, ch: q.charge ? 1 : undefined, lad: q.ladder ? 1 : undefined });
+    for (const q of movers) q.ladder = 0;
+    // 5) сеча: сшибки марша и приказы «сеча»; кто сам не бьёт — отвечает первому напавшему
+    const atk = [];
+    for (const q of G.sq) { if (!gOk(q) || !q.cur || q.engine) continue;
+      let t = null;
+      if (q.clash) t = G.sq.find(z => z.id === q.clash);
+      else if (q.cur.o === 'melee') { const adj = gAdj(G, q, false); t = (q.cur.t && adj.find(z => z.id === q.cur.t)) || adj.sort((a, b) => gEK(G, q, b, true) - gEK(G, q, a, true))[0]; if (!t) E.burn.push(q.id); }
+      if (t && gOn(t) && gDist(q, t) === 1) atk.push([q, t]); }
+    const acting = new Set(atk.map(p => p[0]));
+    for (const [q, t] of atk.slice()) if (gOk(t) && !acting.has(t) && !t.engine && !(t.cur && (t.cur.o === 'flee' || t.cur.o === 'back')) && !atk.some(p => p[0] === t && p.ret)) { const p = [t, q]; p.ret = 1; atk.push(p); acting.add(t); }
+    // копья в обороне встречают натиск: бьют первыми, натиск гаснет
+    for (const p of atk) { const [q, t] = p; if (!q.charge) continue;
+      if (t.w === 'pike' && t.cur && t.cur.o === 'hold' && gOk(t)) { q.charge = false; const pre = atk.find(z => z[0] === t); if (pre) pre.first = 1; E.ev.push({ e: 'set', id: t.id, at: q.id }); } }
+    for (const p of atk.filter(p => p.first)) { gRoll(G, p[0], p[1], true, 0, E.mel); E.mel[E.mel.length - 1].first = 1; }
+    gApply(G);
+    for (const p of atk) { if (p.first) continue; const [q, t] = p; if (!q.sol.length || !gOn(t)) continue;
+      let mod = 0; const why = []; if (q.charge && !p.ret) { mod -= 1; why.push('charge'); } if (G.wall && gCross(G, q.c, t.c, t.r) && q.side === 'a') { mod += (GRID.climb[G.wall.lv] || 1) + (G.oil || 0); why.push('wall'); if (G.oil) why.push('oil'); }   // натиск +1; лезть на стену −1
+      if ((G.terr === 'ford' || G.terr === 'river') && q.side === 'a') { mod += 1; why.push('ford'); }
+      if (t.mounted && q.w === 'pike') why.push('pike');
+      gRoll(G, q, t, true, mod, E.mel, why); const R = E.mel[E.mel.length - 1]; if (q.charge && !p.ret) R.ch = 1; if (p.ret) R.ret = 1; }
+    gApply(G);
+    // 6) дух: потерял за шаг половину — бросок d6, нужно 4+
+    for (const q of G.sq) { if (!q.n1 || q.engine) continue;
+      if (!q.sol.length) { if (q.st !== 'gone') { q.st = 'dead'; E.ev.push({ e: 'dead', id: q.id }); } continue; }
+      if (q.st !== 'ok') continue; const lost = q.n1 - q.sol.length;
+      if (lost > 0 && lost * 2 >= q.n1) { let m = 0;
+        const gen = G.gen[q.side], gq = gen && G.sq.find(z => z.id === gen); if (gq && gOk(gq) && gDist(gq, q) <= 1) m++;
+        if (G.sq.some(z => z.side === q.side && z !== q && z.st === 'flee' && gDist(z, q) <= 1)) m--;
+        m += G.morMod[q.side] || 0; if (G.wall && q.side === 'd' && q.c >= 3 && gWallUp(G, q.r)) m += GRID.wallMor;   // за целой стеной стоят твёрже
+        const d = gd6(G), ok = d + m >= GRID.morale;
+        E.mor.push({ id: q.id, d, m, ok: ok ? 1 : 0 });
+        if (!ok) { q.st = 'flee'; q.stack = [{ o: 'flee' }, { o: 'flee' }, { o: 'flee' }]; } } }
+    // князь: знамя при отряде; отряд бежит или пал — князь ранен
+    for (const side of ['a', 'd']) { const gen = G.gen[side]; if (!gen) continue; const gq = G.sq.find(z => z.id === gen);
+      if (!gq || !gOk(gq)) { G.gen[side] = null; G.wound[side] = 1; E.ev.push({ e: 'wound', side, id: gen }); } }
+    // 7) войско сломлено: бежит (или ушло с поля) половина
+    if (!G.broken) {
+      const frac = (side) => { const all = G.sq.filter(q => q.side === side && !q.engine && q.sol.length); const n = all.reduce((a, q) => a + q.sol.length, 0);
+        const fled = all.filter(q => q.st !== 'ok').reduce((a, q) => a + q.sol.length, 0); return n ? fled / n : 1; };
+      const fa = frac('a'), fd = frac('d'), ba = fa >= GRID.breakAt, bd = fd >= GRID.breakAt;
+      const side = ba && bd ? (fd >= fa ? 'd' : 'a') : ba ? 'a' : bd ? 'd' : null;
+      if (side) { G.broken = side; E.ev.push({ e: 'break', side }); gChase(G, side, E); }
+    }
+    G.step++;
+    if (!G.draft) { E.snap = G.sq.map(q => [q.id, q.c, q.r, q.sol.length, q.st === 'ok' ? 0 : q.st === 'flee' ? 1 : q.st === 'gone' ? 2 : 3]); if (G.wall) E.wall = G.wall.seg.slice(); G.log.push(E); }
+    return E;
+  }
+  // осадная машина: «обстрел стены» по пряслу или «стрельба» по отряду
+  function gEngine(G, q, E) {
+    const spec = GRID.eng[q.engine]; if (!spec) return;
+    if (q.cur.o === 'bombard') {
+      if (!G.wall) { E.burn.push(q.id); return; }
+      let row = q.cur.row != null ? +q.cur.row : q.engine === 'ram' ? q.r : G.focus; if (!(row >= 0 && row < GRID.R)) row = GRID.gate;
+      if (q.engine === 'ram' && !(q.c === 2 && q.r === row)) { E.burn.push(q.id); return; }   // таран бьёт лишь вплотную
+      if (G.wall.seg[row] <= 0) { E.burn.push(q.id); return; }
+      const th = gclamp(spec.hit + (G.engMod || 0) + (q.engine === 'ram' ? G.ramPen || 0 : 0), 2, 6), R = { id: q.id, row, d: [], th, dmg: 0 };   // ров мешает тарану, Осадник бьёт метче
+      for (let i = 0; i < q.sol.length; i++) { const d = gd6(G); R.d.push(d); if (d >= th) R.dmg += spec.dmg * (q.engine === 'ram' && row === GRID.gate ? 2 : 1) * (G.siegeMul || 1); }
+      R.dmg = Math.round(R.dmg); const before = G.wall.seg[row]; G.wall.seg[row] = Math.max(0, before - R.dmg); R.dmg = before - G.wall.seg[row];
+      G.wall.dealt += R.dmg; if (before > 0 && G.wall.seg[row] <= 0) R.breach = 1;
+      E.eng.push(R); return; }
+    if (q.engine === 'ram') { E.burn.push(q.id); return; }
+    let t = q.cur.t && G.sq.find(z => z.id === q.cur.t); if (!t || !gCanShoot(G, q, t)) t = gBestShot(G, q); if (!t) { E.burn.push(q.id); return; }
+    const R = { id: q.id, t: t.id, m: 0, d: [], th: GRID.engHit, s: [], sth: 0, k: 0, eng: 1 };
+    for (let i = 0; i < q.sol.length * spec.dice; i++) { const d = gd6(G); R.d.push(d); if (d < GRID.engHit) continue;
+      const y = t.sol[t._dead || 0]; if (!y) continue; const st = gclamp(gSaveT(y, 'fist', gCover(G, q, t), false) + GRID.engAp, 2, 7), s = gd6(G); R.s.push(s); R.sth = R.sth || st; if (s < st) { t._dead = (t._dead || 0) + 1; R.k++; } }
+    q.kills += R.k; E.shot.push(R);
+  }
+  // погоня: чем больше у победителя стоящих (и конных), тем больше бегущих не уйдёт
+  function gChase(G, side, E) {
+    const win = G.sq.filter(q => q.side !== side && gOk(q) && !q.engine), wn = win.reduce((a, q) => a + q.sol.length, 0), cav = win.filter(q => q.mounted).reduce((a, q) => a + q.sol.length, 0);
+    const run = G.sq.filter(q => q.side === side && q.sol.length && !q.engine), rn = run.reduce((a, q) => a + q.sol.length, 0);
+    if (!wn || !rn) return; const pc = Math.min(0.75, 0.035 * wn / rn + 0.2 * cav / rn); let got = 0;
+    for (const q of run) { const k = Math.min(q.sol.length, Math.round(q.sol.length * pc)); if (k > 0) { q.sol.splice(q.sol.length - k, k); got += k; q.lost = (q.lost || 0) + k; } q.st = q.sol.length ? 'gone' : 'dead'; }
+    if (got) { (win.find(q => q.mounted) || win[0]).kills += got; E.ev.push({ e: 'chase', side: gFoe(side), n: got }); }
+  }
+  function gDone(G) {
+    if (G.broken || G.step >= GRID.steps * GRID.stacks) return true;
+    for (const side of ['a', 'd']) if (!G.sq.some(q => q.side === side && gOk(q) && !q.engine)) return true;
+    return false;
+  }
+  function gRunStack(G) { for (let i = 0; i < GRID.steps && !gDone(G); i++) gStep(G); }
+  // ---------- расстановка ----------
+  const GROWS = [2, 1, 3, 0, 4];
+  function gDeployAI(G, side) {
+    const my = G.sq.filter(q => q.side === side), zone = gZone(G, side), used = {};
+    const put = (q, c, r) => { q.c = c; q.r = r; used[c + ',' + r] = 1; };
+    const free = (c) => GROWS.filter(r => !used[c + ',' + r]);
+    const pow = (q) => q.sol.reduce((a, x) => a + (GRID.hit[x.w] ? 7 - GRID.hit[x.w] : 1) * (8 - gSaveT(x, 'sword', false, true)), 0);
+    const foot = my.filter(q => !q.ranged && !q.mounted && !q.engine).sort((a, b) => pow(b) - pow(a));
+    const rng = my.filter(q => q.ranged).sort((a, b) => pow(b) - pow(a)), cav = my.filter(q => q.mounted && !q.ranged).sort((a, b) => pow(b) - pow(a)), eng = my.filter(q => q.engine);
+    const front = zone[0], back = zone[1], deep = zone[2];
+    const queue = [];   // [отряд, предпочтительные колонки, предпочтительные ряды]
+    if (G.wall && side === 'd') {   // на стене — пехота и стрелки вперемешку, за стеной — запас и конница
+      foot.forEach(q => queue.push([q, [front, back, deep]]));
+      rng.forEach(q => queue.push([q, [front, back, deep]]));
+      cav.forEach(q => queue.push([q, [deep, back, front]]));
+    } else {
+      foot.forEach(q => queue.push([q, [front, back]]));
+      rng.forEach(q => queue.push([q, foot.length ? [back, front] : [front, back]]));
+      cav.forEach(q => queue.push([q, [back, front], [0, 4, 1, 3, 2]]));
+      eng.forEach(q => queue.push([q, q.engine === 'ram' ? [front, back] : [back, front]]));
+    }
+    for (const [q, cols, rows] of queue) { let ok = false;
+      for (const c of cols) { if (c == null) continue; const fr = (rows || GROWS).filter(r => !used[c + ',' + r]); if (fr.length) { put(q, c, fr[0]); ok = true; break; } }
+      if (!ok) { for (const c of [0, 1, 2, 3, 4, 5]) { const fr = free(c).filter(() => true); if (fr.length && !gAt(G, c, fr[0])) { put(q, c, fr[0]); break; } } } }
+    // знамя князя — при сильнейшем пешем отряде (иначе — при любом)
+    if (G.hasGen[side]) G.gen[side] = (foot[0] || cav[0] || rng[0] || my[0] || {}).id || null;
+  }
+  // расстановка игрока: { id: [колонка, ряд] } в своей зоне, без наложений; иначе — советник
+  function gDeployPlan(G, side, dep, banner) {
+    if (!dep) return false; const my = G.sq.filter(q => q.side === side), zone = gZone(G, side), used = {};
+    for (const q of my) { const p = dep[q.id]; if (!p || zone.indexOf(+p[0]) < 0 || !(p[1] >= 0 && p[1] < GRID.R) || used[p[0] + ',' + p[1]]) return false; used[p[0] + ',' + p[1]] = 1; }
+    for (const q of my) { q.c = +dep[q.id][0]; q.r = +dep[q.id][1]; }
+    if (G.hasGen[side] && banner && my.some(q => q.id === banner && !q.engine)) G.gen[side] = banner;
+    return true;
+  }
+  // ---------- советник ----------
+  function gBehind(G, q) { return gFree(G, q.c - gDir(q.side), q.r) && !gCross(G, q.c, q.c - gDir(q.side), q.r); }
+  function gAIOne(G, q, style) {
+    const side = q.side, foes = G.sq.filter(e => e.side !== side && gOk(e)), fd = gDir(side);
+    if (q.st === 'flee') return { o: 'flee' };
+    if (!foes.length) return { o: 'hold' };
+    const adj = gAdj(G, q, true), adjF = adj.filter(e => !e.engine);
+    if (q.engine) {
+      if (q.engine === 'ram') { if (!G.wall) return { o: 'wait' };
+        if (q.c === 2 && gWallUp(G, q.r)) return { o: 'bombard', row: q.r };
+        if (q.c < 2 && !gEngaged(G, q)) { const up = [G.focus, 2, 1, 3, 0, 4].find(r => gWallUp(G, r)); if (up != null && up !== q.r && gFree(G, q.c, q.r + (up > q.r ? 1 : -1))) return gFlankTo(q, up); return gFree(G, q.c + 1, q.r) ? { o: 'march' } : { o: 'wait' }; }   // таран — к воротам
+        return { o: 'wait' }; }
+      if (G.wall && G.wall.seg.some(v => v > 0) && G.wall.seg[G.focus] > 0) return { o: 'bombard', row: G.focus };
+      const t = gBestShot(G, q); return t ? { o: 'shoot', t: t.id } : { o: 'wait' };
+    }
+    if (q.ranged) {
+      if (adjF.length) { const strong = adjF.some(e => !e.ranged && gEK(G, e, q, true) > gEK(G, q, e, true) * 0.8); if (strong && gBehind(G, q)) return { o: 'back' };
+        const t = adj.sort((a, b) => gEK(G, q, b, true) - gEK(G, q, a, true))[0]; return { o: 'melee', t: t.id }; }
+      if (adj.length) return { o: 'melee', t: adj[0].id };   // машину — порубить
+      const t = gBestShot(G, q); if (t) return { o: 'shoot', t: t.id };
+      if (side === 'd' && (G.wall || style !== 'push')) return { o: 'hold' };
+      return gFree(G, q.c + fd, q.r) && !gCross(G, q.c, q.c + fd, q.r) ? { o: 'march' } : { o: 'hold' };
+    }
+    // пешие и конные рубаки
+    if (adj.length) {
+      const sc = (e) => gEK(G, q, e, true, q.mounted ? 0 : 0) * (e.engine ? 3 : e.ranged ? 1.4 : 1) * (e.st === 'flee' ? 1.2 : 1) / (1 + gEK(G, e, q, true) * 0.5);
+      const t = adj.slice().sort((a, b) => sc(b) - sc(a))[0];
+      if (style !== 'push') {
+        if (q.w === 'pike' && adjF.some(e => e.mounted)) return { o: 'hold' };
+        if (q.mounted && t.w === 'pike' && !t.mounted && gBehind(G, q)) return { o: 'back' };
+        const mine = gEK(G, q, t, true), theirs = adjF.reduce((a, e) => a + gEK(G, e, q, true), 0);
+        if (theirs > mine * 3 && q.sol.length <= 3 && gBehind(G, q)) return { o: 'back' };
+        if (G.wall && side === 'd' && q.c === 3 && gWallUp(G, q.r) && mine < theirs * 0.6) return { o: 'hold' };   // на стене: держать прясло
+      }
+      return { o: 'melee', t: t.id };
+    }
+    const tgtList = foes.filter(e => e.st === 'ok');
+    if (!tgtList.length) return { o: 'hold' };
+    // оборона в поле при перевесе в стрелках ждёт; копья ждут конницу
+    const rngPow = (sd) => G.sq.filter(z => z.side === sd && gOk(z) && (z.ranged || (z.engine && z.engine !== 'ram'))).reduce((a, z) => a + z.sol.length, 0);
+    if (style !== 'push') {
+      if (q.w === 'pike' && tgtList.some(e => e.mounted && gDist(e, q) <= 3 && Math.abs(e.r - q.r) <= 1)) return { o: 'hold' };
+      if (side === 'd' && !G.wall && rngPow('d') > rngPow('a') && !tgtList.some(e => gDist(e, q) <= 2)) return { o: 'hold' };
+      if (side === 'd' && style === 'hold') return { o: 'hold' };
+    }
+    // в осаде: оборона стоит на стене, а вылезших — бьёт; конница штурмующих ждёт пролома
+    if (G.wall && side === 'd') { const inside = tgtList.filter(e => e.c >= 3);
+      if (!inside.length) return { o: 'hold' };
+      const t = inside.sort((a, b) => gDist(a, q) - gDist(b, q))[0]; return gStepTo(G, q, t); }
+    if (G.wall && side === 'a') {
+      const breach = [0, 1, 2, 3, 4].filter(r => !gWallUp(G, r));
+      if (q.mounted && !breach.length) return { o: 'hold' };
+      if (q.c >= 3) { const t = tgtList.sort((a, b) => gDist(a, q) - gDist(b, q))[0]; return gStepTo(G, q, t); }
+      if (breach.length) { const br = breach.sort((a, b) => Math.abs(a - q.r) - Math.abs(b - q.r))[0]; if (br !== q.r && (q.mounted || Math.abs(br - q.r) <= 1)) return gFlankTo(q, br); }
+      if (q.c === 2) { const across = gAt(G, 3, q.r); if (!across) return { o: 'march' }; return { o: 'hold' }; }
+      return gFree(G, q.c + 1, q.r) ? { o: 'march' } : gSideStep(G, q);
+    }
+    // в поле: конница — по стрелкам и машинам, пехота — на ближайшего
+    let t;
+    if (q.mounted) t = tgtList.slice().sort((a, b) => ((b.ranged || b.engine ? 2 : 0) - (b.w === 'pike' ? 1.5 : 0) - gDist(b, q) * 0.4) - ((a.ranged || a.engine ? 2 : 0) - (a.w === 'pike' ? 1.5 : 0) - gDist(a, q) * 0.4))[0];
+    else t = tgtList.slice().sort((a, b) => (gDist(a, q) + Math.abs(a.r - q.r) * 0.6) - (gDist(b, q) + Math.abs(b.r - q.r) * 0.6))[0];
+    return gStepTo(G, q, t);
+  }
+  function gFlankTo(q, row) { const up = row < q.r; return { o: (up === (q.side === 'a')) ? 'flankL' : 'flankR' }; }
+  function gSideStep(G, q) { for (const r of [q.r - 1, q.r + 1]) if (gFree(G, q.c, r)) return gFlankTo(q, r); return { o: 'hold' }; }
+  function gStepTo(G, q, t) {
+    const fd = gDir(q.side), ahead = (t.c - q.c) * fd;
+    if (t.r === q.r || (ahead >= 1 && Math.abs(t.r - q.r) <= 1 && ahead <= 2)) {
+      if (ahead > 0) { if (gFree(G, q.c + fd, q.r) || gAt(G, q.c + fd, q.r) === t) return { o: 'march' }; return gSideStep(G, q); }
+      return { o: 'hold' }; }
+    if (ahead >= 3 && !q.mounted) return gFree(G, q.c + fd, q.r) ? { o: 'march' } : gFlankTo(q, t.r);   // далеко — сперва идти, ряд выбрать по пути
+    const nr = q.r + (t.r > q.r ? 1 : -1); if (gFree(G, q.c, nr)) return gFlankTo(q, t.r);
+    return gFree(G, q.c + fd, q.r) && ahead > 0 ? { o: 'march' } : { o: 'hold' };
+  }
+  function gClone(G, seedX) { const L = G.log; G.log = []; const c = JSON.parse(JSON.stringify(G)); G.log = L; c.draft = true; c.rs = ((G.rs ^ seedX) >>> 0) || 1; return c; }
+  // стек советника: на черновике идёт три шага, предполагая, что враг поступит по советнику же
+  function gPlan(G, side, style) {
+    const C = gClone(G, 0x2545f491), ord = {};
+    for (const q of G.sq) if (q.side === side && gOn(q)) ord[q.id] = [];
+    for (let i = 0; i < GRID.steps; i++) {
+      const k = C.step % GRID.steps;
+      for (const q of C.sq) { if (!gOn(q)) continue; const o = gAIOne(C, q, q.side === side ? style : 'base'); q.stack[k] = o; if (q.side === side && ord[q.id] && q.st === 'ok') ord[q.id][i] = o; }   // дрогнувший на черновике — не приказ
+      if (gDone(C)) break; gStep(C); }
+    for (const id in ord) for (let i = 0; i < GRID.steps; i++) if (!ord[id][i]) ord[id][i] = { o: 'hold' };
+    return ord;
+  }
+  function gScore(G, side) {
+    const v = (sd) => G.sq.filter(q => q.side === sd && !q.engine).reduce((a, q) => a + q.sol.length * (q.st === 'ok' ? 1 : 0.6), 0);
+    return v(side) - v(gFoe(side)) + (G.broken && G.broken !== side ? 6 : G.broken === side ? -6 : 0) + (G.wall ? (side === 'a' ? 1 : -1) * G.wall.dealt * 0.5 : 0);
+  }
+  function gRollout(C) { let guard = 0; while (!gDone(C) && guard++ < 20) { for (const sd of ['a', 'd']) gOrders(C, sd, gPlan(C, sd, 'base')); gRunStack(C); } }
+  // полководец с просчётом: перебирает замыслы (советник, напор, выжидание) и проигрывает каждый на черновике
+  function gThink(G, side) {
+    const styles = ['base', 'push', 'hold'], cands = styles.map(st => gPlan(G, side, st));
+    let best = cands[0], bs = -1e9;
+    if (!RULES.fieldThink) return best;
+    for (const c of cands) { let sc = 0;
+      for (const sx of [0x9e3779b9, 0x85ebca6b]) { const C = gClone(G, sx); gOrders(C, side, c); gOrders(C, gFoe(side), gPlan(C, gFoe(side), 'base')); gRunStack(C); gRollout(C); sc += gScore(C, side); }
+      if (sc > bs + 1e-9) { bs = sc; best = c; } }
+    return best;
+  }
+  // ---------- начало боя ----------
+  function gridInit(A, D, cfg) {
+    cfg = cfg || {};
+    const G = { step: 0, rs: (cfg.seed >>> 0) || 1, terr: cfg.terr || 'plain', sq: [], log: [], broken: null, gen: { a: null, d: null }, hasGen: { a: cfg.aGen !== false, d: cfg.dGen !== false },
+      wound: {}, mod: { a: cfg.aHit || 0, d: cfg.dHit || 0 }, morMod: { a: cfg.aMor || 0, d: cfg.dMor || 0 }, bless: { a: !!cfg.aBless, d: !!cfg.dBless }, wall: null, focus: GRID.gate, siegeMul: cfg.siegeMul || 1, ramPen: cfg.ramPen || 0, oil: cfg.oil || 0, engMod: cfg.engMod || 0 };
+    if (cfg.wallLv > 0) { const hp = Math.max(1, Math.round(GRID.segHp[Math.min(5, cfg.wallLv)] * (cfg.wallPct == null ? 100 : cfg.wallPct) / 100)); G.wall = { lv: cfg.wallLv, seg: [hp, hp, hp, hp, hp], max: hp, dealt: 0, pct: cfg.wallPct == null ? 100 : cfg.wallPct }; if (!(cfg.wallPct > 0)) G.wall.seg = [0, 0, 0, 0, 0]; }
+    for (const x of A.concat(D)) if (WEAPON[x.w] && x.atk < WEAPON[x.w].power - 1e-9) x.starve = 1;
+    G.sq = gSquads(A, 'a', cfg.aEng).concat(gSquads(D, 'd', null, cfg.wallLv > 0 ? GRID.R : 0));
+    gDeployAI(G, 'd');
+    if (!gDeployPlan(G, 'a', cfg.aDeploy, cfg.aBanner)) gDeployAI(G, 'a');
+    if (G.wall) { const ram = G.sq.find(q => q.engine === 'ram'); G.focus = GRID.gate; }
+    for (const q of G.sq) q.stack = [{ o: 'wait' }, { o: 'wait' }, { o: 'wait' }];
+    gSnap0(G);
+    return G;
+  }
+  function gSnap0(G) { G.start = G.sq.map(q => [q.id, q.c, q.r, q.sol.length, 0]); G.wall0 = G.wall ? G.wall.seg.slice() : null; }   // строй до первого шага — для показа боя
+  function gridOutcome(G, A0, D0) {
+    const surv = (side) => G.sq.filter(q => q.side === side && !q.engine).reduce((arr, q) => arr.concat(q.sol), []);
+    const A = surv('a'), D = surv('d'), a0 = A0.length, d0 = D0.length;
+    const okA = G.sq.some(q => q.side === 'a' && gOk(q) && !q.engine), okD = G.sq.some(q => q.side === 'd' && gOk(q) && !q.engine);
+    const atkRout = A.length > 0 && (G.broken === 'a' || !okA), defRout = D.length > 0 && (G.broken === 'd' || !okD) && !atkRout;
+    const atkWins = A.length > 0 && !atkRout && (D.length === 0 || defRout || (!G.broken && (d0 - D.length) > (a0 - A.length)));
+    const kl = (side) => G.sq.filter(q => q.side === side).reduce((a, q) => a + q.kills, 0);
+    const engLost = {}; for (const q of G.sq) if (q.engine && q.side === 'a') { const l = q.n0 - q.sol.length; if (l > 0) engLost[q.engine] = l; }
+    const wallDmg = G.wall && G.wall.max ? Math.round(G.wall.pct * G.wall.dealt / (G.wall.max * 5)) : 0;
+    const ev = [{ t: 'grid', steps: G.step, broken: G.broken }, { t: 'melee', side: 'atk', killed: kl('a'), dmg: 0 }, { t: 'melee', side: 'def', killed: kl('d'), dmg: 0 }];
+    if (G.wall && G.wall.dealt) ev.push({ t: 'breach', ok: G.wall.seg.some(v => v <= 0), by: 'grid', dmg: wallDmg });
+    return { events: ev, atkArmy: A.length, defArmy: D.length, atkRout, defRout, atkWins, held: false, wallDmg, engLost, A, D, grid: G,
+      atkLost: lostKitCnt(A0, A), defLost: lostKitCnt(D0, D) };
+  }
+  // общие поправки из обстановки боя (норов, местность, благословение, навыки, засада)
+  function gridSetup(atk, def, rndFn, opts) {
+    const A = armyProfile(atk, def), D = armyProfile(def, atk), A0 = A.slice(), D0 = D.slice();
+    const pm = (p) => p === 'passive' ? 1 : 0, pr = (p) => p === 'aggressive' ? 1 : 0;
+    const perkM = (v) => v >= 1.15 ? 1 : 0;
+    const G = gridInit(A, D, { seed: Math.floor(rndFn() * 4294967296), terr: opts.defTerr || 'plain',
+      aHit: pm(atk.posture) - (opts.ambush ? 1 : 0), dHit: pm(def.posture),
+      aMor: pr(atk.posture) + perkM(opts.atkPerk || 1) + (opts.atkNoRout ? 2 : 0) + (opts.ambush ? 1 : 0),
+      dMor: pr(def.posture) + perkM(opts.defPerk || 1) + (opts.defNoRout ? 2 : 0) + (def.militia && !(opts.wallLv > 0) ? -1 : 0) + ((opts.defMult || 1) > 1.12 ? 1 : 0),
+      aBless: !!opts.atkBless, dBless: !!opts.defBless, aDeploy: opts.aDeploy, aBanner: opts.aBanner,
+      aGen: !atk.militia, dGen: !def.militia, wallLv: opts.wallLv || 0, wallPct: opts.wallPct, aEng: opts.engines || null, siegeMul: opts.siegeMul || 1, ramPen: opts.ramPen, oil: opts.oil, engMod: opts.engMod });
+    return { G, A0, D0 };
+  }
+  // бой без игрока: обе стороны — советник с просчётом
+  function gridBattle(atk, def, rndFn, opts) {
+    opts = opts || {};
+    const { G, A0, D0 } = gridSetup(atk, def, rndFn, opts);
+    while (!gDone(G)) { gOrders(G, 'a', gThink(G, 'a')); gOrders(G, 'd', gThink(G, 'd')); gRunStack(G); }
+    return gridOutcome(G, A0, D0);
+  }
+  // что видит игрок: отряды, поле, стена, журнал шагов
+  function gridPack(G) { return { grid: 1, terr: G.terr, step: G.step, steps: GRID.steps, stacks: GRID.stacks, broken: G.broken, gen: Object.assign({}, G.gen), wound: Object.assign({}, G.wound),
+    wall: G.wall ? { lv: G.wall.lv, seg: G.wall.seg.slice(), max: G.wall.max, gate: GRID.gate } : null,
+    sq: G.sq.map(q => ({ id: q.id, side: q.side, kind: q.kind, w: q.w, engine: q.engine, mounted: q.mounted, ranged: q.ranged, heavy: q.heavy, n0: q.n0, n: q.sol.length, c: q.c, r: q.r, st: q.st,
+      save: q.sol.length && !q.engine ? gSaveT(q.sol[0], 'sword', false, true) : 0, hit: GRID.hit[q.w] || 0, range: gRangeOf(G, q), speed: gSpeed(G, q, 'march') })),
+    log: G.log, start: G.start, wall0: G.wall0, R: GRID.R, C: GRID.C }; }
+  // бой отрядами для игрока: расстановка — в стеке команд «fight»; оборона — советник
+  function gridStart(atk, def, rndFn, opts) { const st = gridSetup(atk, def, rndFn, opts); st.G.phase = 'deploy'; return st; }
+  function gridView(s) { const f = s.fight; if (!f || !f.G) return null; return Object.assign(gridPack(f.G), { pid: f.pid, fid: f.fid, owner: f.owner, phase: f.G.phase || 'orders', from: f.from || 0,
+    zone: gZone(f.G, 'a'), advice: f.G.phase === 'deploy' ? null : gPlan(f.G, 'a', 'base') }); }
+  // команда «fight» в бою на клетках: { deploy: {id: [c, r]}, banner, ord: {id: [o, o, o]} } или 'auto'
+  function gridFightOrders(s, seat, arg) {
+    const f = s.fight, G = f.G, auto = arg === 'auto';
+    if (G.phase === 'deploy') { if (!auto && arg && arg.deploy) gDeployPlan(G, 'a', arg.deploy, arg.banner); G.phase = 'orders'; gSnap0(G); if (!auto && !(arg && arg.ord)) return { ok: true, kind: 'fight', fight: gridView(s) }; }
+    do { f.from = G.log.length;
+      const od = gThink(G, 'd'), oa = auto || !arg || !arg.ord ? gThink(G, 'a') : arg.ord;
+      gOrders(G, 'a', oa); gOrders(G, 'd', od); gRunStack(G);
+    } while (auto && !gDone(G));
+    if (!gDone(G)) return { ok: true, kind: 'fight', fight: gridView(s) };
+    const pr = getPrince(s, f.pid), foe = f.fid != null ? getPrince(s, f.fid) : null, out = gridOutcome(G, f.A0, f.D0);
+    s.fight = null;
+    if (f.village) return villageAftermath(s, pr, out, f.vctx);
+    if (!pr || !foe) return { ok: true, kind: 'fightEnd' };
+    return princeAftermath(s, pr, foe, out, f.ctx);
+  }
   function resolveCombat(atk, def, rndFn, opts) {
     opts = opts || {};
     const ev = [];
@@ -5761,7 +6304,7 @@ body.tut-on #gAdv { display: none !important; }   /* в обучении гов�
         if (bl && ll > 0) { const back = Math.round(ll * [0, 0.15, 0.3, 0.4, 0.5][bl]); if (back > 0) L.army += back; }
         deed(s, L, 'beaten'); L.beatBy = (L.beatBy || []).filter(x => x !== W.id).concat([W.id]).slice(-6); }
     }
-    const battle = { field: res.field ? fieldPack(res.field) : undefined, kind: 'prince', terrain: terr, ambush: !!ambush, siege: false, naval: naval, atk: { name: aName, faction: aFac, army0: a0, army1: pr.army, alive: pr.alive, routed: aRout, weapons: aW, armor: aA, siege: aS, vessel: aFloat ? pr.vessel : null }, def: { name: dName, faction: dFac, army0: d0, army1: foePrince.army, alive: foePrince.alive, routed: dRout, weapons: dW, armor: dA, vessel: dFloat ? foePrince.vessel : null }, events };
+    const battle = { field: res.field ? fieldPack(res.field) : undefined, grid: res.grid ? gridPack(res.grid) : undefined, kind: 'prince', terrain: terr, ambush: !!ambush, siege: false, naval: naval, atk: { name: aName, faction: aFac, army0: a0, army1: pr.army, alive: pr.alive, routed: aRout, weapons: aW, armor: aA, siege: aS, vessel: aFloat ? pr.vessel : null }, def: { name: dName, faction: dFac, army0: d0, army1: foePrince.army, alive: foePrince.alive, routed: dRout, weapons: dW, armor: dA, vessel: dFloat ? foePrince.vessel : null }, events };
     noteBattle(s, foePrince.owner, targetKey, battle, foePrince.alive);
     return { ok: true, kind: 'prince', events, battle };
   }
@@ -5792,10 +6335,11 @@ body.tut-on #gAdv { display: none !important; }   /* в обучении гов�
       let navalVol = 0;
       if (naval && pr.siege && (pr.siege.cannon || 0) > 0) navalVol = fireEngines(pr, ['cannon'], true).power;
       const live = RULES.field && !aFloat && !dFloat && plan && plan.live && s.players[pr.owner] && s.players[pr.owner].kind === 'human';
-      const res = (live ? fieldStart : RULES.field && !aFloat && !dFloat ? fieldBattle : resolveCombat)(pr, foePrince, rndFn, { plan, defMult, ambush, siege: navalVol, siegeVol: navalVol, atkMod, defMod, naval: naval,
+      const res = (live ? (RULES.grid ? gridStart : fieldStart) : RULES.field && !aFloat && !dFloat ? (RULES.grid ? gridBattle : fieldBattle) : resolveCombat)(pr, foePrince, rndFn, { plan, defMult, ambush, siege: navalVol, siegeVol: navalVol, atkMod, defMod, naval: naval,
         field: !aFloat && !dFloat, atkTerr: tileAt(s, pr.at).terrain, defTerr: terr, atkOrder: pr.order || null, defOrder: foePrince.order || null, atkBless: !!pr.blessed, defBless: !!foePrince.blessed,
         atkPerk: battlePerk(s, pr, foePrince, naval), defPerk: battlePerk(s, foePrince, pr, naval), atkNoRout: !!pr.blessed && perkLv(pr, 'devout') >= 4, defNoRout: !!foePrince.blessed && perkLv(foePrince, 'devout') >= 4 });
       const ctx = { a0, d0, aName, aFac, dName, dFac, terr, aW, aA, aS, dW, dA, ambush: !!ambush, naval, aFloat, dFloat, targetKey };
+      if (live && res.G) { s.fight = { owner: pr.owner, pid: pr.id, fid: foePrince.id, G: res.G, A0: res.A0, D0: res.D0, ctx }; return { ok: true, kind: 'fight', fight: gridView(s) }; }   // бой на клетках: расстановка, затем стеки приказов
       if (live) {   // бой отрядами с паузами: первая треть сыграна — ждём приказов игрока (команда «fight»)
         if (fieldDone(res.F)) return princeAftermath(s, pr, foePrince, fieldOutcome(res.F, res.A0, res.D0, true), ctx);
         s.fight = { owner: pr.owner, pid: pr.id, fid: foePrince.id, ph: 0, F: res.F, A0: res.A0, D0: res.D0, ctx };
@@ -5839,48 +6383,62 @@ body.tut-on #gAdv { display: none !important; }   /* в обучении гов�
       const wallPen = wallPenOf(foeVillage), wallClass = wallClassOf(foeVillage), wallArrow = wallArrowOf(foeVillage); // стена → штраф к атаке штурмующих + класс защиты для пролома + стрелы о камень
       const defMult = 1 + ({ hills: 0.15, forest: 0.10, marsh: 0.10 }[defTerrain] || 0); // только местность — множитель
       const ambush = isConcealed(s, pr.id) ? (perkLv(pr, 'pathfinder') >= 4 ? 1.5 : 1) : 0;
-      const res = resolveCombat(pr, garrison, rndFn, { wallPen, wallClass, wallArrow, siegeEngines, defMult, ambush, siegeOnly: !!siegeOnly,
+      const vopts = { wallPen, wallClass, wallArrow, siegeEngines, defMult, ambush, siegeOnly: !!siegeOnly,
         field: false, atkTerr: tileAt(s, pr.at).terrain, defTerr: defTerrain, atkOrder: pr.order || null, defOrder: defP ? (defP.order || null) : null, ramGuard: hasTech(foeVillage, 'rov') ? 3 : 0,
         defMelee: (hasTech(foeVillage, 'kipyatok') && wallTop(foeVillage) >= 4) ? 1.2 : 1, atkBless: !!pr.blessed, defBless: !!(defP && defP.blessed),
         atkPerk: RULES.perks ? 1 + itemFx(pr, 'pow') + (s.season === 'winter' && perkLv(pr, 'winter') >= 4 ? 0.1 : 0) + (defP && perkLv(pr, 'beaten') >= 4 && (pr.beatBy || []).indexOf(defP.id) >= 0 ? 0.08 : 0) : 1,
         defPerk: defP ? 1 + 0.05 * perkLv(defP, 'defender') + itemFx(defP, 'pow') : 1,
         breachAdd: [0, 0, 1, 2, 2][perkLv(pr, 'besieger')] - (defP && perkLv(defP, 'defender') >= 4 ? 2 : 0), siegeMul: 1 + [0, 0.1, 0.1, 0.2, 0.3][perkLv(pr, 'besieger')],
-        atkNoRout: !!pr.blessed && perkLv(pr, 'devout') >= 4, defNoRout: !!(defP && defP.blessed && perkLv(defP, 'devout') >= 4) });   // Осадник, Заступник, Богомолец IV // стена гасит атаку штурмующих; орудия ломают её броском d20
-      unbless(pr); if (defP) unbless(defP);
-      if (res.wallDmg && wallTop(foeVillage)) foeVillage.wallHp = Math.max(0, Math.round(wallHpOf(foeVillage) - res.wallDmg));   // прочность стены после проломов
-      pr.army = res.atkArmy; settleCarts(pr); // потери при штурме — лишние телеги ломаются
-      // потери защитников делим между воеводой (если засел в городе) и ополчением — гибнут и те, и другие
-      const survived = Math.max(0, res.defArmy);
-      let princeSurv = 0, garrSurv = survived, pLoss = 0;
-      if (defP && g0 > 0) { princeSurv = Math.min(defP.army, Math.round(survived * defP.army / g0)); garrSurv = survived - princeSurv; pLoss = defP.army - princeSurv; }
-      { const tKey = targetKey, tr = (s.tiles[tKey] && s.tiles[tKey].trophy) || { weapons: {}, armor: {} };
-        dropGear(pr, a0 - res.atkArmy, res.atkArmy <= 0, tr, res.atkLost);
-        if (defP) dropGear(defP, pLoss, princeSurv <= 0, tr);       // павшие воеводы роняют снаряжение в общий трофей
-        const atkHolds = res.atkArmy > 0 && (res.defArmy <= 0 || res.defRout);
-        if (atkHolds) { lootTrophy(pr, tr, 0.8); if (s.tiles[tKey]) delete s.tiles[tKey].trophy; }
-        else if (s.tiles[tKey]) s.tiles[tKey].trophy = tr; }
-      if (defP) { defP.army = princeSurv; settleCarts(defP); if (princeSurv <= 0 && defP.alive) killOrRout(s, defP, true, res.events, aName); } // защищавший воевода пал вместе с обороной
-      foeVillage.pop = Math.max(0, Math.round(garrSurv / 0.6));
-      const events = res.events.slice();
-      const dFac = foeVillage.owner != null && s.players[foeVillage.owner] ? s.players[foeVillage.owner].faction : null;
-      const aRoutV = res.atkRout && res.atkArmy > 0;
-      const mkBattle = (broken) => ({ kind: 'village', terrain: defTerrain, siege: Object.keys(siegeEngines).length > 0, atk: { name: aName, faction: aFac, army0: a0, army1: pr.army, alive: pr.alive, routed: aRoutV, weapons: aW, armor: aA, siege: aS }, def: { village: true, name: foeVillage.name || (foeVillage.tier >= 2 ? 'городище' : 'поселение'), faction: dFac, garr0: g0, garr1: Math.max(0, res.defArmy), broken, weapons: gW, armor: gA, wall: wallKind, wallLv: wallTop(foeVillage), wallHp: wallHpOf(foeVillage), pop: vPop0, tier: vTier, built: Object.assign({}, foeVillage.built || {}) }, events });
-      if ((res.atkArmy <= 0 || res.atkRout) && foeVillage.owner != null && a0 >= 6) addFame(s, foeVillage.owner, 8 + Math.ceil((a0 - Math.max(0, res.atkArmy)) / 2), 'hold', defP && defP.alive ? defP : null, { key: targetKey, vname: foeVillage.name, vs: pr.owner });   // отбитый штурм
-      if (RULES.perks && (res.atkArmy <= 0 || res.atkRout)) { if (defP && defP.alive) deed(s, defP, 'defend'); if (pr.alive && res.atkArmy > 0) { deed(s, pr, 'beaten'); if (defP) pr.beatBy = (pr.beatBy || []).concat([defP.id]).slice(-6); } }
-      if (res.atkArmy <= 0 || res.atkRout) { if (aRoutV) pr.flees = (pr.flees || 0) + 1; chronAdd(s, pr, { t: 'repulsed', v: foeVillage.name, lost: a0 - Math.max(0, res.atkArmy), at: targetKey }); if (res.atkArmy <= 0) killOrRout(s, pr, true, events, '«' + foeVillage.name + '»'); else routRetreat(s, pr, events, targetKey); const bb = mkBattle(false); noteBattle(s, foeVillage.owner, targetKey, bb, true); return { ok: true, kind: 'village', broken: false, events, battle: bb }; }
-      if (foeVillage.owner == null) freeRelHit(s, pr.owner, foeVillage, 20, 10, 20);   // набег на вольный город — молва по округе
-      const broken = res.defArmy <= 0 || res.defRout || res.defArmy <= Math.floor(0.4 * (foeVillage.siegeGarr0 || g0)); // сдаётся, потеряв ≥60% первоначального гарнизона (накопительно за осаду)
-      if (broken) { foeVillage.broken = true; delete foeVillage.siegeGarr0; pr.wins = (pr.wins || 0) + 1; }
-      chronAdd(s, pr, { t: broken ? 'storm' : 'siege', v: foeVillage.name, slain: g0 - Math.max(0, res.defArmy), lost: a0 - pr.army, at: targetKey }); // взломал оборону — победа
-      deed(s, pr, 'siege', broken ? 2 : 1);
-      if (defP && defP.alive && broken) routRetreat(s, defP, events, pr.at); // город пал — уцелевший защитник отходит
-      pr.mp = 0;
-      const bb2 = mkBattle(broken); bb2.held = res.held; noteBattle(s, foeVillage.owner, targetKey, bb2, !broken);
-      return { ok: true, kind: 'village', broken, held: res.held, events, battle: bb2 };
+        atkNoRout: !!pr.blessed && perkLv(pr, 'devout') >= 4, defNoRout: !!(defP && defP.blessed && perkLv(defP, 'devout') >= 4) };   // Осадник, Заступник, Богомолец IV // стена гасит атаку штурмующих; орудия ломают её броском d20
+      // БОЙ НА КЛЕТКАХ у стен (24.10): стена — 5 прясел посреди поля, машины ломают их, в пролом идут; «только обстрел» — по-старому
+      const gopts = Object.assign({}, vopts, { wallLv: wallTop(foeVillage), wallPct: wallHpOf(foeVillage), engines: siegeEngines, ramPen: hasTech(foeVillage, 'rov') ? 1 : 0, oil: vopts.defMelee > 1 ? 1 : 0, engMod: -(vopts.breachAdd || 0) });
+      const vctx = { targetKey, a0, aName, aFac, vPop0, vTier, aW, aA, aS, g0, gW, gA, defTerrain, siegeEngines, wallKind, defPid: defP ? defP.id : null };
+      const liveV = RULES.grid && !siegeOnly && plan && plan.live && s.players[pr.owner] && s.players[pr.owner].kind === 'human';
+      if (liveV) { const st = gridStart(pr, garrison, rndFn, gopts); s.fight = { owner: pr.owner, pid: pr.id, fid: defP ? defP.id : null, G: st.G, A0: st.A0, D0: st.D0, village: 1, vctx }; return { ok: true, kind: 'fight', fight: gridView(s) }; }
+      const res = RULES.grid && !siegeOnly ? gridBattle(pr, garrison, rndFn, gopts) : resolveCombat(pr, garrison, rndFn, vopts);
+      return villageAftermath(s, pr, res, vctx);
     }
     return { ok: false, error: 'некого атаковать' };
   }
 
+  // итог штурма поселения (общий для боя на клетках, живого боя и старого расчёта)
+  function villageAftermath(s, pr, res, vctx) {
+    const { targetKey, a0, aName, aFac, vPop0, vTier, aW, aA, aS, g0, gW, gA, defTerrain, siegeEngines, wallKind } = vctx;
+    const foeVillage = settlementAt(s, targetKey), defP = vctx.defPid != null ? getPrince(s, vctx.defPid) : null;
+    if (!pr || !foeVillage) return { ok: true, kind: 'fightEnd' };
+    if (res.engLost && pr.siege) for (const k in res.engLost) pr.siege[k] = Math.max(0, (pr.siege[k] || 0) - res.engLost[k]);   // машины, порубленные вылазкой
+    unbless(pr); if (defP) unbless(defP);
+    if (res.wallDmg && wallTop(foeVillage)) foeVillage.wallHp = Math.max(0, Math.round(wallHpOf(foeVillage) - res.wallDmg));   // прочность стены после проломов
+    pr.army = res.atkArmy; settleCarts(pr); // потери при штурме — лишние телеги ломаются
+    // потери защитников делим между воеводой (если засел в городе) и ополчением — гибнут и те, и другие
+    const survived = Math.max(0, res.defArmy);
+    let princeSurv = 0, garrSurv = survived, pLoss = 0;
+    if (defP && g0 > 0) { princeSurv = Math.min(defP.army, Math.round(survived * defP.army / g0)); garrSurv = survived - princeSurv; pLoss = defP.army - princeSurv; }
+    { const tKey = targetKey, tr = (s.tiles[tKey] && s.tiles[tKey].trophy) || { weapons: {}, armor: {} };
+      dropGear(pr, a0 - res.atkArmy, res.atkArmy <= 0, tr, res.atkLost);
+      if (defP) dropGear(defP, pLoss, princeSurv <= 0, tr);       // павшие воеводы роняют снаряжение в общий трофей
+      const atkHolds = res.atkArmy > 0 && (res.defArmy <= 0 || res.defRout);
+      if (atkHolds) { lootTrophy(pr, tr, 0.8); if (s.tiles[tKey]) delete s.tiles[tKey].trophy; }
+      else if (s.tiles[tKey]) s.tiles[tKey].trophy = tr; }
+    if (defP) { defP.army = princeSurv; settleCarts(defP); if (princeSurv <= 0 && defP.alive) killOrRout(s, defP, true, res.events, aName); } // защищавший воевода пал вместе с обороной
+    foeVillage.pop = Math.max(0, Math.round(garrSurv / 0.6));
+    const events = res.events.slice();
+    const dFac = foeVillage.owner != null && s.players[foeVillage.owner] ? s.players[foeVillage.owner].faction : null;
+    const aRoutV = res.atkRout && res.atkArmy > 0;
+    const mkBattle = (broken) => ({ kind: 'village', terrain: defTerrain, siege: Object.keys(siegeEngines).length > 0, atk: { name: aName, faction: aFac, army0: a0, army1: pr.army, alive: pr.alive, routed: aRoutV, weapons: aW, armor: aA, siege: aS }, def: { village: true, name: foeVillage.name || (foeVillage.tier >= 2 ? 'городище' : 'поселение'), faction: dFac, garr0: g0, garr1: Math.max(0, res.defArmy), broken, weapons: gW, armor: gA, wall: wallKind, wallLv: wallTop(foeVillage), wallHp: wallHpOf(foeVillage), pop: vPop0, tier: vTier, built: Object.assign({}, foeVillage.built || {}) }, events, grid: res.grid ? gridPack(res.grid) : undefined });
+    if ((res.atkArmy <= 0 || res.atkRout) && foeVillage.owner != null && a0 >= 6) addFame(s, foeVillage.owner, 8 + Math.ceil((a0 - Math.max(0, res.atkArmy)) / 2), 'hold', defP && defP.alive ? defP : null, { key: targetKey, vname: foeVillage.name, vs: pr.owner });   // отбитый штурм
+    if (RULES.perks && (res.atkArmy <= 0 || res.atkRout)) { if (defP && defP.alive) deed(s, defP, 'defend'); if (pr.alive && res.atkArmy > 0) { deed(s, pr, 'beaten'); if (defP) pr.beatBy = (pr.beatBy || []).concat([defP.id]).slice(-6); } }
+    if (res.atkArmy <= 0 || res.atkRout) { if (aRoutV) pr.flees = (pr.flees || 0) + 1; chronAdd(s, pr, { t: 'repulsed', v: foeVillage.name, lost: a0 - Math.max(0, res.atkArmy), at: targetKey }); if (res.atkArmy <= 0) killOrRout(s, pr, true, events, '«' + foeVillage.name + '»'); else routRetreat(s, pr, events, targetKey); const bb = mkBattle(false); noteBattle(s, foeVillage.owner, targetKey, bb, true); return { ok: true, kind: 'village', broken: false, events, battle: bb }; }
+    if (foeVillage.owner == null) freeRelHit(s, pr.owner, foeVillage, 20, 10, 20);   // набег на вольный город — молва по округе
+    const broken = res.defArmy <= 0 || res.defRout || res.defArmy <= Math.floor(0.4 * (foeVillage.siegeGarr0 || g0)); // сдаётся, потеряв ≥60% первоначального гарнизона (накопительно за осаду)
+    if (broken) { foeVillage.broken = true; delete foeVillage.siegeGarr0; pr.wins = (pr.wins || 0) + 1; }
+    chronAdd(s, pr, { t: broken ? 'storm' : 'siege', v: foeVillage.name, slain: g0 - Math.max(0, res.defArmy), lost: a0 - pr.army, at: targetKey }); // взломал оборону — победа
+    deed(s, pr, 'siege', broken ? 2 : 1);
+    if (defP && defP.alive && broken) routRetreat(s, defP, events, pr.at); // город пал — уцелевший защитник отходит
+    pr.mp = 0;
+    const bb2 = mkBattle(broken); bb2.held = res.held; noteBattle(s, foeVillage.owner, targetKey, bb2, !broken);
+    return { ok: true, kind: 'village', broken, held: res.held, events, battle: bb2 };
+}
   function trimWeapons(pr) { /* оружие/броня — обоз-склад: НЕ режем по числу солдат (бойцы берут лучшее, лишнее едет обозом и добавляет вес) */ }
   // павшие роняют лучшее снаряжение в трофейный пул (при полном разгроме — весь обоз)
   function dropGear(pr, count, wipeAll, trophy, lost) {
@@ -8224,7 +8782,7 @@ body.tut-on #gAdv { display: none !important; }   /* в обучении гов�
     resolveCombat, armyStats, attack, retreat, isEngaged, subjugate, claim, deposit, nextBuild, foundVillage, FOUND_COST, queueOrder, raisePrince, canRaise, orderVillage, resAvail, coastalCap, freeCoastalWater, shipsInRad, pathTo, shipResources, buildCost, timeCap, pendingShipmentsTo, villageGarrison, autoForge, claimTribute, claimInfo, wallLevel, stroyMult, wallPenOf, wallClassOf, getWeapons, giveWeapons, takeResources, splitPrince, give, MAX_PRINCES, VILLAGE_ORDER_RADIUS, buildMenu, setBuildPriority, buildOrder, woodYield, oreYield,
     recomputeVisibility, endTurn, endRound, scores, winCheck, serialize, deserialize, RULES, capLong,
     // econ2
-    setOrder, ORDERS, CAV, horsesOf, mountedAll, FIELD, FORDERS, FFORMS, fieldInit, fieldOrders, fieldRun, fieldRunPhase, fieldPauseAt, fieldSetup, fieldDone, fieldAI, fieldThink, fieldOutcome, fieldBattle, fieldSquads, fMatch, FROLE_ORD, fieldStart, fightOrders, fightView, fieldPack, fieldPreview, fieldEligible, _addFameForTest: (s, o, n, w) => addFame(s, o, n, w), stoneYield, cutStone, hireMerc, MERC_PRICE, MERC_MAX, mercPrice, PERKS, PERK_BY, PERK_TITLES, perkLv, perkSum, perkNick, perkTitleOf, perkAt, deed, vesselCap, woeCureCost, bribeCost, MKT_RES, MKT_SIEGE, MKT_TAX, mktKind, mktBase, mktFloor, mktCeil, mktMerch, mktMarket, MERCH_MARKUP, mktAvg, mktStock, mktOf, sellLot, unsellLot, buyLot, buyMerchant, sellMerchant, LUX, LUX_BY, LUX_CAT, luxTier, buyLux, fameOf, addFame, BUILD_FAME, raidShare, disband, hold, sendDove, answerDove, breakPeace, atPeace, pactOf, doveChance, leaderOf, lagOf, capitalOf, seasonText, PEACE_LEN, RAID_LEN, TAX_RATE, TAX_NAME, WAGE_PER, cityTax, taxBonus, taxOf, treasury, setTax, wagesOf, soldiersOf, WOE, woeRisk, woeList, woeOn, cureWoe, cityPts, woeSeason, barter, barterInfo, barterQuote, barterPartners, freeStock, freeNeed, freeSpare, freeRel, freeMult, freeSeason, FREE_REL_BAN, barterCost, barterMaxN, BARTER_VAL, wallTop, wallHpOf, wallArrowOf, wallRepairCost, WALL_LV_NAME, WALL_LV_PEN, WALL_LV_CLASS, WALL_LV_ARROW, AMMO, ammoRes, fireEngines, craftTable, craftReq,
+    setOrder, ORDERS, CAV, horsesOf, mountedAll, FIELD, FORDERS, FFORMS, fieldInit, fieldOrders, fieldRun, fieldRunPhase, fieldPauseAt, fieldSetup, fieldDone, fieldAI, fieldThink, fieldOutcome, fieldBattle, fieldSquads, GRID, GORD, gridInit, gridSetup, gridBattle, gridOutcome, gridPack, gridView, gridStart, gStep, gDone, gRunStack, gOrders, gPlan, gThink, gAIOne, gSaveT, gDeployAI, gClone, gScore, villageAftermath, fMatch, FROLE_ORD, fieldStart, fightOrders, fightView, fieldPack, fieldPreview, fieldEligible, _addFameForTest: (s, o, n, w) => addFame(s, o, n, w), stoneYield, cutStone, hireMerc, MERC_PRICE, MERC_MAX, mercPrice, PERKS, PERK_BY, PERK_TITLES, perkLv, perkSum, perkNick, perkTitleOf, perkAt, deed, vesselCap, woeCureCost, bribeCost, MKT_RES, MKT_SIEGE, MKT_TAX, mktKind, mktBase, mktFloor, mktCeil, mktMerch, mktMarket, MERCH_MARKUP, mktAvg, mktStock, mktOf, sellLot, unsellLot, buyLot, buyMerchant, sellMerchant, LUX, LUX_BY, LUX_CAT, luxTier, buyLux, fameOf, addFame, BUILD_FAME, raidShare, disband, hold, sendDove, answerDove, breakPeace, atPeace, pactOf, doveChance, leaderOf, lagOf, capitalOf, seasonText, PEACE_LEN, RAID_LEN, TAX_RATE, TAX_NAME, WAGE_PER, cityTax, taxBonus, taxOf, treasury, setTax, wagesOf, soldiersOf, WOE, woeRisk, woeList, woeOn, cureWoe, cityPts, woeSeason, barter, barterInfo, barterQuote, barterPartners, freeStock, freeNeed, freeSpare, freeRel, freeMult, freeSeason, FREE_REL_BAN, barterCost, barterMaxN, BARTER_VAL, wallTop, wallHpOf, wallArrowOf, wallRepairCost, WALL_LV_NAME, WALL_LV_PEN, WALL_LV_CLASS, WALL_LV_ARROW, AMMO, ammoRes, fireEngines, craftTable, craftReq,
     TECH, TECH_BY, TECH_BRANCH, STAGE_NAME, cityStage, hasTech, techState, techCatalog, techCost, techPayer, orderTech, toolN, techLive, techTurnsLeftFrozen,
     popCap, popRoom, ensureHouses, militia, HOUSE_WOOD, HOUSE_STONE, WOOD_HOUSES, STONE_HOUSES, minerSlots, stoneTiles, stoneWanted,
     pray, liftRelic, deliverRelic, relicsIn, relicById, relicInfo, relicCount, RELIC_NAMES, RELIC_LORE, hasChurch, dirWord,
@@ -20096,6 +20654,451 @@ var FieldScene = (function () {
 })();
 if (typeof module !== 'undefined') module.exports = FieldScene;
 </script>
+<script>/* src/ui2/grid2.js */
+/* Бой на клетках (24.10.2026, Ник: «боёвка настольная, на экране — анимации механик»).
+   Доска 5 рядов × 6 колонок. Отряды стоят строем в клетках; каждому — стек из 3 приказов; стек разыгрывается по шагам,
+   на экране — ход строем, стрелы с кубиками, сшибки, павшие, бросок духа, пролом стены.
+   GridScene.run(view, send, opts, done) — живой бой: view — Core.fightView (grid: 1); send(arg, cb) → cb(ответ ядра)
+   GridScene.replay(battle, done)       — показать сыгранный бой (battle.grid) */
+var GridScene = (function () {
+  'use strict';
+  var FCOL = (typeof Render !== 'undefined' && Render.FCOL) || { azure: ['#4f7fc0', '#2b4d80', '#bcd0ee'], crimson: ['#c14a3f', '#7d2620', '#eab0a8'], emerald: ['#4f9a5a', '#2f6438', '#bfe6c5'], amber: ['#c79a3a', '#8a6820', '#efdba0'], violet: ['#8a5cc0', '#573a7d', '#d3c0ee'], teal: ['#3f9a98', '#25615f', '#b8e2e0'], slate: ['#6b7480', '#454c56', '#c4ccd4'] };
+  var W_RU = { sword: 'мечники', mace: 'булавы', axe: 'топоры', flail: 'цепы', pike: 'копейщики', fist: 'ополчение', bow: 'лучники', crossbow: 'арбалетчики', longbow: 'длинные луки', ram: 'таран', catapult: 'катапульта', trebuchet: 'требушет', cannon: 'пушка' };
+  var ORD = {
+    wait: ['Стоять', 'Отряд стоит и ничего не делает.'],
+    hold: ['Оборона', 'Встать в оборону: проваленные спасброски перебрасываются. Копья в обороне гасят натиск конницы и бьют первыми.'],
+    shoot: ['Стрельба', 'Бить по врагу в досягаемости. В упор (по соседу) нельзя; через свой отряд — на 1 хуже.'],
+    march: ['Марш', 'Вперёд: пехота на 2 клетки, тяжёлая — на 1, конница — на 3. Упёрся во врага — сшибка; у конницы с разбега — натиск.'],
+    flankL: ['Левый фланг', 'Сдвинуться на клетку к левому флангу (конница — на 2). Пока идут, враг перебрасывает промахи.'],
+    flankR: ['Правый фланг', 'Сдвинуться на клетку к правому флангу (конница — на 2). Пока идут, враг перебрасывает промахи.'],
+    melee: ['Сеча', 'Ударить соседний отряд — и по прямой, и наискось. Урон наносится обоим разом. Связанный сечей отряд не может уйти маршем.'],
+    back: ['Отход', 'Назад на клетку (конница — на 2). Соседи-враги бьют вслед, перебрасывая промахи.'],
+    flee: ['Побег', 'Бежать: на 2 клетки назад (конница — на 3), за край поля — прочь из боя. Соседи бьют вслед.'],
+    bombard: ['Обстрел стены', 'Машины бьют по пряслу стены. Прясло рухнуло — пролом: туда можно идти, укрытия там нет.']
+  };
+  // знаки приказов (24×24): из этих же путей рисует и холст
+  var GLY = { march: 'M3 12h14M12 6l6 6-6 6', back: 'M21 12H7M12 6l-6 6 6 6', flee: 'M21 12H6M10 7l-5 5 5 5M16 7l-5 5 5 5', up: 'M12 21V6M6 11l6-6 6 6', down: 'M12 3v15M6 13l6 6 6-6',
+    melee: 'M4 4l16 16M20 4L4 20M3 8V3h5M21 8V3h-5', shoot: 'M5 19L18 6M13 5h6v6M5 6c7 0 13 6 13 13', hold: 'M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z', wait: 'M7 12h10', bombard: 'M12 15m-5 0a5 5 0 1 0 10 0a5 5 0 1 0-10 0M5 5l3 3M12 3v4M19 5l-3 3' };
+  var WHY = { own: 'через своих −1', forest: 'лес −1', wall: 'лезут на стену', oil: 'кипяток −1', ford: 'брод −1', charge: 'натиск +1', hunger: 'голод −1', pike: 'копья против коней 3+' };
+  function glyKey(o, side) { if (o === 'flankL') return side === 'a' ? 'up' : 'down'; if (o === 'flankR') return side === 'a' ? 'down' : 'up'; return o; }
+  function svg(o, side, cls) { return '<svg class="gs-gly ' + (cls || '') + '" viewBox="0 0 24 24" aria-hidden="true"><path d="' + GLY[glyKey(o, side)] + '"/></svg>'; }
+  var TERR_RU = { forest: 'лес: натиска нет, стрелы на 1 хуже', hills: 'холмы: нападающий идёт на клетку медленнее, стрелки обороны бьют на клетку дальше', marsh: 'болото: все идут на клетку медленнее, натиска нет', meadow: 'луг: простор для конницы', plain: 'поле: простор для конницы', ford: 'брод: нападающему в сече на 1 хуже, натиска нет', river: 'река: нападающему в сече на 1 хуже, натиска нет', mountain: 'горы: натиска нет' };
+  var GROUND = { meadow: ['#8aa650', '#62803a'], plain: ['#97aa5a', '#6c843c'], forest: ['#6f8c3e', '#4b6528'], hills: ['#a69860', '#7b6d3c'], marsh: ['#7b8551', '#58623a'], mountain: ['#9b9179', '#736a56'], ford: ['#8aa257', '#5f7b3a'], river: ['#8aa257', '#5f7b3a'] };
+  var SEAT = { bay: { stand: [.38, .22], gallop: [.38, .27], rear: [.4, .42], hit: [.4, .4] }, black: { stand: [.43, .28], gallop: [.47, .25], rear: [.42, .42], hit: [.43, .34] }, grey: { stand: [.42, .28], gallop: [.45, .28], rear: [.39, .41], hit: [.45, .3] } };
+  var LEGP = { stand: 'still', gallop: 'gallop', rear: 'rear', hit: 'hit' };
+  function esc(t) { return String(t == null ? '' : t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function clamp(v, a, b) { return v < a ? a : v > b ? b : v; }
+  function col(fac, i) { return (FCOL[fac] || FCOL.azure)[i || 0]; }
+  function artOk() { return window.ART && ART.ready; }
+  function kindRu(q) { var t = q.engine ? (W_RU[q.engine] || q.engine) : (q.mounted ? 'конные ' : '') + (W_RU[q.w] || q.w); return t.charAt(0).toUpperCase() + t.slice(1); }
+  function saveRu(t) { return t >= 7 ? 'нет' : t + '+'; }
+  function plural(n, a, b, c) { var m = n % 10, h = n % 100; return m === 1 && h !== 11 ? a : m >= 2 && m <= 4 && (h < 10 || h >= 20) ? b : c; }
+
+  // ---------------- доска: вымпелы, печать, поле, грамота ----------------
+  function Board(o) {
+    var ov = document.createElement('div'); ov.className = 'fs-ov gs-ov';
+    var bd = document.createElement('div'); bd.className = 'fs-board gs-board k-frame k-iron-corners';
+    var pen = function (side, name, n, fac) { return '<div class="fs-pen ' + side + '" style="--fc:' + col(fac) + ';--fd:' + col(fac, 1) + ';--fl:' + col(fac, 2) + '"><span class="fs-pen-nm">' + esc(name || 'дружина') + '</span><b class="fs-pen-n" data-n="' + side + '">' + n + '</b></div>'; };
+    bd.innerHTML = '<header class="fs-head">' + pen('a', o.aName, o.aN, o.aFac) + '<div class="fs-seal" aria-live="polite"><span class="fs-seal-t"></span><small></small></div>' + pen('d', o.dName, o.dN, o.dFac) + '</header>' +
+      '<div class="gs-steps" aria-hidden="true">' + Array.from({ length: 12 }, function (_, i) { return '<i class="' + (i % 3 === 2 ? 'e' : '') + '"></i>'; }).join('') + '</div>' +
+      '<div class="fs-stage gs-stage"></div><div class="fs-sheet gs-sheet k-parch"></div>';
+    ov.appendChild(bd); document.body.appendChild(ov);
+    return { ov: ov, bd: bd, stage: bd.querySelector('.fs-stage'), sheet: bd.querySelector('.fs-sheet'),
+      count: function (side, n) { var e = bd.querySelector('[data-n="' + side + '"]'); if (e && e.textContent !== String(n)) e.textContent = n; },
+      seal: function (t, s) { bd.querySelector('.fs-seal-t').textContent = t; bd.querySelector('.fs-seal small').textContent = s || ''; },
+      steps: function (n) { var ns = bd.querySelectorAll('.gs-steps i'); for (var i = 0; i < ns.length; i++) ns[i].classList.toggle('on', i < n); },
+      close: function () { if (ov.parentNode) ov.parentNode.removeChild(ov); } };
+  }
+
+  // ---------------- сцена: холст поля, отряды, слой всплывающих кубиков ----------------
+  function Scene(meta, opts) {
+    var B = Board({ aName: opts.aName, dName: opts.dName, aN: opts.aN || '', dN: opts.dN || '', aFac: opts.aFac || 'azure', dFac: opts.dFac || 'crimson' });
+    var R = meta.R || 5, C = meta.C || 6;
+    var avail = Math.min(window.innerWidth - 16, 1180) - 24, W = Math.max(300, avail);
+    var mx = W < 560 ? 6 : 14, cw = (W - 2 * mx) / C, maxCh = Math.max(46, (window.innerHeight * (W < 560 ? 0.42 : 0.5) - 40) / R), ch = Math.min(cw * (W < 560 ? 0.95 : 0.62), maxCh), top = Math.max(22, ch * 0.5), H = top + R * ch + 10;
+    var cv = document.createElement('canvas'); cv.className = 'gs-cv'; var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    cv.width = W * dpr; cv.height = H * dpr; cv.style.width = W + 'px'; cv.style.height = H + 'px';
+    var wrap = document.createElement('div'); wrap.className = 'gs-wrap'; wrap.style.width = W + 'px'; wrap.style.height = H + 'px';
+    var fx = document.createElement('div'); fx.className = 'gs-fx';
+    wrap.appendChild(cv); wrap.appendChild(fx); B.stage.appendChild(wrap);
+    var spd = 1; try { spd = +localStorage.getItem('krlv-gspd') || 1; } catch (e) { }
+    var sp = document.createElement('div'); sp.className = 'fs-speed gs-speed'; sp.setAttribute('role', 'group'); sp.setAttribute('aria-label', 'Скорость показа');
+    sp.innerHTML = [1, 2, 4].map(function (k) { return '<button data-spd="' + k + '" class="' + (spd === k ? 'on' : '') + '">×' + k + '</button>'; }).join('') + '<button data-skip="1" title="Сразу к концу шагов">»</button>';
+    B.stage.appendChild(sp);
+    var ctx = cv.getContext('2d'); ctx.scale(dpr, dpr);
+    var terr = GROUND[meta.terr] ? meta.terr : 'plain', season = opts.season || 'summer';
+    var S = { byId: {}, disp: {}, tw: [], dead: [], sel: {}, hl: {}, ghosts: [], wall: meta.wall ? meta.wall.seg.slice() : null, wallMax: meta.wall ? meta.wall.max : 0, wallLv: meta.wall ? meta.wall.lv : 0, gen: meta.gen || {}, zone: null, skip: false, shake: {} };
+    meta.sq.forEach(function (q) { S.byId[q.id] = q; S.disp[q.id] = { c: q.c, r: q.r, n: q.n, st: q.st === 'ok' ? 0 : q.st === 'flee' ? 1 : q.st === 'gone' ? 2 : 3, a: 1 }; });
+    sp.onclick = function (e) { var b = e.target.closest('button'); if (!b) return; if (b.getAttribute('data-skip')) { S.skip = true; return; } var k = +b.getAttribute('data-spd'); spd = k; try { localStorage.setItem('krlv-gspd', k); } catch (x) { } sp.querySelectorAll('[data-spd]').forEach(function (z) { z.classList.toggle('on', +z.getAttribute('data-spd') === k); }); };
+    function fac(side) { return side === 'a' ? opts.aFac || 'azure' : opts.dFac || 'crimson'; }
+    function coat(side) { return side === 'a' ? 'bay' : 'black'; }
+    function cx(c) { return mx + (c + 0.5) * cw; }
+    function cy(r) { return top + (r + 0.5) * ch; }
+    function cellAt(x, y) { var c = Math.floor((x - mx) / cw), r = Math.floor((y - top) / ch); return c >= 0 && c < C && r >= 0 && r < R ? [c, r] : null; }
+    // ---- фигуры ----
+    function figKind(q) { return artOk() && !q.engine ? ART.unitKind({ w: q.w }) : null; }
+    function drawRider(side, kind, x, y, H0, pose, dir, alpha) {
+      var hp = pose === 'walk' ? 'gallop' : pose === 'atk' ? 'rear' : pose === 'hit' ? 'hit' : 'stand', cs = coat(side);
+      var hk = 'spr/horse_' + cs + '_' + hp, hi = ART.draw(hk), hs = ART.size(hk); if (!hi) return false;
+      var hh = H0 * 1.2 * hs[1] / 150, hw = hs[0] * hh / hs[1];
+      ctx.save(); ctx.globalAlpha = alpha; ctx.translate(x, 0); ctx.scale(dir, 1); ctx.drawImage(hi, -hw / 2, y - hh, hw, hh);
+      var sx = (SEAT[cs] || SEAT.bay)[hp] || [.4, .25], seatX = -hw / 2 + sx[0] * hw, seatY = y - hh + sx[1] * hh;
+      if (kind) { var un = 'units/' + kind + '_' + (pose === 'atk' ? 'atk' : 'stand'), ui = ART.draw(un, fac(side)) || ART.draw('units/' + kind + '_stand', fac(side));
+        if (ui) { var us = ART.size(un) || ART.size('units/' + kind + '_stand'), uh = H0, uw = us[0] * uh / us[1], hip = uh * 0.53;
+          ctx.save(); ctx.beginPath(); ctx.rect(seatX - uw, seatY - hip - uh * 0.2, uw * 2, hip + uh * 0.24); ctx.clip(); ctx.drawImage(ui, seatX - uw / 2, seatY - hip, uw, uh); ctx.restore(); }
+        var lk = 'spr/hleg_' + (LEGP[hp] || 'still'), li = ART.draw(lk), ls = ART.size(lk);
+        if (li) { var lh = H0 * 0.5 * ls[1] / 95, lw = ls[0] * lh / ls[1]; ctx.drawImage(li, seatX - lw * 0.2, seatY - lh * 0.08, lw, lh); } }
+      ctx.restore(); return true;
+    }
+    function drawFig(side, kind, mounted, x, y, H0, pose, alpha) {
+      var dir = side === 'a' ? 1 : -1;
+      ctx.save(); ctx.globalAlpha = alpha * 0.8; ctx.fillStyle = 'rgba(20,14,6,.3)'; ctx.beginPath(); ctx.ellipse(x, y + 1, (mounted ? 0.42 : 0.2) * H0, 0.06 * H0, 0, 0, 6.28); ctx.fill(); ctx.restore();
+      if (mounted && artOk()) {
+        if (pose === 'dead') { var dk = 'spr/horse_' + coat(side) + '_dead', di = ART.draw(dk), ds = ART.size(dk); if (di) { var dh = H0 * 0.62, dw = ds[0] * dh / ds[1]; ctx.save(); ctx.globalAlpha = alpha; ctx.translate(x, y); ctx.scale(dir, 1); ctx.drawImage(di, -dw / 2, -dh + 3, dw, dh); ctx.restore(); return; } }
+        else if (drawRider(side, kind, x, y + 2, H0, pose, dir, alpha)) return; }
+      if (kind && artOk()) { var nm = 'units/' + kind + '_' + pose, im = ART.draw(nm, fac(side)) || ART.draw('units/' + kind + '_stand', fac(side)), s0 = ART.size('units/' + kind + '_stand');
+        if (im && s0) { var sz = ART.size(nm) || s0, k = H0 / s0[1], w = sz[0] * k, h = sz[1] * k; ctx.save(); ctx.globalAlpha = alpha; ctx.translate(x, y); ctx.scale(dir, 1); ctx.drawImage(im, -w / 2, -h + (pose === 'dead' ? h * 0.15 : 2), w, h); ctx.restore(); return; } }
+      ctx.save(); ctx.globalAlpha = alpha; ctx.fillStyle = col(fac(side)); var s = H0 / 40; if (pose === 'dead') ctx.fillRect(x - 8 * s, y - 4 * s, 16 * s, 4 * s); else { ctx.fillRect(x - 3 * s, y - 26 * s, 7 * s, 22 * s); ctx.fillStyle = '#e6c9a0'; ctx.beginPath(); ctx.arc(x, y - 30 * s, 4 * s, 0, 6.28); ctx.fill(); } ctx.restore();
+    }
+    function spr(n, x, y, h, flip, alpha) { if (!artOk()) return false; var nm = ART.seasonal ? (ART.seasonal(n, season) || n) : n, im = ART.draw(nm) || ART.draw(n); if (!im) return false;
+      var sz = ART.size(nm) || ART.size(n), w = sz[0] * h / sz[1]; ctx.save(); if (alpha != null) ctx.globalAlpha = alpha; ctx.translate(x, y); if (flip) ctx.scale(-1, 1); ctx.drawImage(im, -w / 2, -h, w, h); ctx.restore(); return true; }
+    // ---- земля и клетки: один раз ----
+    var bgCv = null;
+    function rnd(i) { var x = Math.sin(i * 12.9898 + 78.233) * 43758.5453; return x - Math.floor(x); }
+    function paintBg() {
+      var gr = GROUND[terr]; var g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, gr[1]); g.addColorStop(0.25, gr[0]); g.addColorStop(1, gr[1]); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+      for (var gI = 0; gI < 900; gI++) { var gx = rnd(gI + 100) * W, gy = rnd(gI + 300) * H, dk = rnd(gI) > 0.5; ctx.strokeStyle = season === 'winter' ? (dk ? 'rgba(120,130,130,.25)' : 'rgba(255,255,255,.5)') : dk ? 'rgba(40,60,18,.22)' : 'rgba(230,220,150,.18)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(gx, gy); ctx.lineTo(gx + 2 - rnd(gI + 7) * 4, gy - 3 - rnd(gI + 8) * 4); ctx.stroke(); }
+      if (terr === 'ford' || terr === 'river') { ctx.fillStyle = 'rgba(80,120,150,.35)'; ctx.fillRect(mx + cw * 2.6, top, cw * 0.8, R * ch); }
+      var bits = terr === 'marsh' ? ['spr/reed', 'spr/cattail', 'spr/sedge', 'spr/hummock'] : terr === 'hills' || terr === 'mountain' ? ['spr/stones', 'spr/boulder', 'spr/juniper'] : terr === 'forest' ? ['spr/fern', 'spr/stump', 'spr/shrub', 'spr/spruce', 'spr/birch1'] : ['spr/juniper', 'spr/shrub', 'spr/stones', 'spr/fern'];
+      for (var bI = 0; bI < 10; bI++) { var bx = rnd(bI + 70) * W, by = top + 6 + rnd(bI + 50) * (R * ch - 6); if (Math.abs(((bx - mx) / cw) % 1 - 0.5) < 0.3 && Math.abs(((by - top) / ch) % 1 - 0.55) < 0.3) continue; spr(bits[bI % bits.length], bx, by, ch * (terr === 'forest' && bI % 5 > 2 ? 0.7 : 0.26), rnd(bI) > 0.5, 0.9); }
+      // клетки: тонкие борозды; колонки зон — чуть темнее
+      for (var c = 0; c < C; c++) for (var r = 0; r < R; r++) { ctx.fillStyle = (c + r) % 2 ? 'rgba(255,250,220,.05)' : 'rgba(30,20,0,.05)'; ctx.fillRect(mx + c * cw, top + r * ch, cw, ch); }
+      ctx.strokeStyle = 'rgba(40,28,10,.28)'; ctx.lineWidth = 1; ctx.setLineDash([3, 4]);
+      for (var c2 = 0; c2 <= C; c2++) { ctx.beginPath(); ctx.moveTo(mx + c2 * cw, top); ctx.lineTo(mx + c2 * cw, top + R * ch); ctx.stroke(); }
+      for (var r2 = 0; r2 <= R; r2++) { ctx.beginPath(); ctx.moveTo(mx, top + r2 * ch); ctx.lineTo(mx + C * cw, top + r2 * ch); ctx.stroke(); }
+      ctx.setLineDash([]);
+      var vg = ctx.createRadialGradient(W / 2, H * 0.5, H * 0.35, W / 2, H * 0.5, W * 0.7); vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(20,12,4,.32)'); ctx.fillStyle = vg; ctx.fillRect(0, 0, W, H);
+    }
+    function drawBg() { if (!bgCv) { bgCv = document.createElement('canvas'); bgCv.width = W * dpr; bgCv.height = H * dpr; var c0 = ctx; ctx = bgCv.getContext('2d'); ctx.scale(dpr, dpr); paintBg(); ctx = c0; } ctx.drawImage(bgCv, 0, 0, W, H); }
+    // ---- стена: 5 прясел по линии 2|3, башни на стыках, ворота в среднем ряду; рухнувшее — руины ----
+    function drawWall() {
+      if (!S.wall) return; var x = mx + 3 * cw, lv = S.wallLv, wood = lv <= 2, th = Math.max(8, cw * 0.11);
+      for (var r = 0; r < R; r++) { var y0 = top + r * ch, hp = S.wall[r], frac = S.wallMax ? hp / S.wallMax : 0, gate = r === (meta.wall.gate || 2);
+        if (hp <= 0) { if (!spr('spr/fp_ruin', x, y0 + ch * 0.92, ch * 0.62, r % 2)) { ctx.fillStyle = '#7a7266'; ctx.fillRect(x - th, y0 + ch * 0.55, th * 2, ch * 0.3); } continue; }
+        ctx.save(); var hgt = ch * (wood ? 0.5 : 0.62);
+        ctx.fillStyle = wood ? '#6b4a26' : '#b9b1a1'; ctx.strokeStyle = wood ? '#3f2a12' : '#6d675c'; ctx.lineWidth = 1.2;
+        ctx.fillRect(x - th / 2, y0 + 2, th, ch - 4); ctx.strokeRect(x - th / 2, y0 + 2, th, ch - 4);
+        // кладка / частокол
+        ctx.strokeStyle = wood ? 'rgba(30,18,6,.5)' : 'rgba(80,74,64,.55)';
+        if (wood) for (var i = 0; i < 6; i++) { ctx.beginPath(); ctx.moveTo(x - th / 2, y0 + 2 + i * (ch - 4) / 6); ctx.lineTo(x + th / 2, y0 + 2 + i * (ch - 4) / 6); ctx.stroke(); }
+        else for (var j = 0; j < 7; j++) { var yy = y0 + 2 + j * (ch - 4) / 7; ctx.beginPath(); ctx.moveTo(x - th / 2, yy); ctx.lineTo(x + th / 2, yy); ctx.stroke(); ctx.beginPath(); ctx.moveTo(x + (j % 2 ? -th / 6 : th / 6), yy); ctx.lineTo(x + (j % 2 ? -th / 6 : th / 6), yy + (ch - 4) / 7); ctx.stroke(); }
+        // зубцы — к нападающему
+        ctx.fillStyle = wood ? '#7a5730' : '#cfc7b6'; for (var k = 0; k < 5; k++) ctx.fillRect(x - th / 2 - th * 0.35, y0 + 4 + k * (ch - 8) / 5, th * 0.35, (ch - 8) / 10);
+        if (gate) { ctx.fillStyle = '#4a3218'; ctx.fillRect(x - th / 2 - 1, y0 + ch * 0.28, th + 2, ch * 0.44); ctx.strokeStyle = '#2a1a08'; ctx.strokeRect(x - th / 2 - 1, y0 + ch * 0.28, th + 2, ch * 0.44); ctx.fillStyle = '#b08a3a'; ctx.fillRect(x - 1.5, y0 + ch * 0.48, 3, 3); }
+        if (frac < 1) { ctx.strokeStyle = 'rgba(30,20,10,.75)'; ctx.lineWidth = 1.5; var cr = Math.ceil((1 - frac) * 4); for (var q = 0; q < cr; q++) { var yy2 = y0 + ch * (0.2 + 0.18 * q); ctx.beginPath(); ctx.moveTo(x - th / 2, yy2); ctx.lineTo(x - 1, yy2 + 5); ctx.lineTo(x + 2, yy2 - 3); ctx.lineTo(x + th / 2, yy2 + 4); ctx.stroke(); } }
+        // прочность — точки
+        for (var p = 0; p < S.wallMax; p++) { ctx.fillStyle = p < hp ? '#e8d9a8' : 'rgba(40,30,20,.6)'; ctx.beginPath(); ctx.arc(x + th / 2 + 5, y0 + 8 + p * 7, 2.4, 0, 6.28); ctx.fill(); }
+        ctx.restore(); }
+      // башни на стыках
+      for (var t = 0; t <= R; t++) { var ty = top + t * ch; if (t > 0 && t < R && S.wall[t - 1] <= 0 && S.wall[t] <= 0) continue; ctx.fillStyle = wood ? '#5a3c1c' : '#a69e8d'; ctx.strokeStyle = wood ? '#2f1e0a' : '#5f594f'; ctx.beginPath(); ctx.arc(x, ty, th * 0.75, 0, 6.28); ctx.fill(); ctx.stroke(); }
+    }
+    // ---- отряд: строй фигур в клетке, вымпел с числом ----
+    function posOf(id, now) {
+      var d = S.disp[id], p = { c: d.c, r: d.r };
+      for (var i = 0; i < S.tw.length; i++) { var t = S.tw[i]; if (t.id !== id) continue; var k = clamp((now - t.t0) / t.dur, 0, 1); k = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2; p = { c: t.f[0] + (t.to[0] - t.f[0]) * k, r: t.f[1] + (t.to[1] - t.f[1]) * k, moving: k < 1 }; }
+      var sh = S.shake[id]; if (sh && now < sh.until) { var ph = (sh.until - now) / sh.dur; p.c += Math.sin(ph * 18) * 0.04 * sh.dir; }
+      return p;
+    }
+    function drawSquad(q, now) {
+      var d = S.disp[q.id]; if (!d || d.a <= 0.01 || d.n <= 0) return; var p = posOf(q.id, now), x = cx(p.c), yb = top + (p.r + 0.9) * ch, side = q.side, alpha = d.a;
+      var flee = d.st === 1, sel = S.sel[q.id], hl = S.hl[q.id];
+      if (sel || hl) { ctx.save(); ctx.strokeStyle = sel ? '#ffd76a' : hl === 'tgt' ? '#ff7b5c' : 'rgba(255,240,190,.8)'; ctx.lineWidth = sel ? 3 : 2; ctx.setLineDash(hl && !sel ? [5, 4] : []); ctx.strokeRect(mx + p.c * cw + 3, top + p.r * ch + 3, cw - 6, ch - 6); ctx.restore(); }
+      var H0 = ch * 0.5;
+      if (q.engine) { var sn = 'spr/' + q.engine, ok = spr(sn, x, yb, ch * 0.66, side === 'd', alpha); if (!ok) { ctx.fillStyle = '#5b4426'; ctx.fillRect(x - cw * 0.2, yb - ch * 0.35, cw * 0.4, ch * 0.3); }
+        if (d.n > 1) badge(x + cw * 0.28, yb - ch * 0.62, '×' + d.n, side, false); return; }
+      var nFig = q.mounted ? Math.min(d.n, 3) : Math.min(d.n, 8), per = q.mounted ? 3 : 4, rows = Math.ceil(nFig / per) || 1, kind = figKind(q), pose = p.moving ? 'walk' : (S.atk && S.atk[q.id] && now < S.atk[q.id]) ? 'atk' : 'stand';
+      var dir = side === 'a' ? 1 : -1, spanX = cw * (q.mounted ? 0.62 : 0.66);
+      for (var rk = rows - 1; rk >= 0; rk--) { var inRow = Math.min(per, nFig - rk * per); if (inRow <= 0) continue;
+        var ry = yb - (rows - 1 - rk) * ch * 0.2 - (rows === 1 ? ch * 0.08 : 0);
+        for (var i = 0; i < inRow; i++) { var fxp = x - spanX / 2 + (i + 0.5) * spanX / per + (rk % 2 ? dir * spanX / per / 2 : 0) - dir * rk * cw * 0.03;
+          if (flee) fxp += Math.sin(now / 90 + i) * 1.2;
+          drawFig(side, kind, q.mounted, fxp, ry, H0 * (rk === 0 ? 1 : 0.94), pose, alpha * (flee ? 0.85 : 1)); } }
+      badge(x - dir * cw * 0.36, top + p.r * ch + ch * 0.2, flee ? d.n + '↩' : String(d.n), side, flee);
+      if (S.gen[side] === q.id) banner(x + dir * cw * 0.34, top + p.r * ch + ch * 0.12, side);
+    }
+    function badge(x, y, t, side, grey) {
+      var c = grey ? '#7d7466' : col(fac(side)), cd = col(fac(side), 1), dir = side === 'a' ? 1 : -1, ph = Math.max(13, ch * 0.2), pw = Math.max(24, ch * 0.34);
+      ctx.save(); ctx.strokeStyle = '#3a2814'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(x, y - 3); ctx.lineTo(x, y + ph + 8); ctx.stroke();
+      ctx.fillStyle = c; ctx.strokeStyle = cd; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + dir * pw, y); ctx.lineTo(x + dir * pw * 0.82, y + ph / 2); ctx.lineTo(x + dir * pw, y + ph); ctx.lineTo(x, y + ph); ctx.closePath(); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = '#fff7e2'; ctx.font = '700 ' + Math.round(ph * 0.78) + 'px AlegreyaSC, Georgia, serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(t, x + dir * pw * 0.42, y + ph / 2 + 0.5); ctx.restore();
+    }
+    function banner(x, y, side) {   // знамя князя: высокое древко со стягом и навершием
+      var c = col(fac(side)), dir = side === 'a' ? 1 : -1, h = ch * 0.62, w = ch * 0.3;
+      ctx.save(); ctx.strokeStyle = '#2e1e0c'; ctx.lineWidth = 2.4; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x, y + h); ctx.stroke();
+      ctx.fillStyle = '#d9b44a'; ctx.beginPath(); ctx.moveTo(x, y - 6); ctx.lineTo(x - 3, y); ctx.lineTo(x + 3, y); ctx.fill();
+      ctx.fillStyle = c; ctx.strokeStyle = '#d9b44a'; ctx.lineWidth = 1.4; ctx.beginPath(); ctx.moveTo(x, y + 2); ctx.lineTo(x + dir * w, y + 2 + w * 0.15); ctx.lineTo(x + dir * w * 0.9, y + 2 + w * 0.95); ctx.lineTo(x, y + 2 + w * 1.05); ctx.closePath(); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = '#f5e2a0'; ctx.beginPath(); ctx.arc(x + dir * w * 0.48, y + 2 + w * 0.55, w * 0.16, 0, 6.28); ctx.fill(); ctx.restore();
+    }
+    // ---- приказы на доске: три знака под отрядом и тень пути ----
+    var PATHS = {}; Object.keys(GLY).forEach(function (k) { try { PATHS[k] = new Path2D(GLY[k]); } catch (e) { } });
+    function glyph(o, side, x, y, s, colr) { var p = PATHS[glyKey(o, side)]; if (!p) return; ctx.save(); ctx.translate(x - 12 * s, y - 12 * s); ctx.scale(s, s); ctx.strokeStyle = colr || '#2a1a08'; ctx.lineWidth = 2.6; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.fill && o === 'hold' && (ctx.fillStyle = 'rgba(255,240,200,.6)', ctx.fill(p)); ctx.stroke(p); ctx.restore(); }
+    function drawPlans(now) {
+      if (!S.plans) return;
+      S.ghosts.forEach(function (g) { ctx.save(); ctx.strokeStyle = 'rgba(255,236,170,.85)'; ctx.lineWidth = 2; ctx.setLineDash([4, 4]); ctx.beginPath(); ctx.moveTo(cx(g.path[0][0]), cy(g.path[0][1])); for (var i = 1; i < g.path.length; i++) ctx.lineTo(cx(g.path[i][0]), cy(g.path[i][1])); ctx.stroke(); ctx.setLineDash([]);
+        for (var j = 1; j < g.path.length; j++) { var pt = g.path[j]; if (pt[0] === g.path[j - 1][0] && pt[1] === g.path[j - 1][1]) continue; ctx.fillStyle = 'rgba(255,236,170,.92)'; ctx.beginPath(); ctx.arc(cx(pt[0]), cy(pt[1]), 7, 0, 6.28); ctx.fill(); ctx.fillStyle = '#3a2814'; ctx.font = '700 10px Georgia'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(String(pt[2]), cx(pt[0]), cy(pt[1]) + 0.5); }
+        (g.tg || []).forEach(function (t) { var e = S.byId[t[1]], d = e && S.disp[e.id]; if (!d) return; ctx.strokeStyle = t[2] === 'shoot' ? 'rgba(255,200,120,.9)' : 'rgba(255,120,90,.9)'; ctx.lineWidth = 1.6; ctx.setLineDash([2, 3]); ctx.beginPath(); ctx.moveTo(cx(t[0][0]), cy(t[0][1])); ctx.lineTo(cx(d.c), cy(d.r)); ctx.stroke(); ctx.setLineDash([]); });
+        ctx.restore(); });
+      for (var id in S.plans) { var q = S.byId[id], d = S.disp[id]; if (!q || !d || d.st) continue; if (W < 560 && !S.sel[id]) continue; var st = S.plans[id], bx = cx(d.c) - 21, by = top + (d.r + 1) * ch - 9;
+        ctx.save(); ctx.fillStyle = 'rgba(250,240,210,.88)'; ctx.strokeStyle = 'rgba(60,40,15,.7)'; ctx.lineWidth = 1; ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(bx - 2, by - 8, 46, 16, 4); else ctx.rect(bx - 2, by - 8, 46, 16); ctx.fill(); ctx.stroke(); ctx.restore();
+        for (var k = 0; k < 3; k++) glyph((st[k] || {}).o || 'wait', q.side, bx + 7 + k * 14, by, 0.5, S.slotHl && S.sel[id] && S.slotHl === k + 1 ? '#a8201a' : '#2a1a08'); }
+    }
+    // ---- снаряды ----
+    var shots = [];
+    function drawShots(now) {
+      shots = shots.filter(function (s) { return now < s.t0 + s.dur + 60; });
+      shots.forEach(function (s) { var k = clamp((now - s.t0) / s.dur, 0, 1); if (k <= 0 || k >= 1) return;
+        for (var i = 0; i < s.n; i++) { var jx = (rnd(i + s.seed) - 0.5) * cw * 0.5, jy = (rnd(i + s.seed + 9) - 0.5) * ch * 0.5, kk = clamp(k - i * 0.04, 0, 1);
+          var x0 = s.x0 + jx * 0.4, y0 = s.y0 + jy * 0.3, x1 = s.x1 + jx, y1 = s.y1 + jy, x = x0 + (x1 - x0) * kk, y = y0 + (y1 - y0) * kk - Math.sin(kk * Math.PI) * s.arc;
+          if (s.stone) { ctx.fillStyle = '#4b453c'; ctx.beginPath(); ctx.arc(x, y, 3.5, 0, 6.28); ctx.fill(); continue; }
+          var dx = (x1 - x0), dy = (y1 - y0) - Math.cos(kk * Math.PI) * s.arc * Math.PI, a = Math.atan2(dy, dx);
+          ctx.save(); ctx.translate(x, y); ctx.rotate(a); ctx.strokeStyle = '#2b1d0d'; ctx.lineWidth = 1.3; ctx.beginPath(); ctx.moveTo(-8, 0); ctx.lineTo(4, 0); ctx.stroke(); ctx.fillStyle = '#2b1d0d'; ctx.beginPath(); ctx.moveTo(6, 0); ctx.lineTo(2, -2); ctx.lineTo(2, 2); ctx.fill(); ctx.restore(); } });
+    }
+    var raf = 0, cursorMsg = null;
+    function render(now) {
+      raf = requestAnimationFrame(render);
+      drawBg();
+      if (S.zone) { ctx.save(); ctx.fillStyle = 'rgba(255,230,140,.13)'; ctx.strokeStyle = 'rgba(255,230,140,.5)'; S.zone.forEach(function (c) { ctx.fillRect(mx + c * cw, top, cw, R * ch); }); ctx.restore(); }
+      if (S.cellHl) S.cellHl.forEach(function (p) { ctx.save(); ctx.fillStyle = p[2] || 'rgba(255,240,180,.22)'; ctx.fillRect(mx + p[0] * cw + 2, top + p[1] * ch + 2, cw - 4, ch - 4); ctx.restore(); });
+      S.dead.forEach(function (d) { drawFig(d.side, d.kind, d.m, d.x, d.y, ch * 0.42, 'dead', 0.75); });
+      drawWall();
+      var list = meta.sq.slice().sort(function (a, b) { return posOf(a.id, now).r - posOf(b.id, now).r; });
+      list.forEach(function (q) { drawSquad(q, now); });
+      drawPlans(now); drawShots(now);
+      if (S.flash) S.flash = S.flash.filter(function (f) { return now < f.t0 + f.dur; }), S.flash.forEach(function (f) { var k = (now - f.t0) / f.dur; ctx.save(); ctx.globalAlpha = 1 - k; ctx.strokeStyle = '#fff2c0'; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(f.x, f.y, 6 + k * ch * 0.4, 0, 6.28); ctx.stroke(); ctx.restore(); });
+    }
+    raf = requestAnimationFrame(render);
+    // ---- всплывающие кубики ----
+    function pop(x, y, html, dur, cls) {
+      var e = document.createElement('div'); e.className = 'gs-pop ' + (cls || ''); e.style.left = clamp(x, 40, W - 40) + 'px'; e.innerHTML = html; fx.appendChild(e);
+      // не налезать на соседние всплывашки: поднимаем, пока есть пересечение
+      var yy = clamp(y, 30, H), h = e.offsetHeight || 40, w = e.offsetWidth || 120, xl = clamp(x, 40, W - 40), others = Array.prototype.slice.call(fx.children).filter(function (o) { return o !== e && !o.classList.contains('out'); });
+      for (var guard = 0; guard < 8; guard++) { var hitO = others.find(function (o) { var ox = parseFloat(o.style.left), oy = parseFloat(o.style.top), oh = o.offsetHeight, ow = o.offsetWidth; return Math.abs(ox - xl) < (ow + w) / 2 && yy > oy - oh - 2 && yy - h < oy + 2; }); if (!hitO) break; yy = parseFloat(hitO.style.top) - hitO.offsetHeight - 4; if (yy - h < 0) { yy = parseFloat(hitO.style.top) + h + 4; } }
+      e.style.top = clamp(yy, h, H) + 'px';
+      setTimeout(function () { e.classList.add('out'); }, Math.max(200, dur - 260)); setTimeout(function () { if (e.parentNode) e.parentNode.removeChild(e); }, dur);
+      return e;
+    }
+    function diceHtml(R) {
+      var h = '<div class="gs-dr">' + R.d.slice(0, 16).map(function (d) { return '<i class="' + (d >= R.th ? 'h' : '') + '">' + Math.abs(d) + '</i>'; }).join('') + (R.d.length > 16 ? '<b>+' + (R.d.length - 16) + '</b>' : '') + '<em>' + R.th + '+</em></div>' + (R.why && R.why.length ? '<small>' + R.why.map(function (w) { return WHY[w] || w; }).join(', ') + '</small>' : '');
+      if (R.s && R.s.length) h += '<div class="gs-dr s">' + R.s.slice(0, 16).map(function (d) { return '<i class="' + (d >= R.sth ? 'ok' : 'x') + '">' + d + '</i>'; }).join('') + '<em>спас ' + saveRu(R.sth) + '</em></div>';
+      return h + '<div class="gs-k">' + (R.k ? '−' + R.k : 'мимо') + (R.rr ? '<small> переброс промахов</small>' : '') + (R.rs ? '<small> оборона: переброс</small>' : '') + (R.ch ? '<small> натиск +1</small>' : '') + (R.first ? '<small> копья бьют первыми</small>' : '') + '</div>';
+    }
+    function corpses(id, k) { var q = S.byId[id], d = S.disp[id]; if (!q || !d || q.engine) return;
+      for (var i = 0; i < Math.min(k, 6); i++) { if (S.dead.length > 140) S.dead.shift(); S.dead.push({ side: q.side, kind: figKind(q), m: q.mounted, x: cx(d.c) + (Math.random() - 0.5) * cw * 0.7, y: top + (d.r + 0.55 + Math.random() * 0.4) * ch }); } }
+    function T(ms) { return S.skip ? 0 : ms * 0.75 / spd; }
+    function wait(ms, cb) { if (S.skip) return cb(); setTimeout(cb, T(ms)); }
+    function countSide(side) { var n = 0; meta.sq.forEach(function (q) { if (q.side === side && !q.engine) n += S.disp[q.id].n; }); return n; }
+    // ---- один шаг журнала ----
+    function playStep(E, cb) {
+      var now = function () { return performance.now(); };
+      var seq = [];
+      if (E.burn.length) seq.push(function (nx) { E.burn.forEach(function (id) { var d = S.disp[id]; if (d) pop(cx(d.c), top + d.r * ch + ch * 0.4, 'приказ сгорел', T(1100), 'burn'); }); wait(500, nx); });
+      var part = E.mel.filter(function (m) { return m.part; }), leave = E.mv.filter(function (m) { return m.o === 'flee' || m.o === 'back'; });
+      if (part.length) seq.push(function (nx) { part.forEach(function (R) { strike(R); }); wait(1200, nx); });
+      if (leave.length) seq.push(function (nx) { leave.forEach(function (m) { move(m, 650); }); wait(700, function () { leave.forEach(function (m) { if (m.out) fade(m.id); }); nx(); }); });
+      if (E.shot.length || E.eng.length) seq.push(function (nx) {
+        E.shot.forEach(function (R, i) { setTimeout(function () { var a = S.disp[R.id], t = S.disp[R.t]; if (!a || !t) return; S.atk = S.atk || {}; S.atk[R.id] = now() + T(500);
+          shots.push({ t0: now(), dur: T(520), n: Math.min(7, Math.ceil(R.d.length / 2)), x0: cx(a.c), y0: cy(a.r) - ch * 0.25, x1: cx(t.c), y1: cy(t.r) - ch * 0.1, arc: R.eng ? ch * 0.8 : ch * 0.45, seed: i * 31, stone: !!R.eng });
+          setTimeout(function () { hurt(R); pop(cx(t.c), top + t.r * ch + ch * 0.05, diceHtml(R), T(2000)); }, T(520)); }, T(i * 160)); });
+        E.eng.forEach(function (R, i) { setTimeout(function () { var a = S.disp[R.id]; if (!a) return; var wx = mx + 3 * cw, wy = cy(R.row);
+          shots.push({ t0: now(), dur: T(650), n: Math.max(1, R.d.length), x0: cx(a.c), y0: cy(a.r) - ch * 0.3, x1: wx, y1: wy, arc: R.id.indexOf('ram') >= 0 ? 0 : ch * 1.1, seed: 77 + i, stone: true });
+          setTimeout(function () { if (S.wall) S.wall[R.row] = Math.max(0, S.wall[R.row] - R.dmg); S.flash = (S.flash || []).concat([{ x: wx, y: wy, t0: now(), dur: T(500) }]);
+            pop(wx, top + R.row * ch, '<div class="gs-dr">' + R.d.map(function (d) { return '<i class="' + (d >= R.th ? 'h' : '') + '">' + d + '</i>'; }).join('') + '<em>' + R.th + '+</em></div><div class="gs-k">' + (R.breach ? 'ПРОЛОМ!' : R.dmg ? 'прясло −' + R.dmg : 'камни мимо') + '</div>', T(1900), R.breach ? 'big' : ''); }, T(650)); }, T((E.shot.length + i) * 160)); });
+        wait(900 + (E.shot.length + E.eng.length) * 160 + 900, nx); });
+      var go = E.mv.filter(function (m) { return m.o !== 'flee' && m.o !== 'back'; });
+      if (go.length) seq.push(function (nx) { go.forEach(function (m) { move(m, m.ch ? 520 : 700); if (m.lad) { var d = S.byId[m.id]; } }); wait(760, function () {
+        go.forEach(function (m) { if (m.ch) { var d = S.disp[m.id]; pop(cx(d.c), top + d.r * ch, 'НАТИСК!', T(1000), 'big'); } if (m.lad) { var d2 = S.disp[m.id]; pop(cx(d2.c), top + d2.r * ch, 'лестницы на стену', T(1000)); } }); nx(); }); });
+      var mel = E.mel.filter(function (m) { return !m.part; });
+      if (mel.length) seq.push(function (nx) {
+        (E.ev || []).filter(function (e) { return e.e === 'set'; }).forEach(function (e) { var d = S.disp[e.id]; if (d) pop(cx(d.c), top + d.r * ch, 'копья встретили натиск!', T(1200), 'big'); });
+        mel.forEach(function (R, i) { setTimeout(function () { strike(R); }, T(i * 220)); });
+        wait(1300 + mel.length * 220, nx); });
+      seq.push(function (nx) {   // итог шага: счёт, стена, павшие отряды
+        (E.snap || []).forEach(function (a) { var d = S.disp[a[0]]; if (!d) return; if (d.n > a[3]) corpses(a[0], d.n - a[3]); d.n = a[3]; d.c = a[1]; d.r = a[2];
+          var was = d.st; d.st = a[4]; if (a[4] >= 2 && was < 2) fade(a[0], a[4] === 3); });
+        if (E.wall && S.wall) S.wall = E.wall.slice();
+        B.count('a', countSide('a')); B.count('d', countSide('d'));
+        if (E.mor.length) { E.mor.forEach(function (m) { var d = S.disp[m.id]; if (!d) return; pop(cx(d.c), top + d.r * ch + ch * 0.1, '<div class="gs-mor"><i class="' + (m.ok ? 'ok' : 'x') + '">' + m.d + '</i>' + (m.m ? (m.m > 0 ? '+' : '') + m.m : '') + ' <span>' + (m.ok ? 'держатся' : 'дрогнули!') + '</span></div><small>дух: нужно 4+</small>', T(1700), m.ok ? '' : 'big'); }); wait(1500, nx); }
+        else wait(150, nx); });
+      seq.push(function (nx) {
+        var evs = (E.ev || []).filter(function (e) { return e.e === 'wound' || e.e === 'break' || e.e === 'chase'; });
+        evs.forEach(function (e) { if (e.e === 'wound') { S.gen[e.side] = null; pop(W / 2, H * 0.3, (e.side === 'a' ? opts.aName : opts.dName) + ' ранен — знамя пало', T(1800), 'big'); }
+          if (e.e === 'break') pop(W / 2, H * 0.45, 'Войско ' + (e.side === 'a' ? opts.aName : opts.dName) + ' бежит!', T(2000), 'big');
+          if (e.e === 'chase') pop(W / 2, H * 0.6, 'Погоня: изрублено ' + e.n, T(1800)); });
+        wait(evs.length ? 1700 : 50, nx); });
+      var i = 0; (function next() { if (i >= seq.length) return cb(); seq[i++](next); })();
+    }
+    function strike(R) { var a = S.disp[R.id], t = S.disp[R.t]; if (!a || !t) return; S.atk = S.atk || {}; S.atk[R.id] = performance.now() + T(600);
+      var dir = Math.sign(t.c - a.c) || 1; S.shake[R.t] = { until: performance.now() + T(500), dur: T(500), dir: dir }; S.flash = (S.flash || []).concat([{ x: (cx(a.c) + cx(t.c)) / 2, y: (cy(a.r) + cy(t.r)) / 2, t0: performance.now(), dur: T(450) }]);
+      hurt(R); pop((cx(a.c) + cx(t.c)) / 2, (top + a.r * ch + top + t.r * ch) / 2 + ch * 0.05, diceHtml(R), T(2100), R.part ? 'part' : ''); }
+    function hurt(R) { var t = S.disp[R.t]; if (!t || !R.k) return; corpses(R.t, R.k); t.n = Math.max(0, t.n - R.k); B.count('a', countSide('a')); B.count('d', countSide('d')); }
+    function move(m, dur) { var d = S.disp[m.id]; if (!d) return; S.tw = S.tw.filter(function (t) { return t.id !== m.id; }); var to = m.out ? [m.to[0] + (S.byId[m.id].side === 'a' ? -1 : 1) * 0.9, m.to[1]] : m.to;
+      if (S.skip) { d.c = m.to[0]; d.r = m.to[1]; return; }
+      S.tw.push({ id: m.id, f: [d.c, d.r], to: to, t0: performance.now(), dur: T(dur) }); setTimeout(function () { d.c = m.to[0]; d.r = m.to[1]; if (m.out) d.a = 0; S.tw = S.tw.filter(function (t) { return t.id !== m.id; }); }, T(dur)); }
+    function fade(id, dead) { var d = S.disp[id]; if (!d) return; if (dead && d.n > 0) corpses(id, d.n); var t0 = performance.now(); (function f() { var k = (performance.now() - t0) / T(600 || 1); d.a = Math.max(0, 1 - (S.skip ? 1 : k)); if (d.a > 0) requestAnimationFrame(f); })(); }
+    function playLog(log, from, cb) { var i = from; S.plans = null; S.ghosts = []; (function next() { if (i >= log.length) { S.skip = false; return cb(); } B.steps(log[i].step + 1); B.seal(String(log[i].step % 3 + 1), 'шаг · стек ' + (Math.floor(log[i].step / 3) + 1)); playStep(log[i++], next); })(); }
+    function applySnap(snap, wall) { snap.forEach(function (a) { var d = S.disp[a[0]]; if (!d) return; d.c = a[1]; d.r = a[2]; d.n = a[3]; d.st = a[4]; d.a = a[4] >= 2 ? 0 : 1; }); if (wall && S.wall) S.wall = wall.slice(); B.count('a', countSide('a')); B.count('d', countSide('d')); }
+    function close() { cancelAnimationFrame(raf); B.close(); }
+    cv.addEventListener('click', function (e) { if (!S.onCell) return; var rc = cv.getBoundingClientRect(), cell = cellAt((e.clientX - rc.left) * W / rc.width, (e.clientY - rc.top) * H / rc.height); if (cell) S.onCell(cell[0], cell[1], e); });
+    return { B: B, S: S, meta: meta, sheet: B.sheet, playLog: playLog, applySnap: applySnap, close: close, fac: fac, glyph: glyph, W: W, wrap: wrap };
+  }
+
+  // ---------------- что можно приказать отряду ----------------
+  function ordersFor(q, wall) {
+    if (q.engine === 'ram') return ['wait', 'march', 'flankL', 'flankR', 'bombard', 'back'];
+    if (q.engine) return wall ? ['wait', 'bombard', 'shoot'] : ['wait', 'shoot'];
+    if (q.ranged) return ['shoot', 'hold', 'march', 'flankL', 'flankR', 'melee', 'back', 'flee', 'wait'];
+    return ['march', 'melee', 'hold', 'flankL', 'flankR', 'back', 'flee', 'wait'];
+  }
+  function occ(view, disp, c, r, skip) { for (var i = 0; i < view.sq.length; i++) { var q = view.sq[i], d = disp[q.id]; if (q.id !== skip && d && d.st < 2 && d.c === c && d.r === r) return q; } return null; }
+  // тень пути: где будет отряд после каждого из трёх приказов (без учёта чужих ходов)
+  function ghost(view, disp, q, stack) {
+    var d = disp[q.id], c = d.c, r = d.r, path = [[c, r, 0]], tg = [], dir = q.side === 'a' ? 1 : -1, wall = view.wall;
+    var crossBlocked = function (c1, c2, rr) { return wall && Math.min(c1, c2) === 2 && Math.max(c1, c2) === 3 && wall.seg[rr] > 0; };
+    for (var i = 0; i < 3; i++) { var o = (stack[i] || {}).o || 'wait', v = 0;
+      if (o === 'march') { v = q.engine === 'ram' ? 1 : q.speed || 2; while (v-- > 0) { var nc = c + dir, z = occ(view, disp, nc, r, q.id); if (nc < 0 || nc >= 6 || z || crossBlocked(c, nc, r) && (q.mounted || q.engine)) break; if (crossBlocked(c, nc, r)) { c = nc; break; } c = nc; } }
+      else if (o === 'flankL' || o === 'flankR') { v = q.mounted ? 2 : 1; var dr = (o === 'flankL' ? -1 : 1) * (q.side === 'a' ? 1 : -1); while (v-- > 0) { var nr = r + dr; if (nr < 0 || nr >= 5 || occ(view, disp, c, nr, q.id)) break; r = nr; } }
+      else if (o === 'back' || o === 'flee') { v = o === 'flee' ? (q.mounted ? 3 : 2) : (q.mounted ? 2 : 1); while (v-- > 0) { var bc = c - dir; if (bc < 0 || bc >= 6 || occ(view, disp, bc, r, q.id) || crossBlocked(c, bc, r)) break; c = bc; } }
+      if ((o === 'shoot' || o === 'melee') && stack[i].t) tg.push([[c, r], stack[i].t, o]);
+      path.push([c, r, i + 1]); }
+    return { id: q.id, path: path, tg: tg };
+  }
+
+  // ---------------- расстановка ----------------
+  function deployPanel(sc, view, send, onView) {
+    var S = sc.S, mine = view.sq.filter(function (q) { return q.side === 'a'; }), dep = {}, sel = null, banner = view.gen && view.gen.a;
+    mine.forEach(function (q) { dep[q.id] = [q.c, q.r]; });
+    S.zone = view.zone; sc.B.seal('Строй', 'расстановка');
+    function draw() {
+      S.sel = {}; if (sel) S.sel[sel] = 1; S.gen.a = banner;
+      var q = sel && sc.S.byId[sel];
+      sc.sheet.innerHTML = '<h3>Расставьте войско</h3><p class="gs-hint">Нажмите свой отряд, затем клетку в подсвеченных колонках — встанет туда (свой отряд поменяется местами). Строй врага виден: он встал первым.' + (view.wall ? ' Стена — между третьей и четвёртой колонками; лезть на неё могут лишь пешие, коннице и машинам нужен пролом.' : '') + '</p>' +
+        (q ? '<div class="gs-selq"><b>' + esc(kindRu(q)) + '</b> · ' + q.n + ' ' + plural(q.n, 'боец', 'бойца', 'бойцов') + (q.engine ? '' : ' · спасбросок ' + saveRu(q.save) + (q.hit ? ' · бьют ' + q.hit + '+' : '') + (q.range ? ' · бьют на ' + q.range + ' кл.' : '') + ' · марш ' + q.speed) + (!q.engine && view.gen && view.gen.a !== undefined ? ' <button class="k-btn k-paper" data-act="banner">' + (banner === q.id ? 'Знамя здесь' : 'Знамя князя сюда') + '</button>' : '') + '</div>' : '') +
+        '<div class="fs-btns"><button class="k-btn" data-act="auto" title="Советник расставит и доведёт бой без пауз">Доиграть советником</button><button class="k-btn k-main" data-act="go">К приказам</button></div>';
+    }
+    S.onCell = function (c, r) {
+      var z = occ(view, S.disp, c, r);
+      if (z && z.side === 'a') { sel = sel === z.id ? null : z.id; return draw(); }
+      if (!sel || view.zone.indexOf(c) < 0) return;
+      var d = S.disp[sel], other = occ(view, S.disp, c, r, sel);
+      if (other && other.side !== 'a') return;
+      if (other) { var od = S.disp[other.id]; od.c = d.c; od.r = d.r; dep[other.id] = [od.c, od.r]; }
+      d.c = c; d.r = r; dep[sel] = [c, r]; draw();
+    };
+    sc.sheet.onclick = function (e) { var b = e.target.closest('[data-act]'); if (!b) return; var act = b.getAttribute('data-act');
+      if (act === 'banner') { banner = sel; return draw(); }
+      S.onCell = null; S.zone = null; S.sel = {}; sc.sheet.onclick = null; sc.sheet.innerHTML = '<p class="fs-wait">Войска встают…</p>';
+      send(act === 'auto' ? 'auto' : { deploy: dep, banner: banner }, onView); };
+    draw();
+  }
+
+  // ---------------- приказы: стеки по три ----------------
+  function ordersPanel(sc, view, send, onView) {
+    var S = sc.S, mine = view.sq.filter(function (q) { return q.side === 'a' && q.st === 'ok' && q.n > 0; }), stacks = {}, sel = {}, slot = 0, group = false, pendT = null;
+    var adv = view.advice || {}; mine.forEach(function (q) { stacks[q.id] = [0, 1, 2].map(function (i) { var a = adv[q.id] && adv[q.id][i]; return a ? { o: a.o, t: a.t, row: a.row } : { o: 'wait' }; }); });
+    S.plans = stacks; var stk = Math.floor(view.step / 3) + 1;
+    sc.B.seal(String(stk), 'стек из ' + (view.stacks || 4));
+    if (mine.length) sel[(mine.find(function (q) { return !q.engine; }) || mine[0]).id] = 1;
+    function selList() { return mine.filter(function (q) { return sel[q.id]; }); }
+    function refresh() { S.sel = sel; S.slotHl = slot + 1; S.ghosts = mine.map(function (q) { return ghost(view, S.disp, q, stacks[q.id]); });
+      S.hl = {}; S.cellHl = null;
+      if (pendT != null) { var s0 = selList()[0]; if (s0) { var g = ghost(view, S.disp, s0, stacks[s0.id]), at = g.path[pendT], o = stacks[s0.id][pendT].o;
+        view.sq.forEach(function (e) { if (e.side === 'a' || S.disp[e.id].st >= 2) return; var d = S.disp[e.id], dist = Math.max(Math.abs(d.c - at[0]), Math.abs(d.r - at[1]));
+          if (o === 'melee' ? dist === 1 : dist >= 2 && dist <= (s0.range || 0)) S.hl[e.id] = 'tgt'; }); } } }
+    function draw() {
+      refresh();
+      var ls = selList(), q = ls[0], avail = null;
+      ls.forEach(function (x) { var a = ordersFor(x, view.wall); avail = avail ? avail.filter(function (k) { return a.indexOf(k) >= 0; }) : a; });
+      var kinds = { foot: mine.filter(function (x) { return !x.ranged && !x.mounted && !x.engine; }), rng: mine.filter(function (x) { return x.ranged; }), cav: mine.filter(function (x) { return x.mounted && !x.ranged; }), eng: mine.filter(function (x) { return x.engine; }) };
+      var grp = [['all', 'Все', mine]].concat(kinds.foot.length ? [['foot', 'Пешие', kinds.foot]] : []).concat(kinds.rng.length ? [['rng', 'Стрелки', kinds.rng]] : []).concat(kinds.cav.length ? [['cav', 'Конница', kinds.cav]] : []).concat(kinds.eng.length ? [['eng', 'Машины', kinds.eng]] : []);
+      var h = '<div class="gs-top"><span class="gs-grp">' + grp.map(function (g) { return '<button class="k-btn k-paper" data-grp="' + g[0] + '">' + g[1] + '</button>'; }).join('') + '<button class="k-btn k-paper' + (group ? ' on' : '') + '" data-act="group" title="Нажимать отряды на поле, собирая группу">Группа' + (group ? ': вкл' : '') + '</button></span>' +
+        '<span class="gs-go"><button class="k-btn" data-act="advice" title="Вернуть советы воеводы во все стеки">Совет</button><button class="k-btn" data-act="auto" title="Советник доведёт бой без пауз">Доиграть</button><button class="k-btn k-main" data-act="go">В бой: стек ' + stk + '</button></span></div>';
+      if (q) {
+        h += '<div class="gs-selq"><b>' + (ls.length > 1 ? 'Группа: ' + ls.length + ' ' + plural(ls.length, 'отряд', 'отряда', 'отрядов') : esc(kindRu(q)) + '</b> · ' + q.n + ' ' + plural(q.n, 'боец', 'бойца', 'бойцов') + (q.engine ? '' : ' · спас ' + saveRu(q.save) + (q.hit ? ' · бьют ' + q.hit + '+' : '') + (q.range ? ' · на ' + q.range + ' кл.' : '') + ' · марш ' + q.speed) + '<b>') + '</b></div>';
+        h += '<div class="gs-slots" role="group" aria-label="Приказы по шагам">' + [0, 1, 2].map(function (i) { var o = ls.length === 1 ? stacks[q.id][i] : (ls.every(function (x) { return stacks[x.id][i].o === stacks[q.id][i].o; }) ? stacks[q.id][i] : { o: '?' });
+          var tq = o.t && sc.S.byId[o.t]; return '<button class="gs-slot' + (slot === i ? ' on' : '') + '" data-slot="' + i + '"><small>шаг ' + (i + 1) + '</small>' + (o.o === '?' ? '<span>разные</span>' : svg(o.o, 'a') + '<span>' + ORD[o.o][0] + (tq ? ' → ' + esc(kindRu(tq)) : '') + '</span>') + '</button>'; }).join('') + '</div>';
+        h += '<div class="gs-pal">' + (avail || []).map(function (k) { return '<button class="gs-ord" data-o="' + k + '" title="' + esc(ORD[k][1]) + '">' + svg(k, 'a') + '<span>' + ORD[k][0] + '</span></button>'; }).join('') + '</div>';
+        h += pendT != null ? '<p class="gs-hint gs-hint-t">Цель для шага ' + (pendT + 1) + ': нажмите врага, подсвеченного красным, — или ничего: отряд выберет сам.</p>' : '<p class="gs-hint">Выберите шаг, затем приказ. ' + esc((ORD[(stacks[q.id][slot] || {}).o] || ORD.wait)[1]) + '</p>';
+      } else h += '<p class="gs-hint">Нажмите свой отряд на поле.</p>';
+      h += '<div class="gs-terr">' + esc(TERR_RU[view.terr] || '') + '</div>';
+      sc.sheet.innerHTML = h;
+    }
+    S.onCell = function (c, r, e) {
+      var z = occ(view, S.disp, c, r);
+      if (pendT != null && z && z.side !== 'a' && S.hl[z.id]) { selList().forEach(function (x) { var o = stacks[x.id][pendT]; if (o.o === 'shoot' || o.o === 'melee') o.t = z.id; }); pendT = null; slot = Math.min(2, slot); return draw(); }
+      if (z && z.side === 'a' && z.st === 'ok') { pendT = null; if (group || (e && (e.shiftKey || e.ctrlKey || e.metaKey))) { if (sel[z.id]) delete sel[z.id]; else sel[z.id] = 1; } else { sel = {}; sel[z.id] = 1; } return draw(); }
+    };
+    sc.sheet.onclick = function (e) {
+      var b = e.target.closest('button'); if (!b) return;
+      var sl = b.getAttribute('data-slot'), o = b.getAttribute('data-o'), g = b.getAttribute('data-grp'), act = b.getAttribute('data-act');
+      if (sl != null) { slot = +sl; pendT = null; }
+      else if (o) { var ls = selList(); ls.forEach(function (x) { stacks[x.id][slot] = { o: o, row: o === 'bombard' ? (view.wall ? view.wall.gate : 2) : undefined }; });
+        if (o === 'shoot' || o === 'melee') pendT = slot; else pendT = null; if (pendT == null) slot = Math.min(2, slot + 1); }
+      else if (g) { sel = {}; pendT = null; var pick = g === 'all' ? mine : mine.filter(function (x) { return g === 'foot' ? !x.ranged && !x.mounted && !x.engine : g === 'rng' ? x.ranged : g === 'cav' ? x.mounted && !x.ranged : x.engine; }); pick.forEach(function (x) { sel[x.id] = 1; }); }
+      else if (act === 'group') group = !group;
+      else if (act === 'advice') { mine.forEach(function (x) { stacks[x.id] = [0, 1, 2].map(function (i) { var a = adv[x.id] && adv[x.id][i]; return a ? { o: a.o, t: a.t, row: a.row } : { o: 'wait' }; }); }); S.plans = stacks; pendT = null; }
+      else if (act === 'go' || act === 'auto') { S.onCell = null; S.sel = {}; S.hl = {}; sc.sheet.onclick = null; sc.sheet.innerHTML = '<p class="fs-wait">Приказы открываются…</p>';
+        var ord = {}; mine.forEach(function (x) { ord[x.id] = stacks[x.id].map(function (s) { return { o: s.o, t: s.t, row: s.row }; }); });
+        return send(act === 'auto' ? 'auto' : { ord: ord }, onView); }
+      draw();
+    };
+    draw();
+  }
+  function endPanel(sc, battle, done) {
+    var a = battle.atk, d = battle.def, d0 = d.army0 != null ? d.army0 : d.garr0, d1 = d.army1 != null ? d.army1 : d.garr1;
+    var aw = a.alive && a.army1 > 0 && !a.routed && (d1 <= 0 || d.routed || d.broken), dw = !aw && (a.army1 <= 0 || a.routed);
+    var line = function (nm, x0, x1, note) { return '<li><b>' + esc(nm) + '</b><span>' + x0 + ' → ' + Math.max(0, x1) + '</span><small>' + note + '</small></li>'; };
+    sc.B.seal(aw ? 'Победа' : dw ? 'Устоял' : 'Без исхода', aw ? esc(a.name).split(' ')[0] : dw ? esc(d.name).split(' ')[0] : 'меньше потерь — ' + ((a.army0 - a.army1) < (d0 - d1) ? 'у вас' : 'у врага'));
+    sc.B.bd.classList.add(aw ? 'won-a' : dw ? 'won-d' : 'draw');
+    sc.S.plans = null; sc.S.ghosts = [];
+    sc.sheet.innerHTML = '<h3>' + (aw ? esc(a.name) + (d.village ? (d.broken ? ' взял ' + esc(d.name) : ' потеснил защитников') : ' держит поле') : dw ? esc(d.name) + ' устоял' : 'Бой без исхода') + '</h3><ul class="fs-result">' +
+      line(a.name, a.army0, a.army1, !a.alive ? 'пал' : a.routed ? 'отступил' : a.army1 <= 0 ? 'разбит' : 'держит строй') + line(d.name, d0, d1, d.village ? (d.broken ? 'город пал' : 'держится') : (!d.alive ? 'пал' : d.routed ? 'отступил' : d1 <= 0 ? 'разбит' : 'держит строй')) + '</ul><div class="fs-btns"><button class="k-btn k-main" data-act="close">Закрыть</button></div>';
+    var btn = sc.sheet.querySelector('[data-act="close"]'); if (btn) btn.focus({ preventScroll: true });
+    sc.sheet.onclick = function (e) { if (e.target.closest('[data-act="close"]')) { sc.close(); if (done) done(); } };
+  }
+  function n0(v, side) { return v.sq.filter(function (q) { return q.side === side && !q.engine; }).reduce(function (s, q) { return s + q.n0; }, 0); }
+  // живой бой
+  function run(view, send, opts, done) {
+    opts = opts || {}; opts.aN = n0(view, 'a'); opts.dN = n0(view, 'd');
+    var sc = Scene(view, opts), seen = view.log.length;
+    if (view.start && seen) sc.applySnap(view.start, view.wall0);
+    function fail(res) { sc.sheet.innerHTML = '<p class="fs-wait">Приказ не прошёл: ' + esc(res && res.error) + '</p><div class="fs-btns"><button class="k-btn" data-act="x">Закрыть</button></div>'; sc.sheet.onclick = function () { sc.close(); if (done) done(); }; }
+    function onRes(res) {
+      if (!res || !res.ok) return fail(res);
+      var r = res.r || res;
+      if (r.kind === 'fight') return step(r.fight);
+      if (r.battle && r.battle.grid) { var g = r.battle.grid; return sc.playLog(g.log, seen, function () { seen = g.log.length; endPanel(sc, r.battle, done); }); }
+      sc.close(); if (done) done();
+    }
+    function sender(arg, cb) { send(arg, onRes); }
+    function step(v) {
+      if (v.phase === 'deploy') return deployPanel(sc, v, sender, onRes);
+      sc.playLog(v.log, seen, function () { seen = v.log.length; sc.applySnap(v.sq.map(function (q) { return [q.id, q.c, q.r, q.n, q.st === 'ok' ? 0 : q.st === 'flee' ? 1 : q.st === 'gone' ? 2 : 3]; }), v.wall && v.wall.seg); sc.S.gen = v.gen || {}; ordersPanel(sc, v, sender, onRes); });
+    }
+    step(view);
+    return sc;
+  }
+  function replay(battle, done) {
+    var g = battle.grid; if (!g) { if (done) done(); return; }
+    var sc = Scene(g, { aName: battle.atk.name, dName: battle.def.name, aFac: battle.atk.faction, dFac: battle.def.faction, season: battle.season, aN: battle.atk.army0, dN: battle.def.army0 != null ? battle.def.army0 : battle.def.garr0 });
+    if (g.start) sc.applySnap(g.start, g.wall0);
+    sc.sheet.innerHTML = '<div class="fs-btns"><button class="k-btn" data-act="skip">К исходу</button></div>';
+    sc.sheet.onclick = function (e) { if (e.target.closest('[data-act="skip"]')) sc.S.skip = true; };
+    sc.playLog(g.log, 0, function () { endPanel(sc, battle, done); });
+  }
+  return { run: run, replay: replay, ORD: ORD };
+})();
+if (typeof module !== 'undefined') module.exports = GridScene;
+</script>
 <script>/* src/ui2/icons.js */
 /* Иконки ремастера. Каждая — картинка img/icons/<имя>.webp (рисованные, стиль E).
    Порядок в SHEETS совпадает с листами генерации (art/tools/jobs_ui.json):
@@ -21492,11 +22495,25 @@ var Table = (function () {
       '<div class="bp-verdict ' + bp.level + '">' + bp.verdict + ' <button class="c-q" onclick="Codex.open(\'battle\')" title="как считается бой">?</button></div>' +
       (bp.arms ? '<div class="bp-note" style="font-weight:700">' + IC('sword', 20) + ' ' + esc(bp.arms) + '</div>' : '') +
       '<div class="bp-note">' + (bp.terrain ? 'Местность даёт защитнику +' + bp.terrain + '. ' : '') + (bp.estimate ? 'Оценка по тому, что видно, — разведка скажет точно.' : '') + '</div>';
-    var btns = hasSiege ? [['Только обстрел', function () { App.send({ a: 'attack', pr: pr.id, to: k, siege: true }, toastRes('Обстрел')); }], ['Полный штурм', function () { App.send({ a: 'attack', pr: pr.id, to: k }, toastRes('Штурм')); }, true]]
+    var grid = Core.RULES && Core.RULES.grid && window.GridScene, isTown = bp.who.kind === 'settlement';
+    var btns = grid && isTown ? (hasSiege ? [['Только обстрел', function () { App.send({ a: 'attack', pr: pr.id, to: k, siege: true }, toastRes('Обстрел')); }]] : []).concat([['Штурм: авторасчёт', function () { App.send({ a: 'attack', pr: pr.id, to: k }, toastRes('Штурм')); }], ['Штурм отрядами', function () { gridGo(pr, k); }, true]])   // бой на клетках у стен (24.10)
+      : grid && Core.fieldEligible && Core.fieldEligible(A.s, pr.id, k) ? [['Авторасчёт', function () { App.send({ a: 'attack', pr: pr.id, to: k }, toastRes('Бой')); }], ['Отряды и приказы', function () { gridGo(pr, k); }, true]]   // бой на клетках (24.10)
+      : hasSiege ? [['Только обстрел', function () { App.send({ a: 'attack', pr: pr.id, to: k, siege: true }, toastRes('Обстрел')); }], ['Полный штурм', function () { App.send({ a: 'attack', pr: pr.id, to: k }, toastRes('Штурм')); }, true]]
       : Core.fieldEligible && Core.fieldEligible(A.s, pr.id, k) && window.FieldScene
         ? [['Авторасчёт', function () { App.send({ a: 'attack', pr: pr.id, to: k }, toastRes('Бой')); }], ['Отряды и приказы', function () { fieldPlan(pr, k); }, true]]   // бой отрядами (16.10)
         : [['Атаковать', function () { App.send({ a: 'attack', pr: pr.id, to: k }, toastRes('Бой')); }, true]];
     modal('Бой', body, [['Отмена', null]].concat(btns));
+  }
+  // бой на клетках: расстановка → стеки по три приказа → исход (24.10)
+  function gridGo(pr, k) {
+    var foe = Core.princeAt(A.s, k), v = Core.settlementAt && Core.settlementAt(A.s, k);
+    var dName = foe && foe.owner !== pr.owner ? foe.name : v ? (v.name || 'поселение') : '', dFac = foe && foe.owner !== pr.owner ? foe.faction : v && v.owner != null && A.s.players[v.owner] ? A.s.players[v.owner].faction : 'slate';
+    App.send({ a: 'attack', pr: pr.id, to: k, plan: { live: true } }, function (res) {
+      if (!res.ok) return toast(res.error, true);
+      var r = res.r || {}, opts = { aName: pr.name, dName: dName, aFac: pr.faction, dFac: dFac, season: A.s.season };
+      if (r.kind === 'fight') GridScene.run(r.fight, function (arg, cb) { App.send({ a: 'fight', arg: arg }, cb); }, opts, function () { render(); perkToasts(); });
+      else if (r.battle) Battle(r.battle);
+    });
   }
   // бой отрядами: экран приказов → первая треть → паузы → исход
   function fieldPlan(pr, k) {
@@ -21664,6 +22681,7 @@ var Table = (function () {
   function Battle(battle, key) {
     if (!window.BattleScene || !battle) return;
     if (window.Settings && Settings.get('battle') === 'skip') { var a = battle.atk, d = battle.def, aw = !(a.routed || a.army1 <= 0 || !a.alive); var d0 = d.army0 != null ? d.army0 : d.garr0 || 0, d1 = d.army1 != null ? d.army1 : d.garr1 || 0; toast((aw ? 'Победа' : 'Отступили') + ': ' + (a.name || 'дружина').split(' ')[0] + ' потерял ' + Math.max(0, a.army0 - a.army1) + ' из ' + a.army0 + ', враг — ' + Math.max(0, d0 - d1) + ' из ' + d0); snd('battle'); return; }
+    if (battle.grid && window.GridScene) { battle.season = battle.season || A.s.season; try { GridScene.replay(battle, function () { render(); }); } catch (e) { console.error(e); } return; }
     if (battle.field && window.FieldScene) { battle.season = battle.season || A.s.season; try { FieldScene.replay(battle, function () { render(); }); } catch (e) { console.error(e); } return; }
     try { BattleScene.play(battle, [{ t: battle.atk.name + ' против ' + battle.def.name, cls: 'bhead', d: 600 }], function () { render(); if (window.Coach) Coach.hint('battle'); }); } catch (e) { }
   }
@@ -21866,6 +22884,14 @@ var Codex = (function () {
         '<p>Перед атакой игра показывает расклад по тому, что вы видите. Точнее скажет разведка.</p>';
     }],
     ['field', 'Бой отрядами', function () {
+      if (Core.RULES && Core.RULES.grid) return '<p><b>Бой идёт на доске 5×6, как настольная игра.</b> Нападающий стоит в двух левых колонках, оборона — в двух правых. Войско делится на отряды по оружию (и коню): в отряде до восьми бойцов, на сторону не больше десяти отрядов — когда людей больше, отряды крупнее. Оборона встаёт первой, её строй виден; свои отряды можно переставить в своих колонках и отдать знамя князя.</p>' +
+        '<p><b>Приказы — стеками по три.</b> Каждому отряду — три приказа, у обеих сторон втайне. Затем они открываются по шагам: сперва первые приказы всех отрядов, потом вторые, потом третьи. Внутри шага по старшинству: побег и отход → оборона → стрельба → марш и фланги → сеча. Отыграли стек — пауза и новые приказы. Бой — не больше четырёх стеков.</p>' +
+        '<p><b>Приказы.</b> <i>Стрельба</i> — по врагу в досягаемости (лук и арбалет — 3 клетки, длинный лук — 4), в упор нельзя, через свой отряд — на 1 хуже. <i>Оборона</i> — проваленные спасброски перебрасываются. <i>Марш</i> — вперёд: пехота на 2 клетки, тяжёлая (в латах) на 1, конница на 3; упёрся во врага — сшибка. <i>Сеча</i> — удар по соседу, и наискось тоже; урон обоим разом, связанный сечей отряд маршем не уйдёт. <i>Левый и правый фланг</i> — сдвиг на клетку (конница на 2). <i>Отход</i> — назад на клетку, <i>побег</i> — на две, за край поля — прочь из боя. По идущему во фланг, отходящему и бегущему враг перебрасывает промахи, а соседи бьют уходящему вслед. Приказ, который нельзя исполнить, сгорает — отряд просто стоит.</p>' +
+        '<p><b>Кубики.</b> Каждый боец — кубик. Попадание: меч, топор, копьё — 4+ (копьё по коннице — 3+); булава, цеп, кулак, луки, арбалет — 5+. Каждое попадание — спасбросок по броне: без брони 6, щит 5+, кольчуга 4+, латы 3+, щит с кольчугой 3+, латы со щитом 2+. Топор не замечает щита, булава и арбалет портят спасбросок на 1. Конница с разбега бьёт на 1 метче — это натиск; копья в обороне его гасят и бьют первыми.</p>' +
+        '<p><b>Дух.</b> Отряд, что за шаг потерял половину, бросает кубик: нужно 4+ (знамя князя рядом +1, сосед бежит −1). Не выдержал — бежит. Побежала половина войска — оно сломлено, победитель гонит бегущих, конница — особенно. Не решилось за четыре стека — побеждает тот, у кого меньше потерь (поровну — оборона).</p>' +
+        '<p><b>Знамя князя</b> стоит при отряде. Отряд бежит или пал — князь ранен. Погибает князь, только если разбито всё войско.</p>' +
+        '<p><b>Штурм.</b> У стен поселения стена идёт посреди доски: пять прясел, в среднем — ворота. Оборона стоит на стене и за ней. Сквозь целое прясло не пройти: пешие лезут лестницами (бьют хуже, у защитников за стеной спасбросок лучше и дух крепче), конница и машины ждут пролома. Катапульта, требушет и пушка — отдельные отряды с приказом «Обстрел стены», таран подъезжает вплотную и бьёт прясло, у ворот — вдвое. Рухнуло прясло — пролом: туда можно идти. Урон стене остаётся у поселения.</p>' +
+        '<p><b>Местность.</b> Лес — натиска нет, стрелы на 1 хуже. Болото — все на клетку медленнее, натиска нет. Холмы — нападающий идёт медленнее, стрелки обороны бьют на клетку дальше. Брод и река — нападающему в сече на 1 хуже.</p>';
       return '<p><b>В поле дружины бьются строй против строя.</b> Войско делится на отряды по оружию: мечники, копейщики, лучники, конные — в каждом не больше восьми. Поле делится на линии: их столько, сколько пеших и конных отрядов у меньшей стороны, но не больше четырёх. В каждой линии у каждой стороны ровно один отряд в строю — строи всегда стоят друг против друга и не проходят друг сквозь друга.</p>' +
         '<p><b>Кто против кого — решает нападающий.</b> Оборона встаёт первой, её строй виден; что стоит за её строем — нет. Нажмите свой отряд, потом место в строю: подсказка между строями покажет, как сложится пара один на один (перевес, сильнее, на равных, слабее, тяжело). Лишние отряды встают за строй: стрелки — во вторую линию, прочие — в запас.</p>' +
         '<p><b>Фазы боя.</b> <i>Сближение:</i> строи идут навстречу, стрелки второй линии бьют поверх своих. <i>Сшибка:</i> натиск с разбега бьёт сильнее и пугает врага, у конницы — в два с половиной раза; копья, что держат строй, натиск гасят. <i>Сеча:</i> линии рубятся; по сцепившимся стрелки бьют вполсилы. <i>Перелом:</i> отряд, что теряет людей, теряет и дух и бежит; побежало больше половины войска — бежит всё, победитель рубит бегущих, конница — особенно.</p>' +
@@ -22016,7 +23042,7 @@ var Coach = (function () {
     { ch: 6, t: 'Господство на море', x: 'Море очищено! Пока на нём только твои суда — ты <b>держишь море</b>: +2 славы каждый сезон. Сойти на берег — в начале хода нажми клетку суши рядом; галера останется у берега под твоим флагом.', btn: 'Дальше' },
     // ===== VIII. Соседи =====
     { ch: 7, t: 'Державы и голуби', lore: 'Голуби из Черноброда летают всё чаще. Мстивой пишет брату ласково, а дружину держит под седлом.', x: 'Нажми «<b>Державы</b>»: там слава каждой державы и <b>голубиная почта</b> — мир на 2 года или совместный набег. Отстающие охотнее договариваются, лидеру отказывают. Нарушить мир можно, но вся земля узнает о клятвопреступлении.', glow: '#gPowers', done: function () { return openModal('.pw-t'); } },
-    { ch: 7, t: 'Первая битва', x: 'Тревога! <b>Твердята</b>, воевода Мстивоя, вывел чернобродскую дружину к нашим землям — «проверить броды». Веди воеводу <b>вплотную</b> и <b>нажми клетку врага</b> — окно покажет расклад сил. В поле можно повести бой самому: «<b>Отряды и приказы</b>» — строй, приказы отрядам и две паузы в сече; «Авторасчёт» — бой поведёт советник. Битва с войском державы — слава.',
+    { ch: 7, t: 'Первая битва', x: 'Тревога! <b>Твердята</b>, воевода Мстивоя, вывел чернобродскую дружину к нашим землям — «проверить броды». Веди воеводу <b>вплотную</b> и <b>нажми клетку врага</b> — окно покажет расклад сил. В поле можно повести бой самому: «<b>Отряды и приказы</b>» — расставишь отряды на доске и дашь каждому по три приказа на стек; «Авторасчёт» — бой поведёт советник. Битва с войском державы — слава.',
       enter: function () { var s = S(), f = s.princes.find(function (p) { return p.alive && p.owner !== me() && p.name !== 'Мстивой Чернобродский'; }) || s.princes.find(function (p) { return p.alive && p.owner !== me(); }), mp = mine().filter(function (p) { return !p.vessel; }).sort(function (a, b) { return b.army - a.army; })[0] || champ(); if (!f || !mp) return; var k = landNear(mp.at, 2) || landNear(mp.at, 3); if (!k) return; f.at = k; f.army = 5; f.weapons = { pike: 5 }; f.armor = {}; f.posture = 'passive'; f.order = null;   /* дозор: малый и не рвётся в бой — учебная сеча должна получиться */ if (f.name === 'Мстивой Чернобродский') f.name = 'Твердята Остромирич'; f.inv.food = 30; C.foe = f.id; C.foeA = f.army; mine().filter(function (p) { return !p.vessel; }).forEach(function (p) { if (p.army < 12) { p.weapons.pike = (p.weapons.pike || 0) + 12 - p.army; p.army = 12; } p.inv = p.inv || {}; p.inv.food = Math.max(p.inv.food || 0, p.army * 2); p.starving = 0; });   /* и не впроголодь: голодная дружина бьётся вполсилы */ /* учебная битва не должна решаться удачей */ s.players.forEach(function (pl) { Core.recomputeVisibility(s, pl.index); }); },
       live: true, tile: function () { var f = foe(); return f && f.alive ? f.at : null; }, done: function () { var f = foe(); return !f || !f.alive || f.army < (C.foeA || 6); } },
     { ch: 7, t: 'Осада городов', x: 'Города держав берут только <b>штурмом</b>. Против деревянной стены нужны лучники и <b>таран</b>, против каменной — <b>катапульты, требушеты, пушки</b> (кузня, железо, камень на снаряды). Каждый пролом снижает прочность стены. Взятый город — большая слава, столица — ещё больше.', tile: function () { return byName('Бобровка').key; }, btn: 'Дальше' },
@@ -22498,7 +23524,7 @@ var Shell = (function () {
   function build() {
     if ($('menuRoot')) return;
     var r = document.createElement('div'); r.id = 'menuRoot';
-    r.innerHTML = '<div class="m-wrap"><div class="m-logo" id="mLogo"></div><div class="m-cols"><div class="m-col" id="mCol"></div><div class="h-col k-parch k-frame k-iron-corners" id="hCol"></div></div><div class="m-foot">Королевство · Порубежье · сборка 21.10 20:40</div></div>';
+    r.innerHTML = '<div class="m-wrap"><div class="m-logo" id="mLogo"></div><div class="m-cols"><div class="m-col" id="mCol"></div><div class="h-col k-parch k-frame k-iron-corners" id="hCol"></div></div><div class="m-foot">Королевство · Порубежье · сборка 24.10 19:34</div></div>';
     document.body.appendChild(r);
     $('mLogo').innerHTML = '<div class="k-logo">КОРОЛЕВСТВО</div><div class="k-logo-sub">Порубежье</div>';
     hallStart();
