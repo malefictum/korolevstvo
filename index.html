@@ -1046,6 +1046,24 @@ body.tut-on #gAdv { display: none !important; }   /* в обучении гов�
 }
 @media (prefers-reduced-motion: reduce) { .gs-pop { animation: none; transition: none; } }
 
+/* уроки боя (gs-lesson) */
+.gs-lesson { display: flex; gap: 10px; align-items: flex-start; margin-top: 8px; padding: 7px 12px 8px; border-radius: 6px; color: var(--k-ink); box-shadow: inset 0 0 0 2px var(--k-brass-2), 0 2px 8px rgba(0,0,0,.5); animation: gsIn .2s ease-out; }
+.gs-lface { flex: 0 0 auto; width: 44px; height: 44px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 2px var(--k-brass-2), 0 2px 4px rgba(0,0,0,.4); }
+.gs-lbody { flex: 1 1 auto; min-width: 0; }
+.gs-lh { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; }
+.gs-lh b { font-family: var(--k-head); font-size: 17px; }
+.gs-lh small { font-size: 12.5px; color: var(--k-ink-2); font-style: italic; }
+.gs-lesson p { margin: 2px 0 4px; font-size: 14px; line-height: 1.35; max-width: 92ch; }
+.gs-lbody { display: flex; flex-wrap: wrap; align-items: flex-start; column-gap: 12px; }
+.gs-lbody > .gs-lh, .gs-lbody > p { flex: 1 1 100%; }
+.gs-lbody > p { flex: 1 1 420px; }
+.gs-lb { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; margin-left: auto; }
+.gs-lb .k-btn { min-height: 34px; font-size: 14px; padding: 3px 12px; }
+.gs-lroll { display: inline-block; margin: 2px 0 6px; padding: 5px 9px; border-radius: 6px; background: rgba(255, 250, 235, .75); box-shadow: inset 0 0 0 1px rgba(110,80,40,.5); font: 600 12px/1.25 var(--k-head); text-align: center; }
+.gs-lroll .gs-dr { max-width: 320px; }
+.gs-glow { animation: tutGlow 1.2s ease-in-out infinite; border-radius: 8px; }
+@media (max-width: 560px) { .gs-lface { width: 40px; height: 40px; } .gs-lesson p { font-size: 13.5px; } }
+
 </style>
 </head>
 <body>
@@ -5659,13 +5677,13 @@ body.tut-on #gAdv { display: none !important; }   /* в обучении гов�
   // погоня. Не больше 4 стеков (12 шагов); не решилось — побеждает тот, у кого меньше потерь (поровну — оборона).
   const GRID = { R: 5, C: 6, chunk: 8, chunkMax: 16, maxSq: 10, steps: 3, stacks: 4, gate: 2,
     hit: { sword: 4, axe: 4, pike: 4, mace: 5, flail: 5, fist: 5, bow: 5, longbow: 5, crossbow: 5 }, ap: { mace: 1, crossbow: 1 },
-    range: { bow: 3, longbow: 4, crossbow: 3 }, rangedMelee: 5, morale: 4, breakAt: 0.5,
+    range: { bow: 3, longbow: 4, crossbow: 3 }, rangedMelee: 6, morale: 4, breakAt: 0.5,
     eng: { catapult: { hit: 4, dmg: 1, dice: 2 }, trebuchet: { hit: 3, dmg: 2, dice: 2 }, cannon: { hit: 3, dmg: 2, dice: 3 }, ram: { hit: 3, dmg: 2, dice: 0 } },
     engHit: 4, engAp: 2, engRange: 5, segHp: [0, 2, 3, 4, 5, 6],
     climb: [0, 1, 2, 3, 3, 4], cover: [0, 1, 1, 2, 2, 2], wallMor: 1 };   // по уровню стены: штраф лезущим на стену, прибавка к спасброску за стеной; дух за целой стеной +1
-  const GORD = { wait: 'Стоять', hold: 'Оборона', shoot: 'Стрельба', bombard: 'Обстрел стены', march: 'Марш', flankL: 'На левый фланг', flankR: 'На правый фланг', melee: 'Сеча', back: 'Отход', flee: 'Побег' };
-  const GPRI = { flee: 0, back: 0, hold: 1, wait: 1, shoot: 2, bombard: 2, march: 3, flankL: 3, flankR: 3, melee: 4 };
-  const GMOVE = { flankL: 1, flankR: 1, back: 1, flee: 1 };   // по ним враг перебрасывает промахи
+  const GORD = { wait: 'Стоять', hold: 'Оборона', shoot: 'Стрельба', shootback: 'Стрельба с отходом', bombard: 'Обстрел стены', march: 'Марш', flankL: 'На левый фланг', flankR: 'На правый фланг', melee: 'Сеча', back: 'Отход', flee: 'Побег' };
+  const GPRI = { flee: 0, back: 0, hold: 1, wait: 1, shoot: 2, shootback: 2, bombard: 2, march: 3, flankL: 3, flankR: 3, melee: 4 };
+  const GMOVE = { flankL: 1, flankR: 1, back: 1, flee: 1, shootback: 1 };   // по ним враг перебрасывает промахи
   const gclamp = (v, a, b) => v < a ? a : v > b ? b : v;
   function gr(G) { G.rs = (G.rs + 0x6D2B79F5) >>> 0; let t = G.rs; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }
   const gd6 = (G) => 1 + Math.floor(gr(G) * 6);
@@ -5707,8 +5725,16 @@ body.tut-on #gAdv { display: none !important; }   /* в обучении гов�
   const gWX = (G) => G.wall ? 3 : 4;   // первая колонка обороны (стена — перед ней)
   function gCross(G, c1, c2, r) { if (!G.wall) return false; const lo = Math.min(c1, c2), hi = Math.max(c1, c2); return lo === 2 && hi === 3 && gWallUp(G, r); }
   function gCover(G, att, tgt) { return G.wall && tgt.side === 'd' && tgt.c >= 3 && att.c <= 2 && gWallUp(G, tgt.r) ? GRID.cover[G.wall.lv] || 1 : 0; }
-  function gAdj(G, q, okOnly) { return G.sq.filter(e => e.side !== q.side && (okOnly ? gOk(e) : gOn(e)) && gDist(e, q) === 1); }
-  function gEngaged(G, q) { return G.sq.some(e => e.side !== q.side && gOk(e) && !e.engine && gDist(e, q) === 1); }
+  // через целое прясло рукопашной нет (24.10, Ник: «лучники на стенах стреляют безнаказанно, пешие им не достанут, пока стена цела»)
+  function gWallSep(G, a, b) { if (!G.wall) return false; const lo = Math.min(a.c, b.c), hi = Math.max(a.c, b.c); if (lo !== 2 || hi !== 3) return false; const inner = a.c === 3 ? a : b; return gWallUp(G, inner.r); }
+  function gReach(G, a, b) { return gDist(a, b) === 1 && !gWallSep(G, a, b); }
+  function gAdj(G, q, okOnly) { return G.sq.filter(e => e.side !== q.side && (okOnly ? gOk(e) : gOn(e)) && gReach(G, e, q)); }
+  // откуда бьют (24.10, Ник): отряд смотрит на врага; из-за спины — тыл. Фланг — удар по отряду, уже связанному боем с другим нашим отрядом
+  function gSide(att, tgt) { if (tgt.st === 'flee') return 'rear'; const f = (att.c - tgt.c) * gDir(tgt.side); return f > 0 ? 'front' : f === 0 ? 'side' : 'rear'; }
+  function gFlank(G, q, t) {   // q бьёт t вторым: t уже связан с другим нашим отрядом (тот был рядом раньше или стоит прямо перед ним)
+    const at0 = (z) => z._c0 != null && Math.max(Math.abs(z._c0 - t._c0), Math.abs(z._r0 - t._r0)) === 1, frontOf = (z) => z.r === t.r && (z.c - t.c) * gDir(t.side) === 1;
+    return G.sq.some(e => e !== q && e.side === q.side && gOk(e) && !e.engine && gDist(e, t) === 1 && ((at0(e) && !at0(q)) || (at0(e) === at0(q) && frontOf(e) && !frontOf(q)))); }
+  function gEngaged(G, q) { return G.sq.some(e => e.side !== q.side && gOk(e) && !e.engine && gReach(G, e, q)); }
   function gZone(G, side) { return side === 'a' ? [1, 0] : G.wall ? [3, 4, 5] : [4, 5]; }
   // ---------- кубики ----------
   function gSaveT(y, w, cover, melee) {
@@ -5728,7 +5754,7 @@ body.tut-on #gAdv { display: none !important; }   /* в обучении гов�
   // бросок отряда q по цели t. Попадания ложатся по бойцам цели с первого (самый защищённый стоит впереди); гибель — в t._dead
   function gRoll(G, q, t, melee, mod, rec, why) {
     const R = { id: q.id, t: t.id, m: melee ? 1 : 0, d: [], th: 0, s: [], sth: 0, k: 0, rr: 0 }; if (why && why.length) R.why = why;
-    const moving = !!(GMOVE[t.cur && t.cur.o] || t.st === 'flee'), cover = gCover(G, q, t);
+    const moving = !!(GMOVE[t.cur && t.cur.o] || t.st === 'flee' || (melee && q._fresh)), cover = gCover(G, q, t);   // сшибка: первый удар — переброс промахов
     const hits = [];
     for (const x of q.sol) { if (x.w === 'eng') continue;
       const h = gHitT(G, q, x, t, melee, mod), th = Math.min(6, h.thr), ok = (d) => d >= th && (h.thr <= 6 || gd6(G) >= h.thr - 3);
@@ -5746,7 +5772,7 @@ body.tut-on #gAdv { display: none !important; }   /* в обучении гов�
   function gSortSol(q) { if (q.engine) return; q.sol.sort((a, b) => gSaveT(a, 'sword', false, true) - gSaveT(b, 'sword', false, true)); }
   // ожидаемые убитые от q по t (для советника)
   function gEK(G, q, t, melee, mod) {
-    if (!t.sol.length) return 0; let s = 0; const y = t.sol[0], cover = gCover(G, q, t);
+    if (!t.sol.length) return 0; let s = 0; const y = t.sol[0], cover = gCover(G, q, t); if (melee && gDist(q, t) <= 1 && (gSide(q, t) === 'rear' || G.sq.some(e => e !== q && e.side === q.side && gOk(e) && !e.engine && gDist(e, t) === 1))) mod = (mod || 0) - 1;
     for (const x of q.sol) { if (x.w === 'eng') continue; const h = gHitT(G, q, x, t, melee, mod);
       s += (h.thr <= 6 ? (7 - h.thr) / 6 : (10 - h.thr) / 36) * (gSaveT(y, h.w, cover, melee) - 1) / 6; }
     return Math.min(s, t.sol.length);
@@ -5756,8 +5782,10 @@ body.tut-on #gAdv { display: none !important; }   /* в обучении гов�
   function gLineThroughOwn(G, q, t) {   // на линии выстрела стоит свой отряд — −1 к попаданию
     const n = gDist(q, t); for (let i = 1; i < n; i++) { const c = Math.round(q.c + (t.c - q.c) * i / n), r = Math.round(q.r + (t.r - q.r) * i / n), z = gAt(G, c, r); if (z && z.side === q.side) return true; }
     return false; }
-  function gCanShoot(G, q, t) { if (!gOn(t) || t.side === q.side) return false; const d = gDist(q, t); return d >= 2 && d <= gRangeOf(G, q); }
-  function gShotMod(G, q, t) { return (gLineThroughOwn(G, q, t) ? 1 : 0) + (G.terr === 'forest' ? 1 : 0); }
+  function gCanShoot(G, q, t) { if (!gOn(t) || t.side === q.side) return false; const d = gDist(q, t); if (d === 1 && gWallSep(G, q, t) && q.side === 'd') return true;   // со стены — и под самую стену
+    if (!q.engine && G.wall && q.side === 'a' && q.c <= 2 && t.c >= 4 && gWallUp(G, t.r)) return false;   // за стеной не видно: туда бьют лишь машины навесом
+    return d >= 2 && d <= gRangeOf(G, q); }
+  function gShotMod(G, q, t) { return (gLineThroughOwn(G, q, t) ? 1 : 0) + (G.terr === 'forest' ? 1 : 0) + (gCover(G, q, t) ? 1 : 0); }   // за зубцами стены — ещё на 1 хуже
   function gBestShot(G, q) {
     let best = null, bv = -1;
     for (const t of G.sq) { if (!gCanShoot(G, q, t)) continue; const v = gEK(G, q, t, false, gShotMod(G, q, t)) * (t.engine ? 1.5 : 1) * (t.st === 'flee' ? 0.6 : 1); if (v > bv) { bv = v; best = t; } }
@@ -5766,7 +5794,8 @@ body.tut-on #gAdv { display: none !important; }   /* в обучении гов�
   // ---------- ход отрядов ----------
   function gSpeed(G, q, o) {
     if (q.engine) return q.engine === 'ram' ? 1 : 0;
-    if (o === 'flankL' || o === 'flankR' || o === 'back') return q.mounted ? 2 : 1;
+    if (o === 'flankL' || o === 'flankR') return q.mounted ? 2 : 1;
+    if (o === 'back') return q.mounted || (q.ranged && !q.heavy) ? 2 : 1;   // лучники без брони отходят на 2 (24.10, Ник)
     if (o === 'flee') return q.mounted ? 3 : 2;
     let v = q.mounted ? 3 : q.heavy ? 1 : 2;
     if (G.terr === 'marsh') v--; if (G.terr === 'forest' && q.mounted) v--; if (G.terr === 'hills' && q.side === 'a') v--;
@@ -5783,7 +5812,7 @@ body.tut-on #gAdv { display: none !important; }   /* в обучении гов�
   // ---------- шаг боя ----------
   function gStep(G) {
     const k = G.step % GRID.steps, E = { step: G.step, burn: [], mv: [], shot: [], eng: [], mel: [], mor: [], ev: [] };
-    for (const q of G.sq) { q._dead = 0; q.n1 = q.sol.length; q.clash = null; q.charge = false; q.moved = 0;
+    for (const q of G.sq) { q._dead = 0; q._rear = 0; q._c0 = q.c; q._r0 = q.r; q.n1 = q.sol.length; q.clash = null; q.charge = false; q.moved = 0;
       if (!gOn(q)) { q.cur = null; continue; }
       q.cur = q.st === 'flee' ? { o: 'flee' } : gNorm(q.stack[k]); gSortSol(q); }
     // приказ, который нельзя исполнить, сгорает: отряд стоит (без переброса обороны)
@@ -5791,6 +5820,7 @@ body.tut-on #gAdv { display: none !important; }   /* в обучении гов�
       let bad = false;
       if ((o === 'march' || o === 'flankL' || o === 'flankR') && eng) bad = true;
       if (o === 'shoot' && (eng || !(q.ranged || (q.engine && q.engine !== 'ram')))) bad = true;
+      if (o === 'shootback' && (eng || !q.ranged)) bad = true;
       if (o === 'bombard' && !q.engine) bad = true;
       if (o === 'melee' && (q.engine || !gAdj(G, q, false).length)) bad = true;
       if (q.engine && q.engine !== 'ram' && (o === 'march' || o === 'flankL' || o === 'flankR')) bad = true;
@@ -5808,10 +5838,14 @@ body.tut-on #gAdv { display: none !important; }   /* в обучении гов�
       E.mv.push({ id: q.id, o: q.cur.o, f: from, to: [q.c, q.r], out: exit ? 1 : 0 }); }
     // 2) оборона — флаг на шаг (q.cur.o === 'hold'); 3) стрельба и обстрел — разом
     for (const q of G.sq) { if (!q.cur || q.st !== 'ok') continue;
-      if (q.cur.o === 'shoot' && !q.engine) { let t = q.cur.t && G.sq.find(z => z.id === q.cur.t); if (!t || !gCanShoot(G, q, t)) t = gBestShot(G, q); if (!t) { E.burn.push(q.id); continue; }
-        gRoll(G, q, t, false, gShotMod(G, q, t), E.shot, [gLineThroughOwn(G, q, t) ? 'own' : null, G.terr === 'forest' ? 'forest' : null].filter(Boolean)); }
+      if ((q.cur.o === 'shoot' || q.cur.o === 'shootback') && !q.engine) { const sb = q.cur.o === 'shootback'; let t = q.cur.t && G.sq.find(z => z.id === q.cur.t); if (!t || !gCanShoot(G, q, t)) t = gBestShot(G, q); if (!t) { if (!sb) E.burn.push(q.id); continue; }
+        gRoll(G, q, t, false, gShotMod(G, q, t) + (sb ? 1 : 0), E.shot, [gLineThroughOwn(G, q, t) ? 'own' : null, G.terr === 'forest' ? 'forest' : null, gCover(G, q, t) ? 'merlon' : null, sb ? 'onmove' : null].filter(Boolean)); }   // с отходом — на 1 хуже
       else if (q.engine && (q.cur.o === 'shoot' || q.cur.o === 'bombard')) gEngine(G, q, E); }
     gApply(G);
+    // 3б) стрелки с отходом: после залпа — шаг назад (раньше марша — уходят от погони)
+    for (const q of G.sq) { if (!gOk(q) || !q.cur || q.cur.o !== 'shootback') continue; const from = [q.c, q.r], c = q.c - gDir(q.side);
+      if (c >= 0 && c < GRID.C && !gCross(G, q.c, c, q.r) && gFree(G, c, q.r)) { q.c = c; q.moved++; } else { const alt = [q.r - 1, q.r + 1].find(r => c >= 0 && c < GRID.C && gFree(G, c, r) && !gCross(G, q.c, c, r)); if (alt != null) { q.c = c; q.r = alt; q.moved++; } }
+      if (q.moved) E.mv.push({ id: q.id, o: 'shootback', f: from, to: [q.c, q.r] }); }
     // 4) марш и фланги: по клетке за раз, все вместе
     const movers = G.sq.filter(q => gOk(q) && q.cur && (q.cur.o === 'march' || q.cur.o === 'flankL' || q.cur.o === 'flankR'));
     for (const q of movers) { q._mv = gSpeed(G, q, q.cur.o); q._from = [q.c, q.r]; if (q.cur.o !== 'march') q._mv = Math.min(q._mv, 2); }
@@ -5821,11 +5855,12 @@ body.tut-on #gAdv { display: none !important; }   /* в обучении гов�
         let c = q.c, r = q.r; if (q.cur.o === 'march') c += gDir(q.side); else r = gFlankRow(q, q.cur.o);
         if (c < 0 || c >= GRID.C || r < 0 || r >= GRID.R) { q._mv = 0; continue; }
         const z = gAt(G, c, r);
+        if (z && gCross(G, q.c, c, r)) { q._mv = 0; continue; }   // за целым пряслом — не достать
         if (z && z.side !== q.side && gOn(z)) {   // марш в занятую врагом клетку — встал рядом, сшибка
           if (z.st === 'flee') { q._mv = 0; continue; }
           if (q.cur.o === 'march') { q.clash = z.id; q.charge = q.mounted && q.moved > 0 && !NO_CHARGE[G.terr] && G.terr !== 'forest'; } q._mv = 0; continue; }
         if (z) { q._mv = 0; continue; }
-        if (gCross(G, q.c, c, r)) { if (q.side === 'a' && !q.mounted && !q.engine && q.moved === 0) want.push({ q, c, r, lad: 1 }); else q._mv = 0; continue; }   // целое прясло: пешие лезут лестницами (весь ход)
+        if (gCross(G, q.c, c, r)) { q._mv = 0; continue; }   // целое прясло — лишь в пролом   // целое прясло: пешие лезут лестницами (весь ход)
         want.push({ q, c, r }); }
       if (!want.length) break;
       // споры за клетку: враги — встают рядом, сшибка; свои — первый идёт, второй ждёт
@@ -5843,19 +5878,21 @@ body.tut-on #gAdv { display: none !important; }   /* в обучении гов�
       let t = null;
       if (q.clash) t = G.sq.find(z => z.id === q.clash);
       else if (q.cur.o === 'melee') { const adj = gAdj(G, q, false); t = (q.cur.t && adj.find(z => z.id === q.cur.t)) || adj.sort((a, b) => gEK(G, q, b, true) - gEK(G, q, a, true))[0]; if (!t) E.burn.push(q.id); }
-      if (t && gOn(t) && gDist(q, t) === 1) atk.push([q, t]); }
+      if (t && gOn(t) && gReach(G, q, t)) atk.push([q, t]); }
     const acting = new Set(atk.map(p => p[0]));
-    for (const [q, t] of atk.slice()) if (gOk(t) && !acting.has(t) && !t.engine && !(t.cur && (t.cur.o === 'flee' || t.cur.o === 'back')) && !atk.some(p => p[0] === t && p.ret)) { const p = [t, q]; p.ret = 1; atk.push(p); acting.add(t); }
+    for (const [q, t] of atk.slice()) if (gOk(t) && !acting.has(t) && !t.engine && gSide(q, t) !== 'rear' && !(t.cur && (t.cur.o === 'flee' || t.cur.o === 'back')) && !atk.some(p => p[0] === t && p.ret)) { const p = [t, q]; p.ret = 1; atk.push(p); acting.add(t); }   // кто ударил в тыл — тому не отвечают
     // копья в обороне встречают натиск: бьют первыми, натиск гаснет
     for (const p of atk) { const [q, t] = p; if (!q.charge) continue;
-      if (t.w === 'pike' && t.cur && t.cur.o === 'hold' && gOk(t)) { q.charge = false; const pre = atk.find(z => z[0] === t); if (pre) pre.first = 1; E.ev.push({ e: 'set', id: t.id, at: q.id }); } }
+      if (t.w === 'pike' && t.cur && t.cur.o === 'hold' && gOk(t) && gSide(q, t) === 'front') { q.charge = false; const pre = atk.find(z => z[0] === t); if (pre) pre.first = 1; E.ev.push({ e: 'set', id: t.id, at: q.id }); } }
     for (const p of atk.filter(p => p.first)) { gRoll(G, p[0], p[1], true, 0, E.mel); E.mel[E.mel.length - 1].first = 1; }
     gApply(G);
     for (const p of atk) { if (p.first) continue; const [q, t] = p; if (!q.sol.length || !gOn(t)) continue;
-      let mod = 0; const why = []; if (q.charge && !p.ret) { mod -= 1; why.push('charge'); } if (G.wall && gCross(G, q.c, t.c, t.r) && q.side === 'a') { mod += (GRID.climb[G.wall.lv] || 1) + (G.oil || 0); why.push('wall'); if (G.oil) why.push('oil'); }   // натиск +1; лезть на стену −1
+      let mod = 0; const why = []; if (q.charge && !p.ret) { mod -= 1; why.push('charge'); }
+      if (t.st === 'ok') { const sd = gSide(q, t); if (sd === 'rear') { mod -= 1; why.push('rear'); t._rear = 1; } else if (!p.ret && gFlank(G, q, t)) { mod -= 1; why.push('flank'); } }   // тыл +1 и по духу; фланг (второй на связанного) +1 if (G.wall && gCross(G, q.c, t.c, t.r) && q.side === 'a') { mod += (GRID.climb[G.wall.lv] || 1) + (G.oil || 0); why.push('wall'); if (G.oil) why.push('oil'); }   // натиск +1; лезть на стену −1
       if ((G.terr === 'ford' || G.terr === 'river') && q.side === 'a') { mod += 1; why.push('ford'); }
       if (t.mounted && q.w === 'pike') why.push('pike');
-      gRoll(G, q, t, true, mod, E.mel, why); const R = E.mel[E.mel.length - 1]; if (q.charge && !p.ret) R.ch = 1; if (p.ret) R.ret = 1; }
+      q._fresh = !p.ret && !(q._c0 != null && Math.max(Math.abs(q._c0 - t._c0), Math.abs(q._r0 - t._r0)) === 1 && !gWallSep(G, { c: q._c0, r: q._r0 }, { c: t._c0, r: t._r0 })); if (q._fresh) why.push('fresh');   // ещё не были сцеплены — это сшибка
+      gRoll(G, q, t, true, mod, E.mel, why); q._fresh = false; const R = E.mel[E.mel.length - 1]; if (q.charge && !p.ret) R.ch = 1; if (p.ret) R.ret = 1; }
     gApply(G);
     // 6) дух: потерял за шаг половину — бросок d6, нужно 4+
     for (const q of G.sq) { if (!q.n1 || q.engine) continue;
@@ -5864,7 +5901,7 @@ body.tut-on #gAdv { display: none !important; }   /* в обучении гов�
       if (lost > 0 && lost * 2 >= q.n1) { let m = 0;
         const gen = G.gen[q.side], gq = gen && G.sq.find(z => z.id === gen); if (gq && gOk(gq) && gDist(gq, q) <= 1) m++;
         if (G.sq.some(z => z.side === q.side && z !== q && z.st === 'flee' && gDist(z, q) <= 1)) m--;
-        m += G.morMod[q.side] || 0; if (G.wall && q.side === 'd' && q.c >= 3 && gWallUp(G, q.r)) m += GRID.wallMor;   // за целой стеной стоят твёрже
+        m += G.morMod[q.side] || 0; if (q._rear) m--; if (G.wall && q.side === 'd' && q.c >= 3 && gWallUp(G, q.r)) m += GRID.wallMor;   // за целой стеной стоят твёрже
         const d = gd6(G), ok = d + m >= GRID.morale;
         E.mor.push({ id: q.id, d, m, ok: ok ? 1 : 0 });
         if (!ok) { q.st = 'flee'; q.stack = [{ o: 'flee' }, { o: 'flee' }, { o: 'flee' }]; } } }
@@ -5890,6 +5927,7 @@ body.tut-on #gAdv { display: none !important; }   /* в обучении гов�
       if (!G.wall) { E.burn.push(q.id); return; }
       let row = q.cur.row != null ? +q.cur.row : q.engine === 'ram' ? q.r : G.focus; if (!(row >= 0 && row < GRID.R)) row = GRID.gate;
       if (q.engine === 'ram' && !(q.c === 2 && q.r === row)) { E.burn.push(q.id); return; }   // таран бьёт лишь вплотную
+      if (row === GRID.gate && q.engine !== 'ram') { const alt = [1, 3, 0, 4].find(r => G.wall.seg[r] > 0); if (alt == null) { E.burn.push(q.id); return; } row = alt; }   // ворота пробивает лишь таран
       if (G.wall.seg[row] <= 0) { E.burn.push(q.id); return; }
       const th = gclamp(spec.hit + (G.engMod || 0) + (q.engine === 'ram' ? G.ramPen || 0 : 0), 2, 6), R = { id: q.id, row, d: [], th, dmg: 0 };   // ров мешает тарану, Осадник бьёт метче
       for (let i = 0; i < q.sol.length; i++) { const d = gd6(G); R.d.push(d); if (d >= th) R.dmg += spec.dmg * (q.engine === 'ram' && row === GRID.gate ? 2 : 1) * (G.siegeMul || 1); }
@@ -5900,7 +5938,7 @@ body.tut-on #gAdv { display: none !important; }   /* в обучении гов�
     let t = q.cur.t && G.sq.find(z => z.id === q.cur.t); if (!t || !gCanShoot(G, q, t)) t = gBestShot(G, q); if (!t) { E.burn.push(q.id); return; }
     const R = { id: q.id, t: t.id, m: 0, d: [], th: GRID.engHit, s: [], sth: 0, k: 0, eng: 1 };
     for (let i = 0; i < q.sol.length * spec.dice; i++) { const d = gd6(G); R.d.push(d); if (d < GRID.engHit) continue;
-      const y = t.sol[t._dead || 0]; if (!y) continue; const st = gclamp(gSaveT(y, 'fist', gCover(G, q, t), false) + GRID.engAp, 2, 7), s = gd6(G); R.s.push(s); R.sth = R.sth || st; if (s < st) { t._dead = (t._dead || 0) + 1; R.k++; } }
+      const y = t.sol[t._dead || 0]; if (!y) continue; const st = gclamp(gSaveT(y, 'fist', 0, false) + GRID.engAp, 2, 7), s = gd6(G); R.s.push(s); R.sth = R.sth || st; if (s < st) { t._dead = (t._dead || 0) + 1; R.k++; } }
     q.kills += R.k; E.shot.push(R);
   }
   // погоня: чем больше у победителя стоящих (и конных), тем больше бегущих не уйдёт
@@ -5933,10 +5971,11 @@ body.tut-on #gAdv { display: none !important; }   /* в обучении гов�
       rng.forEach(q => queue.push([q, [front, back, deep]]));
       cav.forEach(q => queue.push([q, [deep, back, front]]));
     } else {
+      eng.filter(q => q.engine === 'ram').forEach(q => queue.push([q, [front, back], [GRID.gate, 1, 3, 0, 4]]));   // таран — напротив ворот
       foot.forEach(q => queue.push([q, [front, back]]));
       rng.forEach(q => queue.push([q, foot.length ? [back, front] : [front, back]]));
       cav.forEach(q => queue.push([q, [back, front], [0, 4, 1, 3, 2]]));
-      eng.forEach(q => queue.push([q, q.engine === 'ram' ? [front, back] : [back, front]]));
+      eng.filter(q => q.engine !== 'ram').forEach(q => queue.push([q, [back, front]]));
     }
     for (const [q, cols, rows] of queue) { let ok = false;
       for (const c of cols) { if (c == null) continue; const fr = (rows || GROWS).filter(r => !used[c + ',' + r]); if (fr.length) { put(q, c, fr[0]); ok = true; break; } }
@@ -5961,18 +6000,23 @@ body.tut-on #gAdv { display: none !important; }   /* в обучении гов�
     const adj = gAdj(G, q, true), adjF = adj.filter(e => !e.engine);
     if (q.engine) {
       if (q.engine === 'ram') { if (!G.wall) return { o: 'wait' };
+        if (q.c === 2 && q.r !== GRID.gate && gWallUp(G, GRID.gate) && gFree(G, 2, q.r + (GRID.gate > q.r ? 1 : -1))) return gFlankTo(q, GRID.gate);   // к воротам
         if (q.c === 2 && gWallUp(G, q.r)) return { o: 'bombard', row: q.r };
         if (q.c < 2 && !gEngaged(G, q)) { const up = [G.focus, 2, 1, 3, 0, 4].find(r => gWallUp(G, r)); if (up != null && up !== q.r && gFree(G, q.c, q.r + (up > q.r ? 1 : -1))) return gFlankTo(q, up); return gFree(G, q.c + 1, q.r) ? { o: 'march' } : { o: 'wait' }; }   // таран — к воротам
         return { o: 'wait' }; }
-      if (G.wall && G.wall.seg.some(v => v > 0) && G.wall.seg[G.focus] > 0) return { o: 'bombard', row: G.focus };
+      if (G.wall && ![0, 1, 3, 4].some(r => G.wall.seg[r] <= 0)) { const row = [1, 3, 0, 4].filter(r => G.wall.seg[r] > 0).sort((a, b) => G.wall.seg[a] - G.wall.seg[b])[0]; if (row != null) return { o: 'bombard', row }; }   // ломают прясло; пролом есть — бьют по войскам
       const t = gBestShot(G, q); return t ? { o: 'shoot', t: t.id } : { o: 'wait' };
     }
     if (q.ranged) {
       if (adjF.length) { const strong = adjF.some(e => !e.ranged && gEK(G, e, q, true) > gEK(G, q, e, true) * 0.8); if (strong && gBehind(G, q)) return { o: 'back' };
         const t = adj.sort((a, b) => gEK(G, q, b, true) - gEK(G, q, a, true))[0]; return { o: 'melee', t: t.id }; }
       if (adj.length) return { o: 'melee', t: adj[0].id };   // машину — порубить
-      const t = gBestShot(G, q); if (t) return { o: 'shoot', t: t.id };
+      const t = gBestShot(G, q);
+      const threat = foes.some(e => !e.engine && !e.ranged && gDist(e, q) <= (e.mounted ? 4 : 3) && !gEngaged(G, e) && (e.c - q.c) * fd > 0);   // к нам идёт свободный враг
+      if (t && threat && style !== 'push' && !(G.wall && side === 'd') && gBehind(G, q)) return { o: 'shootback', t: t.id };   // стрелять и отходить
+      if (t) return { o: 'shoot', t: t.id };
       if (side === 'd' && (G.wall || style !== 'push')) return { o: 'hold' };
+      if (!gFree(G, q.c + fd, q.r)) return gSideStep(G, q);   // свои загородили — обойти
       return gFree(G, q.c + fd, q.r) && !gCross(G, q.c, q.c + fd, q.r) ? { o: 'march' } : { o: 'hold' };
     }
     // пешие и конные рубаки
@@ -5999,20 +6043,28 @@ body.tut-on #gAdv { display: none !important; }   /* в обучении гов�
     }
     // в осаде: оборона стоит на стене, а вылезших — бьёт; конница штурмующих ждёт пролома
     if (G.wall && side === 'd') { const inside = tgtList.filter(e => e.c >= 3);
-      if (!inside.length) return { o: 'hold' };
+      if (!inside.length) { const breachNear = [q.r - 1, q.r, q.r + 1].some(r => r >= 0 && r < GRID.R && !gWallUp(G, r));
+        if (q.c === 3 && gWallUp(G, q.r) && !breachNear && gFree(G, 4, q.r) && tgtList.some(e => e.ranged || (e.engine && e.engine !== 'ram'))) return { o: 'back' };   // пешим на стене делать нечего — за стену от стрел
+        if (q.c >= 4 && breachNear) { const br = [q.r - 1, q.r, q.r + 1].find(r => r >= 0 && r < GRID.R && !gWallUp(G, r)); if (br !== q.r) return gFlankTo(q, br); if (gFree(G, q.c - 1, q.r)) return { o: 'march' }; }   // к пролому
+        return { o: 'hold' }; }
       const t = inside.sort((a, b) => gDist(a, q) - gDist(b, q))[0]; return gStepTo(G, q, t); }
     if (G.wall && side === 'a') {
       const breach = [0, 1, 2, 3, 4].filter(r => !gWallUp(G, r));
       if (q.mounted && !breach.length) return { o: 'hold' };
       if (q.c >= 3) { const t = tgtList.sort((a, b) => gDist(a, q) - gDist(b, q))[0]; return gStepTo(G, q, t); }
       if (breach.length) { const br = breach.sort((a, b) => Math.abs(a - q.r) - Math.abs(b - q.r))[0]; if (br !== q.r && (q.mounted || Math.abs(br - q.r) <= 1)) return gFlankTo(q, br); }
-      if (q.c === 2) { const across = gAt(G, 3, q.r); if (!across) return { o: 'march' }; return { o: 'hold' }; }
+      if (!breach.length) return q.c >= 1 ? { o: 'hold' } : (gFree(G, q.c + 1, q.r) ? { o: 'march' } : { o: 'hold' });   // стена цела — ждать пролома
+      if (q.c === 2) return { o: 'hold' };
       return gFree(G, q.c + 1, q.r) ? { o: 'march' } : gSideStep(G, q);
     }
     // в поле: конница — по стрелкам и машинам, пехота — на ближайшего
     let t;
     if (q.mounted) t = tgtList.slice().sort((a, b) => ((b.ranged || b.engine ? 2 : 0) - (b.w === 'pike' ? 1.5 : 0) - gDist(b, q) * 0.4) - ((a.ranged || a.engine ? 2 : 0) - (a.w === 'pike' ? 1.5 : 0) - gDist(a, q) * 0.4))[0];
     else t = tgtList.slice().sort((a, b) => (gDist(a, q) + Math.abs(a.r - q.r) * 0.6) - (gDist(b, q) + Math.abs(b.r - q.r) * 0.6))[0];
+    if (q.mounted && style !== 'push' && Math.abs(t.c - q.c) >= 2) {   // конница заходит во фланг: идёт рядом с целью, а не в лоб
+      const rows = [t.r - 1, t.r + 1].filter(r => r >= 0 && r < GRID.R).sort((a, b) => Math.abs(a - q.r) - Math.abs(b - q.r));
+      const fr = rows.find(r => r === q.r || gFree(G, q.c, q.r + (r > q.r ? 1 : -1)));
+      if (fr != null && (t.w === 'pike' || t.ranged || gEK(G, t, q, true) > gEK(G, q, t, true) * 0.6)) { if (fr !== q.r) return gFlankTo(q, fr); if (gFree(G, q.c + fd, q.r)) return { o: 'march' }; } }
     return gStepTo(G, q, t);
   }
   function gFlankTo(q, row) { const up = row < q.r; return { o: (up === (q.side === 'a')) ? 'flankL' : 'flankR' }; }
@@ -6046,11 +6098,14 @@ body.tut-on #gAdv { display: none !important; }   /* в обучении гов�
   // полководец с просчётом: перебирает замыслы (советник, напор, выжидание) и проигрывает каждый на черновике
   function gThink(G, side) {
     const styles = ['base', 'push', 'hold'], cands = styles.map(st => gPlan(G, side, st));
+    if (G.step > 0 || (G.wall && side === 'a')) { const lv = {}; for (const q of G.sq) if (q.side === side && gOn(q)) lv[q.id] = [{ o: 'flee' }, { o: 'flee' }, { o: 'flee' }]; lv._leave = 1; cands.push(lv); }   // увести войско с поля
     let best = cands[0], bs = -1e9;
     if (!RULES.fieldThink) return best;
     for (const c of cands) { let sc = 0;
       for (const sx of [0x9e3779b9, 0x85ebca6b]) { const C = gClone(G, sx); gOrders(C, side, c); gOrders(C, gFoe(side), gPlan(C, gFoe(side), 'base')); gRunStack(C); gRollout(C); sc += gScore(C, side); }
+      if (c._leave) sc -= 6;   // уход — лишь когда иначе хуже
       if (sc > bs + 1e-9) { bs = sc; best = c; } }
+    if (best._leave) delete best._leave;
     return best;
   }
   // ---------- начало боя ----------
@@ -6063,7 +6118,7 @@ body.tut-on #gAdv { display: none !important; }   /* в обучении гов�
     G.sq = gSquads(A, 'a', cfg.aEng).concat(gSquads(D, 'd', null, cfg.wallLv > 0 ? GRID.R : 0));
     gDeployAI(G, 'd');
     if (!gDeployPlan(G, 'a', cfg.aDeploy, cfg.aBanner)) gDeployAI(G, 'a');
-    if (G.wall) { const ram = G.sq.find(q => q.engine === 'ram'); G.focus = GRID.gate; }
+    if (G.wall) G.focus = GRID.gate;   // таран — к воротам
     for (const q of G.sq) q.stack = [{ o: 'wait' }, { o: 'wait' }, { o: 'wait' }];
     gSnap0(G);
     return G;
@@ -20668,18 +20723,19 @@ var GridScene = (function () {
     wait: ['Стоять', 'Отряд стоит и ничего не делает.'],
     hold: ['Оборона', 'Встать в оборону: проваленные спасброски перебрасываются. Копья в обороне гасят натиск конницы и бьют первыми.'],
     shoot: ['Стрельба', 'Бить по врагу в досягаемости. В упор (по соседу) нельзя; через свой отряд — на 1 хуже.'],
+    shootback: ['С отходом', 'Стрельба с отходом: залп на 1 хуже, затем шаг назад на клетку. Так лучники уходят от погони, отстреливаясь.'],
     march: ['Марш', 'Вперёд: пехота на 2 клетки, тяжёлая — на 1, конница — на 3. Упёрся во врага — сшибка; у конницы с разбега — натиск.'],
     flankL: ['Левый фланг', 'Сдвинуться на клетку к левому флангу (конница — на 2). Пока идут, враг перебрасывает промахи.'],
     flankR: ['Правый фланг', 'Сдвинуться на клетку к правому флангу (конница — на 2). Пока идут, враг перебрасывает промахи.'],
     melee: ['Сеча', 'Ударить соседний отряд — и по прямой, и наискось. Урон наносится обоим разом. Связанный сечей отряд не может уйти маршем.'],
-    back: ['Отход', 'Назад на клетку (конница — на 2). Соседи-враги бьют вслед, перебрасывая промахи.'],
+    back: ['Отход', 'Назад на клетку (конница и лучники — на 2). Соседи-враги бьют вслед, перебрасывая промахи.'],
     flee: ['Побег', 'Бежать: на 2 клетки назад (конница — на 3), за край поля — прочь из боя. Соседи бьют вслед.'],
-    bombard: ['Обстрел стены', 'Машины бьют по пряслу стены. Прясло рухнуло — пролом: туда можно идти, укрытия там нет.']
+    bombard: ['Обстрел стены', 'Машины крошат прясло стены (нажмите кусок стены). Ворота пробивает только таран — вплотную. Прясло рухнуло — пролом: туда можно идти, укрытия там нет.']
   };
   // знаки приказов (24×24): из этих же путей рисует и холст
-  var GLY = { march: 'M3 12h14M12 6l6 6-6 6', back: 'M21 12H7M12 6l-6 6 6 6', flee: 'M21 12H6M10 7l-5 5 5 5M16 7l-5 5 5 5', up: 'M12 21V6M6 11l6-6 6 6', down: 'M12 3v15M6 13l6 6 6-6',
+  var GLY = { shootback: 'M3 18L14 7M10 6h5v5M21 14h-6M18 11l-3 3 3 3', march: 'M3 12h14M12 6l6 6-6 6', back: 'M21 12H7M12 6l-6 6 6 6', flee: 'M21 12H6M10 7l-5 5 5 5M16 7l-5 5 5 5', up: 'M12 21V6M6 11l6-6 6 6', down: 'M12 3v15M6 13l6 6 6-6',
     melee: 'M4 4l16 16M20 4L4 20M3 8V3h5M21 8V3h-5', shoot: 'M5 19L18 6M13 5h6v6M5 6c7 0 13 6 13 13', hold: 'M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z', wait: 'M7 12h10', bombard: 'M12 15m-5 0a5 5 0 1 0 10 0a5 5 0 1 0-10 0M5 5l3 3M12 3v4M19 5l-3 3' };
-  var WHY = { own: 'через своих −1', forest: 'лес −1', wall: 'лезут на стену', oil: 'кипяток −1', ford: 'брод −1', charge: 'натиск +1', hunger: 'голод −1', pike: 'копья против коней 3+' };
+  var WHY = { own: 'через своих −1', fresh: 'сшибка: переброс промахов', onmove: 'на отходе −1', merlon: 'за зубцами −1', forest: 'лес −1', wall: 'лезут на стену', oil: 'кипяток −1', ford: 'брод −1', charge: 'натиск +1', flank: 'во фланг (цель уже в сече) +1', rear: 'в тыл +1, без ответа', hunger: 'голод −1', pike: 'копья против коней 3+' };
   function glyKey(o, side) { if (o === 'flankL') return side === 'a' ? 'up' : 'down'; if (o === 'flankR') return side === 'a' ? 'down' : 'up'; return o; }
   function svg(o, side, cls) { return '<svg class="gs-gly ' + (cls || '') + '" viewBox="0 0 24 24" aria-hidden="true"><path d="' + GLY[glyKey(o, side)] + '"/></svg>'; }
   var TERR_RU = { forest: 'лес: натиска нет, стрелы на 1 хуже', hills: 'холмы: нападающий идёт на клетку медленнее, стрелки обороны бьют на клетку дальше', marsh: 'болото: все идут на клетку медленнее, натиска нет', meadow: 'луг: простор для конницы', plain: 'поле: простор для конницы', ford: 'брод: нападающему в сече на 1 хуже, натиска нет', river: 'река: нападающему в сече на 1 хуже, натиска нет', mountain: 'горы: натиска нет' };
@@ -20715,7 +20771,7 @@ var GridScene = (function () {
     var B = Board({ aName: opts.aName, dName: opts.dName, aN: opts.aN || '', dN: opts.dN || '', aFac: opts.aFac || 'azure', dFac: opts.dFac || 'crimson' });
     var R = meta.R || 5, C = meta.C || 6;
     var avail = Math.min(window.innerWidth - 16, 1180) - 24, W = Math.max(300, avail);
-    var mx = W < 560 ? 6 : 14, cw = (W - 2 * mx) / C, maxCh = Math.max(46, (window.innerHeight * (W < 560 ? 0.42 : 0.5) - 40) / R), ch = Math.min(cw * (W < 560 ? 0.95 : 0.62), maxCh), top = Math.max(22, ch * 0.5), H = top + R * ch + 10;
+    var mx = W < 560 ? 6 : 14, cw = (W - 2 * mx) / C, maxCh = Math.max(46, (window.innerHeight * (W < 560 ? 0.42 : opts.lesson ? 0.44 : 0.5) - 40) / R), ch = Math.min(cw * (W < 560 ? 0.95 : 0.62), maxCh), top = Math.max(22, ch * 0.5), H = top + R * ch + 10;
     var cv = document.createElement('canvas'); cv.className = 'gs-cv'; var dpr = Math.min(window.devicePixelRatio || 1, 2);
     cv.width = W * dpr; cv.height = H * dpr; cv.style.width = W + 'px'; cv.style.height = H + 'px';
     var wrap = document.createElement('div'); wrap.className = 'gs-wrap'; wrap.style.width = W + 'px'; wrap.style.height = H + 'px';
@@ -20890,7 +20946,7 @@ var GridScene = (function () {
     function diceHtml(R) {
       var h = '<div class="gs-dr">' + R.d.slice(0, 16).map(function (d) { return '<i class="' + (d >= R.th ? 'h' : '') + '">' + Math.abs(d) + '</i>'; }).join('') + (R.d.length > 16 ? '<b>+' + (R.d.length - 16) + '</b>' : '') + '<em>' + R.th + '+</em></div>' + (R.why && R.why.length ? '<small>' + R.why.map(function (w) { return WHY[w] || w; }).join(', ') + '</small>' : '');
       if (R.s && R.s.length) h += '<div class="gs-dr s">' + R.s.slice(0, 16).map(function (d) { return '<i class="' + (d >= R.sth ? 'ok' : 'x') + '">' + d + '</i>'; }).join('') + '<em>спас ' + saveRu(R.sth) + '</em></div>';
-      return h + '<div class="gs-k">' + (R.k ? '−' + R.k : 'мимо') + (R.rr ? '<small> переброс промахов</small>' : '') + (R.rs ? '<small> оборона: переброс</small>' : '') + (R.ch ? '<small> натиск +1</small>' : '') + (R.first ? '<small> копья бьют первыми</small>' : '') + '</div>';
+      return h + '<div class="gs-k">' + (R.k ? '−' + R.k : 'мимо') + (R.rr && !(R.why && R.why.indexOf('fresh') >= 0) ? '<small> переброс промахов</small>' : '') + (R.rs ? '<small> оборона: переброс</small>' : '') + (R.ch ? '<small> натиск +1</small>' : '') + (R.first ? '<small> копья бьют первыми</small>' : '') + '</div>';
     }
     function corpses(id, k) { var q = S.byId[id], d = S.disp[id]; if (!q || !d || q.engine) return;
       for (var i = 0; i < Math.min(k, 6); i++) { if (S.dead.length > 140) S.dead.shift(); S.dead.push({ side: q.side, kind: figKind(q), m: q.mounted, x: cx(d.c) + (Math.random() - 0.5) * cw * 0.7, y: top + (d.r + 0.55 + Math.random() * 0.4) * ch }); } }
@@ -20914,6 +20970,8 @@ var GridScene = (function () {
           setTimeout(function () { if (S.wall) S.wall[R.row] = Math.max(0, S.wall[R.row] - R.dmg); S.flash = (S.flash || []).concat([{ x: wx, y: wy, t0: now(), dur: T(500) }]);
             pop(wx, top + R.row * ch, '<div class="gs-dr">' + R.d.map(function (d) { return '<i class="' + (d >= R.th ? 'h' : '') + '">' + d + '</i>'; }).join('') + '<em>' + R.th + '+</em></div><div class="gs-k">' + (R.breach ? 'ПРОЛОМ!' : R.dmg ? 'прясло −' + R.dmg : 'камни мимо') + '</div>', T(1900), R.breach ? 'big' : ''); }, T(650)); }, T((E.shot.length + i) * 160)); });
         wait(900 + (E.shot.length + E.eng.length) * 160 + 900, nx); });
+      seq.push(function (nx) { var R = E.shot.filter(function (r) { return !r.eng; })[0]; if (!S.L || !R) return nx(); S.L.gate('shot', '<div class="gs-lroll">' + diceHtml(R) + '</div>', nx); });
+      seq.push(function (nx) { var R = E.eng[0]; if (!S.L || !R) return nx(); S.L.gate('eng', '<div class="gs-lroll"><div class="gs-dr">' + R.d.map(function (d) { return '<i class="' + (d >= R.th ? 'h' : '') + '">' + d + '</i>'; }).join('') + '<em>' + R.th + '+</em></div><div class="gs-k">' + (R.breach ? 'пролом!' : R.dmg ? 'прясло −' + R.dmg : 'мимо') + '</div></div>', nx); });
       var go = E.mv.filter(function (m) { return m.o !== 'flee' && m.o !== 'back'; });
       if (go.length) seq.push(function (nx) { go.forEach(function (m) { move(m, m.ch ? 520 : 700); if (m.lad) { var d = S.byId[m.id]; } }); wait(760, function () {
         go.forEach(function (m) { if (m.ch) { var d = S.disp[m.id]; pop(cx(d.c), top + d.r * ch, 'НАТИСК!', T(1000), 'big'); } if (m.lad) { var d2 = S.disp[m.id]; pop(cx(d2.c), top + d2.r * ch, 'лестницы на стену', T(1000)); } }); nx(); }); });
@@ -20922,6 +20980,7 @@ var GridScene = (function () {
         (E.ev || []).filter(function (e) { return e.e === 'set'; }).forEach(function (e) { var d = S.disp[e.id]; if (d) pop(cx(d.c), top + d.r * ch, 'копья встретили натиск!', T(1200), 'big'); });
         mel.forEach(function (R, i) { setTimeout(function () { strike(R); }, T(i * 220)); });
         wait(1300 + mel.length * 220, nx); });
+      seq.push(function (nx) { var mel2 = E.mel.filter(function (m) { return !m.part; }), W2 = S.wall ? mel2.filter(function (m) { var x = S.disp[m.id], y = S.disp[m.t]; return x && y && Math.min(x.c, y.c) === 2 && Math.max(x.c, y.c) === 3; })[0] : null, R = W2 || mel2[0]; if (!S.L || !R) return nx(); var k = W2 ? 'wallmel' : 'mel'; S.L.gate(k, '<div class="gs-lroll">' + diceHtml(R) + '</div>', function () { if (W2 && mel2[0]) S.L.gate('mel', '', nx); else nx(); }); });
       seq.push(function (nx) {   // итог шага: счёт, стена, павшие отряды
         (E.snap || []).forEach(function (a) { var d = S.disp[a[0]]; if (!d) return; if (d.n > a[3]) corpses(a[0], d.n - a[3]); d.n = a[3]; d.c = a[1]; d.r = a[2];
           var was = d.st; d.st = a[4]; if (a[4] >= 2 && was < 2) fade(a[0], a[4] === 3); });
@@ -20929,6 +20988,7 @@ var GridScene = (function () {
         B.count('a', countSide('a')); B.count('d', countSide('d'));
         if (E.mor.length) { E.mor.forEach(function (m) { var d = S.disp[m.id]; if (!d) return; pop(cx(d.c), top + d.r * ch + ch * 0.1, '<div class="gs-mor"><i class="' + (m.ok ? 'ok' : 'x') + '">' + m.d + '</i>' + (m.m ? (m.m > 0 ? '+' : '') + m.m : '') + ' <span>' + (m.ok ? 'держатся' : 'дрогнули!') + '</span></div><small>дух: нужно 4+</small>', T(1700), m.ok ? '' : 'big'); }); wait(1500, nx); }
         else wait(150, nx); });
+      seq.push(function (nx) { var m = E.mor[0]; if (!S.L || !m) return nx(); S.L.gate('mor', '<div class="gs-lroll gs-mor"><i class="' + (m.ok ? 'ok' : 'x') + '">' + m.d + '</i>' + (m.m ? (m.m > 0 ? '+' : '') + m.m : '') + ' <span>' + (m.ok ? 'держатся' : 'дрогнули') + '</span></div>', nx); });
       seq.push(function (nx) {
         var evs = (E.ev || []).filter(function (e) { return e.e === 'wound' || e.e === 'break' || e.e === 'chase'; });
         evs.forEach(function (e) { if (e.e === 'wound') { S.gen[e.side] = null; pop(W / 2, H * 0.3, (e.side === 'a' ? opts.aName : opts.dName) + ' ранен — знамя пало', T(1800), 'big'); }
@@ -20952,11 +21012,74 @@ var GridScene = (function () {
     return { B: B, S: S, meta: meta, sheet: B.sheet, playLog: playLog, applySnap: applySnap, close: close, fac: fac, glyph: glyph, W: W, wrap: wrap };
   }
 
+
+  // ---------------- уроки боя (24.10, Ник: обучение в прологе) ----------------
+  // Урок «поле» — на шаге пролога «Первая битва», урок «штурм» — на «Штурм Заречья»; вне пролога — один раз, при первом таком бое.
+  // Шаги ждут действия игрока (on), карточки «ворот» всплывают на проигрыше при первом залпе, сшибке, броске духа, ударе по стене.
+  var ADV = { name: 'Боярин Добромир', face: 'img/portraits/p15.webp' };
+  var LESSONS = {
+    field: { steps: [
+      { t: 'Поле боя', dep: 1, x: 'Бой идёт на доске: <b>5 рядов и 6 колонок</b>. Твои отряды — слева, в подсвеченных колонках. Отряд — бойцы с одним оружием, до восьми; флажок — сколько их. Враг встал первым, его строй виден.', btn: 1 },
+      { t: 'Расстановка', dep: 1, x: 'Нажми свой отряд, потом пустую клетку в подсвеченных колонках — отряд встанет туда (на занятую — поменяется местами).', wait: 'move', glow: '.gs-cv' },
+      { t: 'Знамя князя', dep: 1, x: 'Знамя стоит при одном отряде. Ему и соседям легче выдержать потери: <b>+1 к броску духа</b>. Падёт или побежит этот отряд — князь ранен. Выбери отряд и нажми «<b>Знамя князя сюда</b>» — или оставь как есть.', btn: 1, wait: 'banner', glow: '[data-act="banner"]' },
+      { t: 'К приказам', dep: 1, x: 'Строй готов — жми «<b>К приказам</b>».', wait: 'deploy', glow: '[data-act="go"]' },
+      { t: 'Три приказа', x: 'Каждому отряду — <b>три приказа на три шага</b>: это стек. Воевода уже посоветовал — значки под отрядами, пунктир с цифрами — где отряд окажется после каждого шага.', btn: 1, glow: '.gs-slots' },
+      { t: 'Стрельба', x: 'Выдели стрелков («<b>Стрелки</b>» или нажми их на поле), выбери <b>шаг 1</b> и приказ «<b>Стрельба</b>». Лук бьёт на 3 клетки, но не в упор. Цель можно ткнуть на поле — она подсвечена красным; не ткнёшь — выберут сами.', wait: 'shoot', glow: '[data-grp="rng"], [data-o="shoot"]', skip: function (v) { return !v.sq.some(function (q) { return q.side === 'a' && q.ranged; }); } },
+      { t: 'Марш', x: 'Пехоте — «<b>Марш</b>»: вперёд на 2 клетки (в латах на 1, конница на 3). Упрётся во врага — <b>сшибка</b>, а конница с разбега бьёт метче. «<b>Сеча</b>» — удар по соседнему отряду, и наискось тоже.', wait: 'march', btn: 1, glow: '[data-grp="foot"], [data-o="march"], [data-o="melee"]' },
+      { t: 'Тайно и по шагам', x: 'Враг тоже отдал приказы — втайне. Откроются они по шагам: сперва первые приказы всех, потом вторые, потом третьи. В шаге по старшинству: <b>побег и отход → оборона → стрельба → марш → сеча</b>. Жми «<b>В бой</b>».', wait: 'go', glow: '[data-act="go"]' },
+      { t: 'Дальше сам', x: 'Это вся наука. После каждого стека — пауза и новые приказы, всего не больше четырёх стеков. «<b>Совет</b>» вернёт советы воеводы, «<b>Доиграть</b>» — советник доведёт бой без пауз. Скорость показа — ×1, ×2, ×4 под полем.', btn: 1, at: 'orders2' }
+    ], gates: {
+      shot: { t: 'Кубики стрельбы', x: 'Каждый стрелок бросает кубик. Верхний ряд — <b>попадание</b>: лукам нужно 5+ (через свой отряд — на 1 хуже). Каждое попадание цель пытается <b>спасти бронёй</b> — нижний ряд: без брони 6, щит 5+, кольчуга 4+, латы 3+. Не спасся — минус боец.' },
+      mel: { t: 'Сеча', x: 'Первый удар — <b>сшибка</b>: кто напал (марш упёрся во врага или «Сеча» по ещё не сцепленному), перебрасывает промахи; защитник в «Обороне» перебрасывает спасброски. Дальше бьют <b>обе стороны разом</b>, кубик на бойца: меч, топор, копьё — 4+, прочие 5+. Топор не замечает щита, булава и арбалет пробивают броню. Копьё по коннице — 3+, а копья в «Обороне» гасят натиск в лоб и бьют первыми. Отряд, уже связанный сечей, второй наш отряд бьёт <b>во фланг</b> — на 1 метче; <b>в тыл</b> (из-за спины) — тоже +1, и ему не отвечают. Конница влёт во фланг — натиск и фланг вместе.' },
+      mor: { t: 'Дух', x: 'Отряд, что за шаг потерял <b>половину</b>, бросает кубик духа: нужно <b>4+</b> (знамя рядом +1, сосед бежит −1). Не выдержал — бежит. Побежала половина войска — бой проигран, победитель гонит бегущих.' }
+    } },
+    siege: { steps: [
+      { t: 'Стена', x: 'У стен поле то же, но посредине — <b>стена из пяти прясел</b>, в среднем — ворота. Точки у прясла — его прочность. Защитники стоят на стене и за ней.', btn: 1, glow: '.gs-cv' },
+      { t: 'Как брать стену', x: 'Пока прясло цело, <b>ни пешим, ни коннице не достать</b> тех, кто на стене, — а их стрелки бьют вниз безнаказанно, даже под самую стену. Стену берут <b>машинами</b>: пролом — и туда идёт войско. Лучники за стеной укрыты, но стрелять по ним можно.', btn: 1 },
+      { t: 'Машины', x: 'Катапульта, требушет и пушка — свои отряды: «<b>Обстрел стены</b>» крошит прясло (нажми кусок стены), «<b>Стрельба</b>» — камнями по войскам за стеной, навесом: стена от них не укрывает. <b>Ворота пробивает только таран</b> — ему надо подъехать вплотную. Нет машин — стену не взять: держи войско подальше от стрелков.', btn: 1, glow: '[data-grp="eng"]' },
+      { t: 'В бой', x: 'Расставь войско и жми «<b>К приказам</b>», затем «<b>В бой</b>». Машины — по пряслу, стрелки — по стене, пехота ждёт пролома вне досягаемости луков.', wait: 'go', glow: '[data-act="go"]' }
+    ], gates: {
+      eng: { t: 'Удар по стене', x: 'Каждая машина бросает кубик; попала — прясло теряет прочность. Прочность кончилась — <b>пролом</b>: там стены больше нет, туда может идти и пехота, и конница, а защитникам в проломе не укрыться.' },
+      wallmel: { t: 'В пролом', x: 'В проломе стены больше нет: бьются как в поле, укрытия нет ни у кого. Соседние целые прясла по-прежнему держат — через них не достать.' },
+      mor: { t: 'Дух', x: 'Отряд, что за шаг потерял <b>половину</b>, бросает кубик духа: нужно <b>4+</b>. За целой стеной защитникам +1. Побежала половина войска — бой окончен.' }
+    } }
+  };
+  function lessonSeen(k) { try { return !!JSON.parse(localStorage.getItem('krlv-glesson') || '{}')[k]; } catch (e) { return false; } }
+  function lessonMark(k) { try { var o = JSON.parse(localStorage.getItem('krlv-glesson') || '{}'); o[k] = 1; localStorage.setItem('krlv-glesson', JSON.stringify(o)); } catch (e) { } }
+  function Lesson(kind, sc, view) {
+    var L = LESSONS[kind], i = 0, shown = {}, el = null, off = !L, sheet = sc.sheet, waitCb = null;
+    if (L) lessonMark(kind);
+    function step() { return L && L.steps[i]; }
+    function card(c, extra, onOk) {
+      if (!el) { el = document.createElement('div'); el.className = 'gs-lesson k-parch'; sheet.parentNode.insertBefore(el, sheet); }
+      el.innerHTML = '<img class="gs-lface" src="' + ADV.face + '" alt=""><div class="gs-lbody"><div class="gs-lh"><b>' + c.t + '</b><small>' + ADV.name + '</small></div><p>' + c.x + '</p>' + (extra || '') +
+        '<div class="gs-lb">' + (onOk ? '<button class="k-btn k-main" data-l="ok">' + (c.wait && c.btn ? 'Дальше' : 'Понятно') + '</button>' : '') + '<button class="k-btn k-paper" data-l="off">Без подсказок</button></div></div>';
+      el.querySelector('[data-l="off"]').onclick = function () { finish(); };
+      var b = el.querySelector('[data-l="ok"]'); if (b) b.onclick = function () { onOk(); };
+      try { el.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); } catch (e) { }
+    }
+    function glow() { sc.B.bd.querySelectorAll('.gs-glow').forEach(function (e) { e.classList.remove('gs-glow'); }); var c = step(); if (off || !c || !c.glow || waitCb) return; sc.B.bd.querySelectorAll(c.glow).forEach(function (e) { e.classList.add('gs-glow'); }); }
+    function show() { if (off) return; var c = step(); while (c && c.skip && c.skip(view)) { i++; c = step(); } if (!c) { if (el) el.style.display = 'none'; sc.B.bd.querySelectorAll('.gs-glow').forEach(function (e) { e.classList.remove('gs-glow'); }); return; } if (c.at && c.at !== at) { if (el) el.style.display = 'none'; return; } if (el) el.style.display = '';
+      card(c, '', c.btn ? function () { i++; show(); } : null); glow(); }
+    var at = 'deploy';
+    function finish(silent) { off = true; if (el && el.parentNode) el.parentNode.removeChild(el); el = null; sc.B.bd.querySelectorAll('.gs-glow').forEach(function (e) { e.classList.remove('gs-glow'); }); if (waitCb) { var cb = waitCb; waitCb = null; cb(); } }
+    return {
+      on: function (evt) { if (off) return; if (evt === 'auto') return finish();
+        if (evt === 'deploy') { while (step() && step().dep) i++; return show(); }   // расстановку пропустили — уроки строя тоже
+        var c = step(); if (c && c.wait === evt) { i++; show(); } },
+      where: function (w) { at = w; if (off) return; var c = step(); if (c && c.at === w) show(); else if (el && c && c.at && c.at !== w) el.style.display = 'none'; },
+      refresh: glow, show: show,
+      gate: function (kind2, extra, cb) { if (off || !L.gates[kind2] || shown[kind2]) return cb(); shown[kind2] = 1; waitCb = cb; if (el) el.style.display = ''; glow();
+        card(L.gates[kind2], extra, function () { var f = waitCb; waitCb = null; if (el) el.style.display = 'none'; show(); if (f) f(); }); },
+      active: function () { return !off; }
+    };
+  }
+  function lessonFor(opts, view) { if (!opts.lesson) return null; var k = opts.lesson === true ? (view.wall ? 'siege' : 'field') : opts.lesson; if (!LESSONS[k]) return null; if (!opts.tutorial && lessonSeen(k)) return null; return k; }
   // ---------------- что можно приказать отряду ----------------
   function ordersFor(q, wall) {
     if (q.engine === 'ram') return ['wait', 'march', 'flankL', 'flankR', 'bombard', 'back'];
     if (q.engine) return wall ? ['wait', 'bombard', 'shoot'] : ['wait', 'shoot'];
-    if (q.ranged) return ['shoot', 'hold', 'march', 'flankL', 'flankR', 'melee', 'back', 'flee', 'wait'];
+    if (q.ranged) return ['shoot', 'shootback', 'hold', 'march', 'flankL', 'flankR', 'melee', 'back', 'flee', 'wait'];
     return ['march', 'melee', 'hold', 'flankL', 'flankR', 'back', 'flee', 'wait'];
   }
   function occ(view, disp, c, r, skip) { for (var i = 0; i < view.sq.length; i++) { var q = view.sq[i], d = disp[q.id]; if (q.id !== skip && d && d.st < 2 && d.c === c && d.r === r) return q; } return null; }
@@ -20967,8 +21090,8 @@ var GridScene = (function () {
     for (var i = 0; i < 3; i++) { var o = (stack[i] || {}).o || 'wait', v = 0;
       if (o === 'march') { v = q.engine === 'ram' ? 1 : q.speed || 2; while (v-- > 0) { var nc = c + dir, z = occ(view, disp, nc, r, q.id); if (nc < 0 || nc >= 6 || z || crossBlocked(c, nc, r) && (q.mounted || q.engine)) break; if (crossBlocked(c, nc, r)) { c = nc; break; } c = nc; } }
       else if (o === 'flankL' || o === 'flankR') { v = q.mounted ? 2 : 1; var dr = (o === 'flankL' ? -1 : 1) * (q.side === 'a' ? 1 : -1); while (v-- > 0) { var nr = r + dr; if (nr < 0 || nr >= 5 || occ(view, disp, c, nr, q.id)) break; r = nr; } }
-      else if (o === 'back' || o === 'flee') { v = o === 'flee' ? (q.mounted ? 3 : 2) : (q.mounted ? 2 : 1); while (v-- > 0) { var bc = c - dir; if (bc < 0 || bc >= 6 || occ(view, disp, bc, r, q.id) || crossBlocked(c, bc, r)) break; c = bc; } }
-      if ((o === 'shoot' || o === 'melee') && stack[i].t) tg.push([[c, r], stack[i].t, o]);
+      else if (o === 'back' || o === 'flee' || o === 'shootback') { v = o === 'flee' ? (q.mounted ? 3 : 2) : o === 'shootback' ? 1 : (q.mounted || (q.ranged && !q.heavy) ? 2 : 1); while (v-- > 0) { var bc = c - dir; if (bc < 0 || bc >= 6 || occ(view, disp, bc, r, q.id) || crossBlocked(c, bc, r)) break; c = bc; } }
+      if ((o === 'shoot' || o === 'shootback' || o === 'melee') && stack[i].t) tg.push([[c, r], stack[i].t, o === 'melee' ? 'melee' : 'shoot']);
       path.push([c, r, i + 1]); }
     return { id: q.id, path: path, tg: tg };
   }
@@ -20984,6 +21107,7 @@ var GridScene = (function () {
       sc.sheet.innerHTML = '<h3>Расставьте войско</h3><p class="gs-hint">Нажмите свой отряд, затем клетку в подсвеченных колонках — встанет туда (свой отряд поменяется местами). Строй врага виден: он встал первым.' + (view.wall ? ' Стена — между третьей и четвёртой колонками; лезть на неё могут лишь пешие, коннице и машинам нужен пролом.' : '') + '</p>' +
         (q ? '<div class="gs-selq"><b>' + esc(kindRu(q)) + '</b> · ' + q.n + ' ' + plural(q.n, 'боец', 'бойца', 'бойцов') + (q.engine ? '' : ' · спасбросок ' + saveRu(q.save) + (q.hit ? ' · бьют ' + q.hit + '+' : '') + (q.range ? ' · бьют на ' + q.range + ' кл.' : '') + ' · марш ' + q.speed) + (!q.engine && view.gen && view.gen.a !== undefined ? ' <button class="k-btn k-paper" data-act="banner">' + (banner === q.id ? 'Знамя здесь' : 'Знамя князя сюда') + '</button>' : '') + '</div>' : '') +
         '<div class="fs-btns"><button class="k-btn" data-act="auto" title="Советник расставит и доведёт бой без пауз">Доиграть советником</button><button class="k-btn k-main" data-act="go">К приказам</button></div>';
+      if (S.L) S.L.refresh();
     }
     S.onCell = function (c, r) {
       var z = occ(view, S.disp, c, r);
@@ -20992,10 +21116,11 @@ var GridScene = (function () {
       var d = S.disp[sel], other = occ(view, S.disp, c, r, sel);
       if (other && other.side !== 'a') return;
       if (other) { var od = S.disp[other.id]; od.c = d.c; od.r = d.r; dep[other.id] = [od.c, od.r]; }
-      d.c = c; d.r = r; dep[sel] = [c, r]; draw();
+      d.c = c; d.r = r; dep[sel] = [c, r]; draw(); if (S.L) S.L.on('move');
     };
     sc.sheet.onclick = function (e) { var b = e.target.closest('[data-act]'); if (!b) return; var act = b.getAttribute('data-act');
-      if (act === 'banner') { banner = sel; return draw(); }
+      if (act === 'banner') { banner = sel; draw(); if (S.L) S.L.on('banner'); return; }
+      if (S.L) S.L.on(act === 'auto' ? 'auto' : 'deploy');
       S.onCell = null; S.zone = null; S.sel = {}; sc.sheet.onclick = null; sc.sheet.innerHTML = '<p class="fs-wait">Войска встают…</p>';
       send(act === 'auto' ? 'auto' : { deploy: dep, banner: banner }, onView); };
     draw();
@@ -21005,13 +21130,16 @@ var GridScene = (function () {
   function ordersPanel(sc, view, send, onView) {
     var S = sc.S, mine = view.sq.filter(function (q) { return q.side === 'a' && q.st === 'ok' && q.n > 0; }), stacks = {}, sel = {}, slot = 0, group = false, pendT = null;
     var adv = view.advice || {}; mine.forEach(function (q) { stacks[q.id] = [0, 1, 2].map(function (i) { var a = adv[q.id] && adv[q.id][i]; return a ? { o: a.o, t: a.t, row: a.row } : { o: 'wait' }; }); });
-    S.plans = stacks; var stk = Math.floor(view.step / 3) + 1;
+    S.plans = stacks; var stk = Math.floor(view.step / 3) + 1; if (S.L) S.L.where(stk > 1 ? 'orders2' : 'orders');
     sc.B.seal(String(stk), 'стек из ' + (view.stacks || 4));
     if (mine.length) sel[(mine.find(function (q) { return !q.engine; }) || mine[0]).id] = 1;
     function selList() { return mine.filter(function (q) { return sel[q.id]; }); }
+    function defRow(x) { var w = view.wall; if (!w) return 2; if (x.engine === 'ram') return w.gate; var r = [1, 3, 0, 4].filter(function (k) { return w.seg[k] > 0; })[0]; return r == null ? 1 : r; }
+    function rowOk(x, r) { var w = view.wall; return w && w.seg[r] > 0 && (x.engine === 'ram' || r !== w.gate); }
     function refresh() { S.sel = sel; S.slotHl = slot + 1; S.ghosts = mine.map(function (q) { return ghost(view, S.disp, q, stacks[q.id]); });
       S.hl = {}; S.cellHl = null;
-      if (pendT != null) { var s0 = selList()[0]; if (s0) { var g = ghost(view, S.disp, s0, stacks[s0.id]), at = g.path[pendT], o = stacks[s0.id][pendT].o;
+      if (pendT != null && selList()[0] && stacks[selList()[0].id][pendT].o === 'bombard') { var b0 = selList()[0]; S.cellHl = [0, 1, 2, 3, 4].filter(function (r) { return rowOk(b0, r); }).map(function (r) { return [3, r, r === stacks[b0.id][pendT].row ? 'rgba(255,120,90,.35)' : 'rgba(255,200,120,.22)']; }); }
+      else if (pendT != null) { var s0 = selList()[0]; if (s0) { var g = ghost(view, S.disp, s0, stacks[s0.id]), at = g.path[pendT], o = stacks[s0.id][pendT].o;
         view.sq.forEach(function (e) { if (e.side === 'a' || S.disp[e.id].st >= 2) return; var d = S.disp[e.id], dist = Math.max(Math.abs(d.c - at[0]), Math.abs(d.r - at[1]));
           if (o === 'melee' ? dist === 1 : dist >= 2 && dist <= (s0.range || 0)) S.hl[e.id] = 'tgt'; }); } } }
     function draw() {
@@ -21027,26 +21155,27 @@ var GridScene = (function () {
         h += '<div class="gs-slots" role="group" aria-label="Приказы по шагам">' + [0, 1, 2].map(function (i) { var o = ls.length === 1 ? stacks[q.id][i] : (ls.every(function (x) { return stacks[x.id][i].o === stacks[q.id][i].o; }) ? stacks[q.id][i] : { o: '?' });
           var tq = o.t && sc.S.byId[o.t]; return '<button class="gs-slot' + (slot === i ? ' on' : '') + '" data-slot="' + i + '"><small>шаг ' + (i + 1) + '</small>' + (o.o === '?' ? '<span>разные</span>' : svg(o.o, 'a') + '<span>' + ORD[o.o][0] + (tq ? ' → ' + esc(kindRu(tq)) : '') + '</span>') + '</button>'; }).join('') + '</div>';
         h += '<div class="gs-pal">' + (avail || []).map(function (k) { return '<button class="gs-ord" data-o="' + k + '" title="' + esc(ORD[k][1]) + '">' + svg(k, 'a') + '<span>' + ORD[k][0] + '</span></button>'; }).join('') + '</div>';
-        h += pendT != null ? '<p class="gs-hint gs-hint-t">Цель для шага ' + (pendT + 1) + ': нажмите врага, подсвеченного красным, — или ничего: отряд выберет сам.</p>' : '<p class="gs-hint">Выберите шаг, затем приказ. ' + esc((ORD[(stacks[q.id][slot] || {}).o] || ORD.wait)[1]) + '</p>';
+        h += pendT != null ? '<p class="gs-hint gs-hint-t">' + ((stacks[q.id][pendT] || {}).o === 'bombard' ? 'Прясло для шага ' + (pendT + 1) + ': нажмите подсвеченный кусок стены. Ворота бьёт только таран.' : 'Цель для шага ' + (pendT + 1) + ': нажмите врага, подсвеченного красным, — или ничего: отряд выберет сам.') + '</p>' : '<p class="gs-hint">Выберите шаг, затем приказ. ' + esc((ORD[(stacks[q.id][slot] || {}).o] || ORD.wait)[1]) + '</p>';
       } else h += '<p class="gs-hint">Нажмите свой отряд на поле.</p>';
       h += '<div class="gs-terr">' + esc(TERR_RU[view.terr] || '') + '</div>';
-      sc.sheet.innerHTML = h;
+      sc.sheet.innerHTML = h; if (S.L) S.L.refresh();
     }
     S.onCell = function (c, r, e) {
       var z = occ(view, S.disp, c, r);
-      if (pendT != null && z && z.side !== 'a' && S.hl[z.id]) { selList().forEach(function (x) { var o = stacks[x.id][pendT]; if (o.o === 'shoot' || o.o === 'melee') o.t = z.id; }); pendT = null; slot = Math.min(2, slot); return draw(); }
+      if (pendT != null && (c === 2 || c === 3) && view.wall && selList().every(function (x) { return stacks[x.id][pendT].o === 'bombard'; })) { selList().forEach(function (x) { if (rowOk(x, r)) stacks[x.id][pendT].row = r; }); pendT = null; slot = Math.min(2, slot + 1); return draw(); }
+      if (pendT != null && z && z.side !== 'a' && S.hl[z.id]) { selList().forEach(function (x) { var o = stacks[x.id][pendT]; if (o.o === 'shoot' || o.o === 'shootback' || o.o === 'melee') o.t = z.id; }); pendT = null; slot = Math.min(2, slot); return draw(); }
       if (z && z.side === 'a' && z.st === 'ok') { pendT = null; if (group || (e && (e.shiftKey || e.ctrlKey || e.metaKey))) { if (sel[z.id]) delete sel[z.id]; else sel[z.id] = 1; } else { sel = {}; sel[z.id] = 1; } return draw(); }
     };
     sc.sheet.onclick = function (e) {
       var b = e.target.closest('button'); if (!b) return;
       var sl = b.getAttribute('data-slot'), o = b.getAttribute('data-o'), g = b.getAttribute('data-grp'), act = b.getAttribute('data-act');
       if (sl != null) { slot = +sl; pendT = null; }
-      else if (o) { var ls = selList(); ls.forEach(function (x) { stacks[x.id][slot] = { o: o, row: o === 'bombard' ? (view.wall ? view.wall.gate : 2) : undefined }; });
-        if (o === 'shoot' || o === 'melee') pendT = slot; else pendT = null; if (pendT == null) slot = Math.min(2, slot + 1); }
+      else if (o) { var ls = selList(); ls.forEach(function (x) { stacks[x.id][slot] = { o: o, row: o === 'bombard' ? defRow(x) : undefined }; });
+        if (o === 'shoot' || o === 'shootback' || o === 'melee' || o === 'bombard') pendT = slot; else pendT = null; if (pendT == null) slot = Math.min(2, slot + 1); if (S.L) setTimeout(function () { S.L.on(o); }, 0); }
       else if (g) { sel = {}; pendT = null; var pick = g === 'all' ? mine : mine.filter(function (x) { return g === 'foot' ? !x.ranged && !x.mounted && !x.engine : g === 'rng' ? x.ranged : g === 'cav' ? x.mounted && !x.ranged : x.engine; }); pick.forEach(function (x) { sel[x.id] = 1; }); }
       else if (act === 'group') group = !group;
       else if (act === 'advice') { mine.forEach(function (x) { stacks[x.id] = [0, 1, 2].map(function (i) { var a = adv[x.id] && adv[x.id][i]; return a ? { o: a.o, t: a.t, row: a.row } : { o: 'wait' }; }); }); S.plans = stacks; pendT = null; }
-      else if (act === 'go' || act === 'auto') { S.onCell = null; S.sel = {}; S.hl = {}; sc.sheet.onclick = null; sc.sheet.innerHTML = '<p class="fs-wait">Приказы открываются…</p>';
+      else if (act === 'go' || act === 'auto') { if (S.L) { S.L.on(act); if (act === 'auto') S.L.on('go'); } S.onCell = null; S.sel = {}; S.hl = {}; sc.sheet.onclick = null; sc.sheet.innerHTML = '<p class="fs-wait">Приказы открываются…</p>';
         var ord = {}; mine.forEach(function (x) { ord[x.id] = stacks[x.id].map(function (s) { return { o: s.o, t: s.t, row: s.row }; }); });
         return send(act === 'auto' ? 'auto' : { ord: ord }, onView); }
       draw();
@@ -21069,7 +21198,8 @@ var GridScene = (function () {
   // живой бой
   function run(view, send, opts, done) {
     opts = opts || {}; opts.aN = n0(view, 'a'); opts.dN = n0(view, 'd');
-    var sc = Scene(view, opts), seen = view.log.length;
+    var sc = Scene(view, opts), seen = view.log.length, lk = lessonFor(opts, view);
+    if (lk) { sc.S.L = Lesson(lk, sc, view); setTimeout(function () { sc.S.L.show(); }, 50); }
     if (view.start && seen) sc.applySnap(view.start, view.wall0);
     function fail(res) { sc.sheet.innerHTML = '<p class="fs-wait">Приказ не прошёл: ' + esc(res && res.error) + '</p><div class="fs-btns"><button class="k-btn" data-act="x">Закрыть</button></div>'; sc.sheet.onclick = function () { sc.close(); if (done) done(); }; }
     function onRes(res) {
@@ -22510,7 +22640,7 @@ var Table = (function () {
     var dName = foe && foe.owner !== pr.owner ? foe.name : v ? (v.name || 'поселение') : '', dFac = foe && foe.owner !== pr.owner ? foe.faction : v && v.owner != null && A.s.players[v.owner] ? A.s.players[v.owner].faction : 'slate';
     App.send({ a: 'attack', pr: pr.id, to: k, plan: { live: true } }, function (res) {
       if (!res.ok) return toast(res.error, true);
-      var r = res.r || {}, opts = { aName: pr.name, dName: dName, aFac: pr.faction, dFac: dFac, season: A.s.season };
+      var r = res.r || {}, opts = { aName: pr.name, dName: dName, aFac: pr.faction, dFac: dFac, season: A.s.season, lesson: true, tutorial: !!A.s.tutorial };   // урок боя: в прологе — всегда, иначе — при первом таком бое
       if (r.kind === 'fight') GridScene.run(r.fight, function (arg, cb) { App.send({ a: 'fight', arg: arg }, cb); }, opts, function () { render(); perkToasts(); });
       else if (r.battle) Battle(r.battle);
     });
@@ -22886,11 +23016,11 @@ var Codex = (function () {
     ['field', 'Бой отрядами', function () {
       if (Core.RULES && Core.RULES.grid) return '<p><b>Бой идёт на доске 5×6, как настольная игра.</b> Нападающий стоит в двух левых колонках, оборона — в двух правых. Войско делится на отряды по оружию (и коню): в отряде до восьми бойцов, на сторону не больше десяти отрядов — когда людей больше, отряды крупнее. Оборона встаёт первой, её строй виден; свои отряды можно переставить в своих колонках и отдать знамя князя.</p>' +
         '<p><b>Приказы — стеками по три.</b> Каждому отряду — три приказа, у обеих сторон втайне. Затем они открываются по шагам: сперва первые приказы всех отрядов, потом вторые, потом третьи. Внутри шага по старшинству: побег и отход → оборона → стрельба → марш и фланги → сеча. Отыграли стек — пауза и новые приказы. Бой — не больше четырёх стеков.</p>' +
-        '<p><b>Приказы.</b> <i>Стрельба</i> — по врагу в досягаемости (лук и арбалет — 3 клетки, длинный лук — 4), в упор нельзя, через свой отряд — на 1 хуже. <i>Оборона</i> — проваленные спасброски перебрасываются. <i>Марш</i> — вперёд: пехота на 2 клетки, тяжёлая (в латах) на 1, конница на 3; упёрся во врага — сшибка. <i>Сеча</i> — удар по соседу, и наискось тоже; урон обоим разом, связанный сечей отряд маршем не уйдёт. <i>Левый и правый фланг</i> — сдвиг на клетку (конница на 2). <i>Отход</i> — назад на клетку, <i>побег</i> — на две, за край поля — прочь из боя. По идущему во фланг, отходящему и бегущему враг перебрасывает промахи, а соседи бьют уходящему вслед. Приказ, который нельзя исполнить, сгорает — отряд просто стоит.</p>' +
-        '<p><b>Кубики.</b> Каждый боец — кубик. Попадание: меч, топор, копьё — 4+ (копьё по коннице — 3+); булава, цеп, кулак, луки, арбалет — 5+. Каждое попадание — спасбросок по броне: без брони 6, щит 5+, кольчуга 4+, латы 3+, щит с кольчугой 3+, латы со щитом 2+. Топор не замечает щита, булава и арбалет портят спасбросок на 1. Конница с разбега бьёт на 1 метче — это натиск; копья в обороне его гасят и бьют первыми.</p>' +
+        '<p><b>Приказы.</b> <i>Стрельба</i> — по врагу в досягаемости (лук и арбалет — 3 клетки, длинный лук — 4), в упор нельзя, через свой отряд — на 1 хуже. <i>Оборона</i> — проваленные спасброски перебрасываются. <i>Марш</i> — вперёд: пехота на 2 клетки, тяжёлая (в латах) на 1, конница на 3; упёрся во врага — сшибка. <i>Сеча</i> — удар по соседу, и наискось тоже; урон обоим разом, связанный сечей отряд маршем не уйдёт. <i>Левый и правый фланг</i> — сдвиг на клетку (конница на 2). <i>Стрельба с отходом</i> (стрелкам) — залп на 1 хуже и шаг назад. <i>Отход</i> — назад на клетку (конница и лучники — на две), <i>побег</i> — на две, за край поля — прочь из боя. По идущему во фланг, отходящему и бегущему враг перебрасывает промахи, а соседи бьют уходящему вслед. Приказ, который нельзя исполнить, сгорает — отряд просто стоит.</p>' +
+        '<p><b>Кубики.</b> Каждый боец — кубик. Попадание: меч, топор, копьё — 4+ (копьё по коннице — 3+); булава, цеп, кулак, луки, арбалет — 5+; стрелки, связанные сечей, рубятся плохо — 6+. Каждое попадание — спасбросок по броне: без брони 6, щит 5+, кольчуга 4+, латы 3+, щит с кольчугой 3+, латы со щитом 2+. Топор не замечает щита, булава и арбалет портят спасбросок на 1. <b>Сшибка:</b> первый удар нападающего (марш упёрся во врага или «Сеча» по ещё не сцепленному отряду) перебрасывает промахи; дальше, когда уже сцепились, бой идёт без перебросов, пока кто-то не отойдёт. Конница с разбега бьёт ещё и на 1 метче — это натиск; копья в обороне гасят натиск в лоб и бьют первыми. <b>Фланг и тыл:</b> отряд, уже связанный сечей с вашим отрядом, второй ваш отряд бьёт во фланг — +1 к попаданию. Отряд смотрит на врага; удар из-за спины — тыл: +1, без ответного удара и −1 к духу цели. Конница, влетевшая во фланг, складывает натиск и фланг.</p>' +
         '<p><b>Дух.</b> Отряд, что за шаг потерял половину, бросает кубик: нужно 4+ (знамя князя рядом +1, сосед бежит −1). Не выдержал — бежит. Побежала половина войска — оно сломлено, победитель гонит бегущих, конница — особенно. Не решилось за четыре стека — побеждает тот, у кого меньше потерь (поровну — оборона).</p>' +
         '<p><b>Знамя князя</b> стоит при отряде. Отряд бежит или пал — князь ранен. Погибает князь, только если разбито всё войско.</p>' +
-        '<p><b>Штурм.</b> У стен поселения стена идёт посреди доски: пять прясел, в среднем — ворота. Оборона стоит на стене и за ней. Сквозь целое прясло не пройти: пешие лезут лестницами (бьют хуже, у защитников за стеной спасбросок лучше и дух крепче), конница и машины ждут пролома. Катапульта, требушет и пушка — отдельные отряды с приказом «Обстрел стены», таран подъезжает вплотную и бьёт прясло, у ворот — вдвое. Рухнуло прясло — пролом: туда можно идти. Урон стене остаётся у поселения.</p>' +
+        '<p><b>Штурм.</b> У стен поселения стена идёт посреди доски: пять прясел, в среднем — ворота. Пока прясло цело, <b>ни пешим, ни коннице не достать</b> тех, кто на стене, а лучники со стены бьют вниз безнаказанно, даже под самую стену. Тех, кто за стеной, стрелы снаружи не видят — туда бьют лишь машины навесом. Стрелять по стоящим на стене можно, но за зубцами попасть на 1 труднее, а спасбросок у них лучше. Катапульта, требушет и пушка — отдельные отряды: «Обстрел стены» крошит прясло (выберите кусок стены), «Стрельба» — камнями по войскам за стеной. <b>Ворота пробивает только таран</b> — вплотную, вдвое сильнее. Рухнуло прясло или ворота — пролом: туда можно идти, там бьются как в поле. Урон стене остаётся у поселения. Без машин стену не взять — советник в таком случае уводит войско.</p>' +
         '<p><b>Местность.</b> Лес — натиска нет, стрелы на 1 хуже. Болото — все на клетку медленнее, натиска нет. Холмы — нападающий идёт медленнее, стрелки обороны бьют на клетку дальше. Брод и река — нападающему в сече на 1 хуже.</p>';
       return '<p><b>В поле дружины бьются строй против строя.</b> Войско делится на отряды по оружию: мечники, копейщики, лучники, конные — в каждом не больше восьми. Поле делится на линии: их столько, сколько пеших и конных отрядов у меньшей стороны, но не больше четырёх. В каждой линии у каждой стороны ровно один отряд в строю — строи всегда стоят друг против друга и не проходят друг сквозь друга.</p>' +
         '<p><b>Кто против кого — решает нападающий.</b> Оборона встаёт первой, её строй виден; что стоит за её строем — нет. Нажмите свой отряд, потом место в строю: подсказка между строями покажет, как сложится пара один на один (перевес, сильнее, на равных, слабее, тяжело). Лишние отряды встают за строй: стрелки — во вторую линию, прочие — в запас.</p>' +
@@ -23016,7 +23146,7 @@ var Coach = (function () {
     { ch: 3, t: 'Навыки воеводы', x: 'Пока ты ковал, воевода учился. Навыки растут <b>сами</b> от повторяемых дел: кто много куёт — станет <b>Кузнецом</b> (второе изделие даром), кто зимует в поле — <b>Зимним воеводой</b>, кто сидит в городе в мор — <b>Лекарем</b>. Значки старших навыков — под именем воеводы, все навыки и сколько осталось до следующего уровня — во вкладке «<b>Отряд</b>». Погибнет воевода — навыки уйдут с ним, береги опытных.', glow: '.pk-row, [data-ptab="army"]',
       enter: function () { if (!(Core.RULES && Core.RULES.perks && Core.deed)) return; var sel = App.A.sel && Core.getPrince(S(), App.A.sel), p = sel && sel.owner === me() ? sel : mine().sort(function (a, b) { return ((b.deeds || {}).craft || 0) - ((a.deeds || {}).craft || 0); })[0]; if (!p) return; var n = (p.deeds || {}).craft || 0; if (n < 5) Core.deed(S(), p, 'craft', 5 - n); App.select && App.select(p.id); },
       btn: 'Дальше' },
-    { ch: 3, t: 'Штурм Заречья', x: '<b>Заречье</b> за частоколом миром не сдаётся. Веди дружину вплотную, поставь настрой <b>Ярость</b> и выбери «<b>Штурм</b>». Сломленный гарнизон — «<b>Подчинить</b>» в «Свободно».', tile: function () { return byName('Заречье').key; }, glow: '.c-deed[data-dialog="attack"], .c-deed[data-cmd*="subjugate"], [data-ptab="free"]',
+    { ch: 3, t: 'Штурм Заречья', x: '<b>Заречье</b> за частоколом миром не сдаётся. Веди дружину вплотную, поставь настрой <b>Ярость</b> и выбери «<b>Штурм отрядами</b>» — я покажу, как берут стену (или «Штурм: авторасчёт»). Сломленный гарнизон — «<b>Подчинить</b>» в «Свободно».', tile: function () { return byName('Заречье').key; }, glow: '.c-deed[data-dialog="attack"], .c-deed[data-cmd*="subjugate"], [data-ptab="free"]',
       done: function () { return ownedBy('Заречье'); } },
     { ch: 3, t: 'Подкуп Каменца', x: 'Каменная крепость <b>Каменец</b> штурмом не взять без машин. Но старейшин можно <b>подкупить</b> златом — деяние рядом с городом. Цена растёт с гарнизоном и стенами.', tile: function () { return byName('Каменец').key; }, glow: '.c-deed[data-cmd*="bribe"]',
       enter: function () { var p = S().players[me()], v = byName('Каменец'); p.score = Math.max(p.score || 0, (Core.bribeCost ? Core.bribeCost(S(), v) : 80) + 30); }, done: function () { return ownedBy('Каменец'); } },
@@ -23524,7 +23654,7 @@ var Shell = (function () {
   function build() {
     if ($('menuRoot')) return;
     var r = document.createElement('div'); r.id = 'menuRoot';
-    r.innerHTML = '<div class="m-wrap"><div class="m-logo" id="mLogo"></div><div class="m-cols"><div class="m-col" id="mCol"></div><div class="h-col k-parch k-frame k-iron-corners" id="hCol"></div></div><div class="m-foot">Королевство · Порубежье · сборка 24.10 19:34</div></div>';
+    r.innerHTML = '<div class="m-wrap"><div class="m-logo" id="mLogo"></div><div class="m-cols"><div class="m-col" id="mCol"></div><div class="h-col k-parch k-frame k-iron-corners" id="hCol"></div></div><div class="m-foot">Королевство · Порубежье · сборка 24.10 20:45</div></div>';
     document.body.appendChild(r);
     $('mLogo').innerHTML = '<div class="k-logo">КОРОЛЕВСТВО</div><div class="k-logo-sub">Порубежье</div>';
     hallStart();
